@@ -1,0 +1,97 @@
+{% extends "!layout.html" %}
+
+{% block extrahead %}
+<style>
+  div.topic {
+    padding: 2px;
+    background-color: #F8F4A6;
+    border: none;
+  }
+
+  p.topic-title {
+    display: run-in;
+    margin-right: 15px;
+  }
+</style>
+
+{% if include_analytics %}
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-29887834-3']);
+  _gaq.push(['_setDomainName', 'pydoit.org']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+{% endif %}
+{% endblock %}
+
+
+{% block rootrellink %}
+        <li><a href="{{ pathto('index') }}">Home</a>&nbsp;|&nbsp;</li>
+        <li><a href="{{ pathto('contents') }}">Documentation</a>&raquo;</li>
+{% endblock %}
+
+
+{% block header %}
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 50px">
+<img src="{{ pathto("_static/doit.png", 1) }}" alt="doit logo" />
+</div>
+{% endblock %}
+
+
+{% block sidebarsearch %}
+{{ super() }}
+
+<h3>Project Links</h3>
+<ul>
+  <li><a href="http://pypi.python.org/pypi/doit">download (PyPi)</a></li>
+  <li><a href="https://bitbucket.org/schettino72/doit">code &amp; bugs (bitbucket)</a></li>
+  <li><a href="https://groups.google.com/forum/#!forum/python-doit">discussion (google)</a></li>
+  <li><a href="http://blog.schettino72.net/categories/doit.html">blog</a></li>
+  <li><a href="https://bitbucket.org/schettino72/doit-recipes/wiki/Home">doit-recipes</a></li>
+</ul>
+
+
+<h3>Sponsors</h3>
+<em>Your logo here</em>
+
+<h3>Sponsor/Donate to <em>doit</em></h3>
+
+{% if include_gittip %}
+<script data-gittip-username="schettino72"
+        data-gittip-widget="button"
+        src="//gttp.co/v1.js"></script>
+{% endif %}
+
+<div style="margin-left:2em;">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="BFF4G58USYPBA">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/pt_BR/i/scr/pixel.gif" width="1" height="1">
+</form>
+</div>
+<br/>
+
+<div style="font-size:75%">
+Why Donate? Donations will be used to sponsor futher development of the project.<br/>
+<br/>
+For coorporate donations the logo of your company will be placed on this website side-bar (see above). For more information please contact <em>schettino72</em>&#64<span>gmail.com</span><br/>
+</div>
+
+
+
+{# logo - python #}
+<h3></h3>
+<a href="http://python.org"><img src="_static/python-powered-w-100x40.png" /></a><br/><br/>
+{% endblock %}
+
+{% block sidebarrel %}
+{% endblock %}
+

@@ -1,0 +1,139 @@
+Logbook Changelog
+=================
+
+Here you can see the full list of changes between each Logbook release.
+
+Version 0.6.0
+-------------
+
+Released on October 3rd 2013. Codename "why_not_production_ready"
+
+- Added Redis handler (Thanks a lot @guillermo for this PR)
+- Fixed email encoding bug (Thanks Raphaël Vinot)
+
+Version 0.5.0
+-------------
+
+Released on August 10th 2013.
+
+- Drop 2.5, 3.2 support, code cleanup
+- The exc_info argument now accepts `True`, like in the standard logging module
+
+Version 0.4.2
+-------------
+
+Released on June 2nd 2013.
+
+- Fixed Python 3.x compatibility, including speedups
+- Dropped Python 2.4 support. Python 2.4 support caused a lot of hacks in the code and introduced duplication to the test code. In addition, it is impossible to cover 2.4-3.x with a single tox installation, which may introduce unwitting code breakage. Travis also does not support Python 2.4 so the chances of accidentally breaking this support were very high as it was...
+
+
+Version 0.4.1
+-------------
+
+Released on December 12th. Codename "121212"
+
+- Fixed several outstanding encoding problems, thanks to @dvarazzo.
+- Merged in minor pull requests (see https://github.com/mitsuhiko/logbook/pulls?&state=closed)
+
+Version 0.4
+-----------
+
+Released on October 24th.  Codename "Phoenix"
+
+- Added preliminary RabbitMQ and CouchDB support.
+- Added :class:`logbook.notifiers.NotifoHandler`
+- `channel` is now documented to be used for filtering purposes if
+  wanted.  Previously this was an opaque string that was not intended
+  for filtering of any kind.
+
+Version 0.3
+-----------
+
+Released on October 23rd.  Codename "Informant"
+
+- Added :class:`logbook.more.ColorizingStreamHandlerMixin` and
+  :class:`logbook.more.ColorizedStderrHandler`
+- Deprecated :class:`logbook.RotatingFileHandlerBase` because the
+  interface was not flexible enough.
+- Provided basic Python 3 compatibility.  This did cause a few smaller
+  API changes that caused minimal changes on Python 2 as well.  The
+  deprecation of the :class:`logbook.RotatingFileHandlerBase` was a
+  result of this.
+- Added support for Python 2.4
+- Added batch emitting support for handlers which now makes it possible
+  to use the :class:`logbook.more.FingersCrossedHandler` with the
+  :class:`logbook.MailHandler`.
+- Moved the :class:`~logbook.FingersCrossedHandler` handler into the
+  base package.  The old location stays importable for a few releases.
+- Added :class:`logbook.GroupHandler` that buffers records until the
+  handler is popped.
+- Added :class:`logbook.more.ExternalApplicationHandler` that executes
+  an external application for each log record emitted.
+
+Version 0.2.1
+-------------
+
+Bugfix release, Released on September 22nd.
+
+- Fixes Python 2.5 compatibility.
+
+Version 0.2
+-----------
+
+Released on September 21st.  Codename "Walls of Text"
+
+- Implemented default with statement for handlers which is an
+  alias for `threadbound`.
+- `applicationbound` and `threadbound` return the handler now.
+- Implemented channel recording on the log records.
+- The :class:`logbook.more.FingersCrossedHandler` now is set to
+  `ERROR` by default and has the ability to create new loggers
+  from a factory function.
+- Implemented maximum buffer size for the
+  :class:`logbook.more.FingersCrossedHandler` as well as a lock
+  for thread safety.
+- Added ability to filter for context.
+- Moved bubbling flags and filters to the handler object.
+- Moved context processors on their own stack.
+- Removed the `iter_context_handlers` function.
+- Renamed `NestedHandlerSetup` to :class:`~logbook.NestedSetup`
+  because it can now also configure processors.
+- Added the :class:`logbook.Processor` class.
+- There is no difference between logger attached handlers and
+  context specific handlers any more.
+- Added a function to redirect warnings to logbook
+  (:func:`logbook.compat.redirected_warnings`).
+- Fixed and improved :class:`logbook.LoggerGroup`.
+- The :class:`logbook.TestHandler` now keeps the record open
+  for further inspection.
+- The traceback is now removed from a log record when the record
+  is closed.  The formatted traceback is a cached property
+  instead of a function.
+- Added ticketing handlers that send logs directly into a database.
+- Added MongoDB backend for ticketing handlers
+- Added a :func:`logbook.base.dispatch_record` function to dispatch
+  records to handlers independently of a logger (uses the default
+  record dispatching logic).
+- Renamed `logger_name` to `channel`.
+- Added a multi processing log handler
+  (:class:`logbook.more.MultiProcessingHandler`).
+- Added a twitter handler.
+- Added a ZeroMQ handler.
+- Added a Growl handler.
+- Added a Libnotify handler.
+- Added a monitoring file handler.
+- Added a handler wrapper that moves the actual handling into a
+  background thread.
+- The mail handler can now be configured to deliver each log record
+  not more than n times in m seconds.
+- Added support for Python 2.5
+- Added a :class:`logbook.queues.SubscriberGroup` to deal with multiple
+  subscribers.
+- Added a :class:`logbook.compat.LoggingHandler` for redirecting logbook
+  log calls to the standard library's :mod:`logging` module.
+
+Version 0.1
+-----------
+
+First public release.
