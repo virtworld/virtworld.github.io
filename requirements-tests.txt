@@ -1,6 +1,0 @@
--r requirements-full.txt
-mock>=1.0.0
-coverage
-nose
-freezegun
-python-coveralls

@@ -1,7 +1,0 @@
-[Core]
-Name = rest_vimeo
-Module = vimeo
-
-[Documentation]
-Description = Vimeo directive
-

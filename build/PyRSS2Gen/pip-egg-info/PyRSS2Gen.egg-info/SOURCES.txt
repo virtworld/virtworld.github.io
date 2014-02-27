@@ -1,6 +1,0 @@
-PyRSS2Gen.py
-README
-pip-egg-info/PyRSS2Gen.egg-info/PKG-INFO
-pip-egg-info/PyRSS2Gen.egg-info/SOURCES.txt
-pip-egg-info/PyRSS2Gen.egg-info/dependency_links.txt
-pip-egg-info/PyRSS2Gen.egg-info/top_level.txt
