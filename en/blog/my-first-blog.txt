@@ -1,0 +1,9 @@
+.. title: My First blog
+.. slug: my-first-blog
+.. date: 2014/05/16 16:59:19
+.. tags: 
+.. link: 
+.. description: 
+.. type: text
+
+This is my first post...

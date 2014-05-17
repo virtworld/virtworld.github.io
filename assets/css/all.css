@@ -311,10 +311,6 @@ h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
 ul.auto-toc {
   list-style-type: none }
 
-a.footnote-reference {
-     line-height: 0px;
-}
-
 pre.code , div.code pre .hll { background-color: #ffffcc }
 pre.code , div.code pre  { background: #f8f8f8; }
 pre.code .c, div.code pre .c { color: #408080; font-style: italic } /* Comment */
@@ -414,7 +410,7 @@ table.codetable { width: 100%;} td.linenos {text-align: right; width: 4em;}
         .cboxIframe{background:#fff;}
         #cboxError{padding:50px; border:1px solid #ccc;}
         #cboxLoadedContent{margin-bottom:28px;}
-        #cboxTitle{position:absolute; bottom:4px; right: 29px; text-align: right; width:100%; color:#949494;}
+        #cboxTitle{position:absolute; bottom:4px; left:0; text-align:center; width:100%; color:#949494;}
         #cboxCurrent{position:absolute; bottom:4px; left:58px; color:#949494;}
         #cboxLoadingOverlay{background:url(images/loading_background.png) no-repeat center center;}
         #cboxLoadingGraphic{background:url(images/loading.gif) no-repeat center center;}
@@ -450,16 +446,12 @@ table.codetable { width: 100%;} td.linenos {text-align: right; width: 4em;}
 }
 
 body {
-  padding-top: 60px;
+    margin-top: 60px;
 }
-@media (max-width: 979px) {
-  body {
-    padding-top: 0px;
-  }
-}
+
 #container {
     width: 960px;
-    margin: 50 auto;
+    margin: 0 auto;
 }
 
 #contentcolumn {
@@ -478,7 +470,11 @@ img {
     margin-bottom: 12px;
 }
 
-.footerbox {padding: 15px; text-align: center; margin-bottom: 15px;}
+.titlebox {
+    text-align: right;
+}
+
+#addthisbox {margin-bottom: 12px;}
 
 td.label {
     /* Issue #290 */
@@ -490,6 +486,7 @@ td.label {
     vertical-align: super;
     font-size: xx-small;
 }
+
 
 .caption {
     /* Issue 292 */
@@ -527,8 +524,8 @@ ul.bricks > li {
     margin: 3px;
 }
 
-ul.breadcrumb > li:before {
-    content: " / ";
+.at300b {
+    box-sizing: content-box;
 }
 
 pre, pre code {

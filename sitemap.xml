@@ -5,27 +5,83 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
-  <loc>http://virtworld.github.com/2014/index.html</loc>
-  <lastmod>2014-02-27</lastmod>
+  <loc>http://virtworld.github.io/2014/index.html</loc>
+  <lastmod>2014-05-16</lastmod>
  </url>
  <url>
-  <loc>http://virtworld.github.com/archive.html</loc>
-  <lastmod>2014-02-27</lastmod>
+  <loc>http://virtworld.github.io/Blog/index.html</loc>
+  <lastmod>2014-05-16</lastmod>
  </url>
  <url>
-  <loc>http://virtworld.github.com/categories/index.html</loc>
-  <lastmod>2014-02-27</lastmod>
+  <loc>http://virtworld.github.io/archive.html</loc>
+  <lastmod>2014-05-17</lastmod>
  </url>
  <url>
-  <loc>http://virtworld.github.com/index.html</loc>
-  <lastmod>2014-02-27</lastmod>
+  <loc>http://virtworld.github.io/blog/index.html</loc>
+  <lastmod>2014-05-17</lastmod>
  </url>
  <url>
-  <loc>http://virtworld.github.com/posts/hello-world.html</loc>
-  <lastmod>2014-02-27</lastmod>
+  <loc>http://virtworld.github.io/blog/my-first-blog.html</loc>
+  <lastmod>2014-05-16</lastmod>
  </url>
  <url>
-  <loc>http://virtworld.github.com/rss.xml</loc>
-  <lastmod>2014-02-27</lastmod>
+  <loc>http://virtworld.github.io/categories/index.html</loc>
+  <lastmod>2014-05-17</lastmod>
+ </url>
+ <url>
+  <loc>http://virtworld.github.io/en/2014/index.html</loc>
+  <lastmod>2014-05-16</lastmod>
+ </url>
+ <url>
+  <loc>http://virtworld.github.io/en/archive.html</loc>
+  <lastmod>2014-05-17</lastmod>
+ </url>
+ <url>
+  <loc>http://virtworld.github.io/en/blog/index.html</loc>
+  <lastmod>2014-05-17</lastmod>
+ </url>
+ <url>
+  <loc>http://virtworld.github.io/en/blog/my-first-blog.html</loc>
+  <lastmod>2014-05-16</lastmod>
+ </url>
+ <url>
+  <loc>http://virtworld.github.io/en/categories/index.html</loc>
+  <lastmod>2014-05-17</lastmod>
+ </url>
+ <url>
+  <loc>http://virtworld.github.io/en/galleries/index.html</loc>
+  <lastmod>2014-05-17</lastmod>
+ </url>
+ <url>
+  <loc>http://virtworld.github.io/en/galleries/rss.xml</loc>
+  <lastmod>2014-05-17</lastmod>
+ </url>
+ <url>
+  <loc>http://virtworld.github.io/en/index.html</loc>
+  <lastmod>2014-05-17</lastmod>
+ </url>
+ <url>
+  <loc>http://virtworld.github.io/en/rss.xml</loc>
+  <lastmod>2014-05-17</lastmod>
+ </url>
+ <url>
+  <loc>http://virtworld.github.io/galleries/index.html</loc>
+  <lastmod>2014-05-17</lastmod>
+ </url>
+ <url>
+  <loc>http://virtworld.github.io/galleries/rss.xml</loc>
+  <lastmod>2014-05-17</lastmod>
+ </url>
+ <url>
+  <loc>http://virtworld.github.io/index.html</loc>
+  <lastmod>2014-05-17</lastmod>
+ </url>
+ <url>
+  <loc>http://virtworld.github.io/listings/index.html</loc>
+  <lastmod>2014-05-17</lastmod>
+ </url>
+ <url>
+  <loc>http://virtworld.github.io/rss.xml</loc>
+  <lastmod>2014-05-17</lastmod>
  </url>
 </urlset>
