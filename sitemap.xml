@@ -5,83 +5,55 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
-  <loc>http://jiaqili.me/2014/index.html</loc>
-  <lastmod>2014-05-16</lastmod>
+  <loc>http://www.jiaqili.me/cn/archive.html</loc>
+  <lastmod>2014-06-01</lastmod>
  </url>
  <url>
-  <loc>http://jiaqili.me/Blog/index.html</loc>
-  <lastmod>2014-05-16</lastmod>
+  <loc>http://www.jiaqili.me/cn/categories/index.html</loc>
+  <lastmod>2014-06-01</lastmod>
  </url>
  <url>
-  <loc>http://jiaqili.me/archive.html</loc>
-  <lastmod>2014-05-17</lastmod>
+  <loc>http://www.jiaqili.me/cn/galleries/index.html</loc>
+  <lastmod>2014-06-01</lastmod>
  </url>
  <url>
-  <loc>http://jiaqili.me/blog/index.html</loc>
-  <lastmod>2014-05-17</lastmod>
+  <loc>http://www.jiaqili.me/cn/galleries/rss.xml</loc>
+  <lastmod>2014-06-01</lastmod>
  </url>
  <url>
-  <loc>http://jiaqili.me/blog/my-first-blog.html</loc>
-  <lastmod>2014-05-16</lastmod>
+  <loc>http://www.jiaqili.me/cn/index.html</loc>
+  <lastmod>2014-06-01</lastmod>
  </url>
  <url>
-  <loc>http://jiaqili.me/categories/index.html</loc>
-  <lastmod>2014-05-17</lastmod>
+  <loc>http://www.jiaqili.me/cn/rss.xml</loc>
+  <lastmod>2014-06-01</lastmod>
  </url>
  <url>
-  <loc>http://jiaqili.me/en/2014/index.html</loc>
-  <lastmod>2014-05-16</lastmod>
+  <loc>http://www.jiaqili.me/en/archive.html</loc>
+  <lastmod>2014-06-01</lastmod>
  </url>
  <url>
-  <loc>http://jiaqili.me/en/archive.html</loc>
-  <lastmod>2014-05-17</lastmod>
+  <loc>http://www.jiaqili.me/en/categories/index.html</loc>
+  <lastmod>2014-06-01</lastmod>
  </url>
  <url>
-  <loc>http://jiaqili.me/en/blog/index.html</loc>
-  <lastmod>2014-05-17</lastmod>
+  <loc>http://www.jiaqili.me/en/galleries/index.html</loc>
+  <lastmod>2014-06-01</lastmod>
  </url>
  <url>
-  <loc>http://jiaqili.me/en/blog/my-first-blog.html</loc>
-  <lastmod>2014-05-16</lastmod>
+  <loc>http://www.jiaqili.me/en/galleries/rss.xml</loc>
+  <lastmod>2014-06-01</lastmod>
  </url>
  <url>
-  <loc>http://jiaqili.me/en/categories/index.html</loc>
-  <lastmod>2014-05-17</lastmod>
+  <loc>http://www.jiaqili.me/en/index.html</loc>
+  <lastmod>2014-06-01</lastmod>
  </url>
  <url>
-  <loc>http://jiaqili.me/en/galleries/index.html</loc>
-  <lastmod>2014-05-17</lastmod>
+  <loc>http://www.jiaqili.me/en/rss.xml</loc>
+  <lastmod>2014-06-01</lastmod>
  </url>
  <url>
-  <loc>http://jiaqili.me/en/galleries/rss.xml</loc>
-  <lastmod>2014-05-17</lastmod>
- </url>
- <url>
-  <loc>http://jiaqili.me/en/index.html</loc>
-  <lastmod>2014-05-17</lastmod>
- </url>
- <url>
-  <loc>http://jiaqili.me/en/rss.xml</loc>
-  <lastmod>2014-05-17</lastmod>
- </url>
- <url>
-  <loc>http://jiaqili.me/galleries/index.html</loc>
-  <lastmod>2014-05-17</lastmod>
- </url>
- <url>
-  <loc>http://jiaqili.me/galleries/rss.xml</loc>
-  <lastmod>2014-05-17</lastmod>
- </url>
- <url>
-  <loc>http://jiaqili.me/index.html</loc>
-  <lastmod>2014-05-17</lastmod>
- </url>
- <url>
-  <loc>http://jiaqili.me/listings/index.html</loc>
-  <lastmod>2014-05-17</lastmod>
- </url>
- <url>
-  <loc>http://jiaqili.me/rss.xml</loc>
-  <lastmod>2014-05-17</lastmod>
+  <loc>http://www.jiaqili.me/listings/index.html</loc>
+  <lastmod>2014-06-01</lastmod>
  </url>
 </urlset>

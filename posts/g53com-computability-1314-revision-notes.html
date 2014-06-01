@@ -1,23 +1,27 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html><html lang="zh_cn">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Jiaqi Li's personal blog">
     <meta name="author" content="Jiaqi Li">
-    <title>Virtual World | Virtual World</title>
+    <title>G53COM 可计算性 1314 年度 复习笔记 | Virtual World</title>
     
             <link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
-      <link rel="canonical" href="http://www.jiaqili.me/en/index.html">
+      <link rel="canonical" href="http://www.jiaqili.me/posts/g53com-computability-1314-revision-notes.html">
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
     <![endif]-->
-                <link rel="alternate" type="application/rss+xml" title="RSS (en)" href="rss.xml">
+                <link rel="alternate" type="application/rss+xml" title="RSS (en)" href="../en/rss.xml">
                 <link rel="alternate" type="application/rss+xml" title="RSS (zh_cn)" href="../rss.xml">
 
     
-    
+
+
+
+                <link rel="alternate" hreflang="en" href="../en/posts/g53com-computability-1314-revision-notes.html">
+
+
     
 </head>
 <body>
@@ -37,20 +41,24 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
                 
-                <li><a href="../archive.html">Archives</a>
-                </li><li><a href="../categories/index.html">Tags</a>
+                <li><a href="../archive.html">归档</a>
+                </li><li><a href="../categories/index.html">标签</a>
                 </li><li><a href="../rss.xml">RSS</a>
-                </li><li><a href="stories/about.html">About</a>
+                </li><li><a href="../stories/about.html">关于</a>
 
             </li></ul>
 
             <ul class="nav navbar-nav navbar-right">
                 
                     <li>
-            </li><li><a href="../index.html" rel="alternate" hreflang="zh_cn">简体中文</a></li>
+            </li><li><a href="../en/index.html" rel="alternate" hreflang="en">English</a></li>
 
                 
                     
+    <li>
+    <a href="g53com-computability-1314-revision-notes.md" id="sourcelink">源代码</a>
+    </li>
+
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -63,17 +71,28 @@
         <!--Body content-->
         <div class="row">
             
-        <article class="postbox h-entry post-text">
-        <h1 class="p-name"><a href="posts/g53com-computability-1314-revision-notes.html" class="u-url">G53COM Computability 1314 Revision Notes</a>
-        <small>  
-             Posted: <time class="published dt-published" datetime="2014-06-01T20:54:42+00:00">2014-06-01 20:54</time>
-        </small></h1>
-        <hr>
-        <div class="e-content">
-        <div><p><em>Contents based on G53COM lecture slides 1314 by <a href="posts/g53com-computability-1314-revision-notes.html" title="http://www.cs.nott.ac.uk/~ajp/">Dr Andrew Parkes</a></em><br>
-<em>These are <strong>NOT</strong> sample answers. Any definition, explanation or example listed below could be imprecise or incorrect. Please refer to your own notes and lecture slides.</em></p>
-<h2>1. Definitions</h2>
-<h3>Problem Classes</h3>
+    <article class="postbox post-text">
+    <div class="h-entry" itemscope="itemscope" itemtype="http://schema.org/Article">
+    
+    <h1 class="p-name" itemprop="headline name">G53COM 可计算性 1314 年度 复习笔记</h1>
+
+    <hr>
+    <small>
+        发表于： <time class="published dt-published" datetime="2014-06-01T20:54:42+00:00" itemprop="datePublished">2014-06-01 20:54</time>
+        
+                  |  
+                <a href="../en/posts/g53com-computability-1314-revision-notes.html" rel="alternate" hreflang="en">Read in English</a>
+
+        
+
+    </small>
+    <hr>
+    <div class="e-content" itemprop="articleBody text">
+    <div><p><em>内容基于 G53COM 1314 年度的课件，讲师为 <a href="#" title="http://www.cs.nott.ac.uk/~ajp/">Dr Andrew Parkes</a></em><br>
+<em>这篇文章<strong>并非</strong>标准答案. 任何定义，解释和示例可能是不准确的或者错误的。请参考您自己的笔记和课件。</em><br>
+<em>因为原始的笔记是用英语写的，有些术语也不清楚中文叫什么，就不翻译了。</em></p>
+<h2>1. 定义</h2>
+<h3>问题分类</h3>
 <ul>
 <li><strong>NC</strong> is a set of problem that can be solved in polylog time using polynomial a number of processors.</li>
 <li><strong>DTIME(f(n))</strong> is a set of problem that can be solved using some DTM in time f(n).</li>
@@ -92,7 +111,7 @@
 <li><strong>NSPACE(f(n))</strong> is a set of problem that can be solved using some NTDM with space f(n).</li>
 <li><strong>NPSPACE = U<sub>k</sub> NSPACE(n<sup>k</sup>)</strong> is a set of problem that can be solved using a NTDM with polynomial space.</li>
 </ul>
-<h3>Relationship</h3>
+<h3>关系</h3>
 <p><strong>NC ⊆ P ⊆ NP ⊆ PSPACE = NPSPACE</strong></p>
 <ul>
 <li><strong>P ⊆ PSPACE</strong>, because a poly time TM cannot use more than polyspace (space can be reuse, but time cannot). </li>
@@ -106,7 +125,7 @@
       It is trivial that PSPACE ⊆ NPSPACE.<br>
       Hence, NPSPACE = PSPACE  </li>
 </ul>
-<h2>2. Turning Machine, Enumeration and Solvability</h2>
+<h2>2. 图灵机，列举和可解决性</h2>
 <h3>Deterministic Turing Machine.</h3>
 <p>Turing machine is a model of computation that consists of a 7-tuples<br>
 </p><table>
@@ -231,24 +250,35 @@ These could be expressed using polynomial size clauses. </p>
 </li>
 </ol>
 <p>The NDTM is converted into a polysize SAT formula containing variables describing the states as a function of time and allowing the need of non-determinism. The SAT formula has a satisfying formula iff there is some sequence of states of the NDTM that lead to acceptance.</p>
-<p><em>(To be finished...)</em></p></div>
-        </div>
-            
-        
-    <p>
-        <a href="posts/g53com-computability-1314-revision-notes.html#disqus_thread" data-disqus-identifier="cache/posts/g53com-computability-1314-revision-notes.html">Comments</a>
-
-
-        </p></article>
+<p><em>(未完待续...)</em></p></div>
+    </div>
+    </div>
     
 
-    
         
-       <script>var disqus_shortname="nikolademo";(function(){var a=document.createElement("script");a.async=true;a.src="//"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="nikolademo",
+            disqus_url="http://www.jiaqili.me/posts/g53com-computability-1314-revision-notes.html",
+        disqus_title="G53COM \u53ef\u8ba1\u7b97\u6027 1314 \u5e74\u5ea6 \u590d\u4e60\u7b14\u8bb0",
+        disqus_identifier="cache/posts/g53com-computability-1314-revision-notes.html",
+        disqus_config = function () {
+            this.language = "zh_cn";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
-	
+    
 
+    </article>
 
         </div>
         <!--End of body content-->

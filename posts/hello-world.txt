@@ -1,9 +1,0 @@
-.. title: Hello World
-.. slug: hello-world
-.. date: 2014/02/27 01:41:15
-.. tags: 
-.. link: 
-.. description: 
-.. type: text
-
-My first post for test purpose.
