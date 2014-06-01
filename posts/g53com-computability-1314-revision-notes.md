@@ -8,7 +8,7 @@
 .. type: text
 -->
 
-*内容基于 G53COM 1314 年度的课件，讲师为 [Dr Andrew Parkes]("http://www.cs.nott.ac.uk/~ajp/")*  
+*内容基于 G53COM 1314 年度的课件，讲师为 [Dr Andrew Parkes](http://www.cs.nott.ac.uk/~ajp/)*  
 *这篇文章**并非**标准答案. 任何定义，解释和示例可能是不准确的或者错误的。请参考您自己的笔记和课件。*  
 *因为原始的笔记是用英语写的，有些术语也不清楚中文叫什么，就不翻译了。*
 

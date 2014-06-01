@@ -8,5 +8,5 @@
 .. type: text
 -->
 
-最后更新: 2014年6月1日 | Read in [English]("http://www.jiaqili.me/en/stories/about.html")
+最后更新: 2014年6月1日 | Read in [English](http://www.jiaqili.me/en/stories/about.html)
 

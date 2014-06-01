@@ -8,7 +8,7 @@
 .. type: text
 -->
 
-*Contents based on G53COM lecture slides 1314 by [Dr Andrew Parkes]("http://www.cs.nott.ac.uk/~ajp/")*  
+*Contents based on G53COM lecture slides 1314 by [Dr Andrew Parkes](http://www.cs.nott.ac.uk/~ajp/)*  
 *These are **NOT** sample answers. Any definition, explanation or example listed below could be imprecise or incorrect. Please refer to your own notes and lecture slides.*
 
 # 1. Definitions

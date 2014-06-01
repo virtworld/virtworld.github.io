@@ -8,4 +8,4 @@
 .. type: text
 -->
 
-Last updated: 01 June 2014 | [中文版]("http://www.jiaqili.me/stories/about.html")
+Last updated: 01 June 2014 | [中文版](http://www.jiaqili.me/stories/about.html)
