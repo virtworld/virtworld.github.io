@@ -2,7 +2,7 @@
 .. title: G53COM Computability 1314 Revision Notes
 .. slug: g53com-computability-1314-revision-notes
 .. date: 2014/06/01 20:54:42
-.. tags: 
+.. tags: Computability, Notes
 .. link: 
 .. description: 
 .. type: text

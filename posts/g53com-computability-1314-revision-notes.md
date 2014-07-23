@@ -2,7 +2,7 @@
 .. title: G53COM 可计算性 1314 年度 复习笔记
 .. slug: g53com-computability-1314-revision-notes
 .. date: 2014/06/01 20:54:42
-.. tags: 
+.. tags: Computability, Notes
 .. link: 
 .. description: 
 .. type: text

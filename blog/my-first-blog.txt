@@ -1,9 +1,0 @@
-.. title: 测试博客
-.. slug: my-first-blog
-.. date: 2014/05/16 16:59:19
-.. tags: 
-.. link: 
-.. description: 
-.. type: text
-
-该死的还有两天考试了还在这里倒腾博客。。
