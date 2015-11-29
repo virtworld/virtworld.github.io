@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# fb: http://ogp.me/ns/fb# " lang="zh_cn">
+<head>
+<meta charset="utf-8">
+<base href="http://www.jiaqili.me/posts/java-gc/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Java垃圾收集技术 | Virtual World</title>
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<meta content="#5670d4" name="theme-color">
+<link rel="alternate" type="application/rss+xml" title="RSS (en)" href="../../en/rss.xml">
+<link rel="alternate" type="application/rss+xml" title="RSS (zh_cn)" href="../../rss.xml">
+<link rel="canonical" href="http://www.jiaqili.me/posts/java-gc/">
+<meta property="fb:app_id" content="1523140791344197">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Jiaqi Li">
+<link rel="prev" href="../dynamic-memory-allocation/" title="Java动态内存分配" type="text/html">
+<meta property="og:site_name" content="Virtual World">
+<meta property="og:title" content="Java垃圾收集技术">
+<meta property="og:url" content="http://www.jiaqili.me/posts/java-gc/">
+<meta property="og:description" content="这篇是对《深入理解Java虚拟机》的第三章的总结笔记，G1部分还没有细看
+1 判断对象存活与否
+1.1 引用计数器(没有GC使用)
+
+每当有一个地方引用对象时，数值就+1，引用失效时，数值就-1。
+问题是无法解决对象之间的循环引用问题，比如对象A的一个字段引用B，对象B的一个字段引用A，然后对象A和B被设置为null，这时无法回收A和B。
+
+1.2 可达性分析
+
+从一系列GC Roots开始搜索，">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-11-26T16:00:00Z">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="JVM">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://www.jiaqili.me/">
+
+                <span id="blog-title">Virtual World</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../archive.html">存档</a>
+                </li>
+<li>
+<a href="../../categories/">标签</a>
+                </li>
+<li>
+<a href="../../rss.xml">RSS feed</a>
+                </li>
+<li>
+<a href="https://github.com/virtworld">GitHub</a>
+                </li>
+<li>
+<a href="../../stories/about-virtual-world/">关于</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+            </li>
+<li><a href="http://www.jiaqili.me/en/" rel="alternate" hreflang="en">English</a></li>
+
+                
+                    
+    <li>
+    <a href="index.md" id="sourcelink">源代码</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Java垃圾收集技术</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                    Jiaqi Li
+            </span></p>
+            <p class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2015-11-26T16:00:00Z" itemprop="datePublished" title="2015-11-26 16:00">2015-11-26 16:00</time></a></p>
+                <p class="commentline">
+        
+<span class="fb-comments-count" data-url="/posts/java-gc/">
+
+
+            
+        <p class="sourceline"><a href="index.md" id="sourcelink">源代码</a></p>
+
+        </span></p>
+</div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p><em>这篇是对《深入理解Java虚拟机》的第三章的总结笔记，G1部分还没有细看</em></p>
+<h3>1 判断对象存活与否</h3>
+<h4>1.1 引用计数器(没有GC使用)</h4>
+<ul>
+<li>每当有一个地方引用对象时，数值就+1，引用失效时，数值就-1。</li>
+<li>问题是无法解决对象之间的循环引用问题，比如对象A的一个字段引用B，对象B的一个字段引用A，然后对象A和B被设置为null，这时无法回收A和B。</li>
+</ul>
+<h4>1.2 可达性分析</h4>
+<ul>
+<li>从一系列GC Roots开始搜索，如果GC Roots到这个对象不可达时，则该对象是不可用的。</li>
+<li>GC Roots包括虚拟机栈中引用的对象，本地方法栈中引用的对象，方法区中类静态属性引用的对象，方法区中常量引用的对象。</li>
+</ul>
+<h3>2 finalize()</h3>
+<ol>
+<li>可达性分析后没有与任何GC Roots引用链相连接的对象，会被第一次标记；</li>
+<li>这些对象会被筛选是否需要执行finalize()方法：当对象没有覆盖finalize或者finalize已经调用过时，该方法就不会被执行，也就是说finalize最多只会执行一次对于任何一个对象；</li>
+<li>对于有必要执行finalize的对象，会被放到一个F-Queue的队列中，由一个虚拟机建立的低优先级线程去执行；</li>
+<li>在finalize方法中对象可以和引用链上的任何一个对象建立关联；</li>
+<li>之后GC会对F-Queue中的对象进行第二次标记，如果对象重新和引用链中的对象建立关联，则不会被回收。</li>
+<li>实践中，不要使用这个方法，因为不确定性的大，运行代价高。</li>
+</ol>
+<h3>3 永久代垃圾收集</h3>
+<ul>
+<li>废弃常量：没有任何String对象引用常量池中的某个常量，则它会被清理出常量池</li>
+<li>无用的类：该类所有实例都被回收，并且；加载该类的ClassLoader已被回收，并且；该类对应的java.lang.Class对象没有在任何地方被引用，无法通过反射访问该类的方法。</li>
+</ul>
+<h3>4 GC算法</h3>
+<h4>4.1 标记-清除算法</h4>
+<ul>
+<li>用来回收老年代。首先标记出所有需要回收的对象，然后统一回收所有被标记的对象。</li>
+<li>问题：两个阶段效率都不高，产生大量不连续的内存片段。</li>
+</ul>
+<h4>4.2 复制算法</h4>
+<ul>
+<li>用来回收年轻代内存。将年轻代划分为一块较大的Eden区，和两块较小的Suvivor区域。每次使用Eden和一块suvivor。当回收发生时，这两块区域的存货对象被全部复制到另一块suvivor区域，然后清理掉他们的空间。</li>
+</ul>
+<h4>4.3 标记-整理</h4>
+<ul>
+<li>用来回收老年代内存。和标记-清除一开始一样，但它把所有被标记的存活对象移动到内存的一段，然后清理掉剩下的内存。</li>
+</ul>
+<h4>4.4 分代收集</h4>
+<ul>
+<li>根据年轻代和年老代的特点。年轻代每次回收都有大量对象死去，就使用复制算法；而老年代就使用标记-清理或标记-整理算法。</li>
+</ul>
+<p><img alt="heap.png" src="../../galleries/java-gc/heap.png" title=""></p>
+<h3>5 内存分配和回收策略</h3>
+<ul>
+<li>对象一般先在eden中分配，如果启用了TLAB，则先在TLAB上分配，如果空间不够，虚拟机将发起一次Minor GC。</li>
+<li>需要大量连续空间的对象，比如数组或者很长的字符串。虚拟机有一个-XX: PretenureSizeThreshold参数，大于该值的对象直接进入老年代分配。</li>
+<li>对象在Eden被分配内存，经历第一次Minor GC后仍旧存货，并被幸存者空间容纳，对象年龄就设置为1，之后没经历过一次Minor GC年龄就+1，默认在年龄超过15时就进入老年代。这个值可以在-XX:MaxTenuringthreshold中设置。</li>
+<li>如果在幸存者空间中相同年龄所有对象大小的综合大于幸存者空间的一半，年龄大于或等于该年龄的对象就可以直接进入老年代。</li>
+<li>空间分配担保：</li>
+<li>在进行Minor GC前，虚拟机先检查老年代可用的连续空间是否大于新生代所有对象总空间，如果大于，则此次回收是安全的（因为即使所有对象都要进入老年代，也有足够的空间）；</li>
+<li>如果不是，则检查HandlePromotionFailure设置是否允许失败担保，如果允许，再检查老年代最大可用的连续空间是否大于历次进入老年代对象的平均大小，如果大于，则进行一次Minor GC，尽管可能是有风险的；如果小于，或者不允许失败担保，则进行一次Full GC。</li>
+</ul>
+<h3>6 垃圾收集器</h3>
+<p><img alt="gc.jpg" src="../../galleries/java-gc/gc.jpg" title=""></p>
+<h4>6.1 Serial收集器</h4>
+<ul>
+<li>单线程，它进行垃圾收集的时候，必须暂停其他所有工作线程，直到它结束</li>
+<li>虚拟机运行Client模式下默认的新生代收集器，采用复制算法；</li>
+<li>优点：简单高效，单线程收集没有线程交互的开销</li>
+</ul>
+<h4>6.2 ParNew 收集器</h4>
+<ul>
+<li>Serial的多线程版本（并行收集器：多个垃圾收集线程一起工作，但是用户线程仍旧暂停），但是单CPU环境下不会比Serial有更好的效果，随着CPU数量的增加，能增加GC时对系统资源的有效利用；；</li>
+<li>虚拟机Server模式下的新生代首选收集器，仍旧采取复制算法，</li>
+</ul>
+<h4>6.3 Parallel Scavenge 收集器</h4>
+<ul>
+<li>同ParNew是一个并行收集器，采用复制算法；</li>
+<li>目标是达到一个可控制的吞吐量（吞吐量 = 运行用户代码的时间 / (运行用户代码的时间 + 垃圾收集时间)），适合在后天运算不需要太多交互的任务。</li>
+<li>两个参数用于控制吞吐量：最大垃圾收集停顿时间-XX:MaxGCPauseMills；吞吐量大小-XX:GCTimeRatio;</li>
+<li>缩短最大停顿时间，是以牺牲吞吐量和缩小新生代空间来换取的，比如收集一个较小的新生代总比较大的新生代的时间要短；</li>
+<li>这个收集器还有自适应调整新生代大小，eden和suvivor比例，老年代晋升年龄的机制。</li>
+</ul>
+<h4>6.4 Serial Old 收集器</h4>
+<ul>
+<li>Serial的老年代版本，单线程，标记-整理算法；</li>
+<li>主要给Client模式下的虚拟机使用，在Server模式下与Parallel Scavenge配合使用，或者作为CMS的后备方案。</li>
+</ul>
+<h4>6.5 Parallel Old 收集器</h4>
+<ul>
+<li>Parallel Scavenge 的老年代版本，标记-整理算法；</li>
+<li>同样是注重吞吐量和CPU资源。</li>
+</ul>
+<h4>6.6 CMS - Concurrent Mark Sweep</h4>
+<ul>
+<li>并发收集器（用户线程和垃圾收集线程交替执行，之前多线程的都是并行），目的在于缩短停顿时间，标记-清除算法；</li>
+<li>初始标记(initial mark): 仅标记GC Root能直接关联到的对象，速度很快，但是单线程工作，并且用户线程暂定；</li>
+<li>并发标记(concurrent mark): 进行GC Root Tracing，GC线程和用户线程同时运作；</li>
+<li>重新标记(remark):修正并发标记期间，用户线程行为导致标记产生变动的那一部分对象的标记记录；多线程重现标记，但是用户线程暂定；</li>
+<li>并发清除(concurrent sweep):清除，和用户线程同时运作；</li>
+<li>其中并发标记和并发清除需时最长，但是可以和用户线程同时工作；因此CMS的特点是并发收集，低停顿；</li>
+<li>缺点1：并发阶段需要占用CPU时间，而导致程序运行减慢，总吞吐量降低；</li>
+<li>缺点2：因为采用标记-清除而不是标记-整理算法，所以会产生大量零散空间，当没有足够的连续空间来分配大对象是，必须触发Full GC；</li>
+<li>缺点3：垃圾收集阶段用户线程的运行带来的问题：1. 不能等老年代全部满时再进行收集，因为要预料一部分空间提供并发收集时程序的运作，而当此预留内存无法满足程序需要时，就会发生Concurrent Mode Failure，这是将启用后备的Serial Old收集器来处理老年代，导致停顿时间很长；2. 并发清理阶段程序还在运行，就会产生新的垃圾，这部分垃圾出现在标记过程之后，需要等待下一次GC。</li>
+</ul>
+<h4>6.7 Garbage First (G1)</h4>
+<ul>
+<li>整个Java堆被划分成了多个大小相等Region，新生代和老年代不再是连续的，每个region可以属于新生代也可以属于老年代；</li>
+<li>G1收集器可以建立可以预测的停顿模型，因为它有计划地避免在整个Java堆中进行全区域的垃圾收集，它跟踪各个Region里面的垃圾堆的价值大小，维护一个优先列表，每次根据允许的时间，优先回收价值最大的Region，这也是名称的由来。</li>
+</ul>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/java/" rel="tag">Java</a></li>
+            <li><a class="tag p-category" href="../../categories/jvm/" rel="tag">JVM</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../dynamic-memory-allocation/" rel="prev" title="Java动态内存分配">前一篇</a>
+            </li>
+        </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
+        
+        
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    // init the FB JS SDK
+    FB.init({
+      appId      : '1523140791344197',
+      status     : true,
+      xfbml      : true
+    });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script><div class="fb-comments" data-href="http://www.jiaqili.me/posts/java-gc/" data-width="470"></div>
+
+
+        </section></article><div id="fb-root"></div>
+<script>
+    // thank lxml for this
+    $('.fb-comments-count').each(function(i, obj) {
+        var url = obj.attributes['data-url'].value;
+        // change here if you dislike the default way of displaying
+        // this
+        obj.innerHTML = '<fb:comments-count href="' + url + '"></fb:comments-count> comments';
+    });
+
+  window.fbAsyncInit = function() {
+    // init the FB JS SDK
+    FB.init({
+      appId      : '1523140791344197',
+      status     : true,
+      xfbml      : true
+    });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2015         <a href="mailto:jiaqi.li@outlook.com">Jiaqi Li</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../assets/js/all-nocdn.js"></script><script src="../../assets/js/colorbox-i18n/jquery.colorbox-zh-CN.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("zh-cn");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>

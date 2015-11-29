@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Virtual World (Notes)</title><link>http://www.jiaqili.me/</link><description></description><atom:link href="http://www.jiaqili.me/en/categories/notes.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Wed, 23 Jul 2014 17:40:21 GMT</lastBuildDate><generator>Nikola &lt;http://getnikola.com/&gt;</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>G53COM Computability 1314 Revision Notes</title><link>http://www.jiaqili.me/en/posts/g53com-computability-1314-revision-notes.html</link><description>&lt;div&gt;&lt;p&gt;&lt;em&gt;Contents based on G53COM lecture slides 1314 by &lt;a href="http://www.cs.nott.ac.uk/~ajp/"&gt;Dr Andrew Parkes&lt;/a&gt;&lt;/em&gt;&lt;br&gt;
+<?xml-stylesheet type="text/xsl" href="../../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Virtual World (Notes)</title><link>http://www.jiaqili.me/</link><description></description><atom:link href="http://www.jiaqili.me/en/categories/notes.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Thu, 26 Nov 2015 16:24:08 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>G53COM Computability Revision Notes</title><link>http://www.jiaqili.me/en/posts/g53com-computability-revision-notes/</link><dc:creator>Jiaqi Li</dc:creator><description>&lt;div&gt;&lt;p&gt;&lt;em&gt;Contents based on G53COM lecture slides 1314 by &lt;a href="http://www.cs.nott.ac.uk/~ajp/"&gt;Dr Andrew Parkes&lt;/a&gt;&lt;/em&gt;&lt;br&gt;
 &lt;em&gt;These are &lt;strong&gt;NOT&lt;/strong&gt; sample answers. Any definition, explanation or example listed below could be imprecise or incorrect. Please refer to your own notes and lecture slides.&lt;/em&gt;&lt;/p&gt;
 &lt;h2&gt;1. Definitions&lt;/h2&gt;
 &lt;h3&gt;Problem Classes&lt;/h3&gt;
@@ -71,19 +71,19 @@ A Language L is accepted by a Turing Machine M if and only if:  &lt;/p&gt;
 &lt;p&gt;Enumerating strings of language L means explicitly produce the elements of L and put it into a list (print it). This requires only the strings that belongs to L are printed, and all strings in L are eventually printed.&lt;/p&gt;
 &lt;h3&gt;Give and explain a method to enumerate the strings of a REC&lt;/h3&gt;
 &lt;p&gt;The method is generate and test. Generate all string s in the REC, test each s by a TM and print out those given a ‘yes’.&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;Repeat&lt;/span&gt;
-    &lt;span class="n"&gt;Generate&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;string&lt;/span&gt; &lt;span class="n"&gt;w&lt;/span&gt;
-    &lt;span class="n"&gt;Check&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;w&lt;/span&gt; &lt;span class="n"&gt;belongs&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;L&lt;/span&gt; &lt;span class="n"&gt;by&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;TM&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt; &lt;span class="n"&gt;If&lt;/span&gt; &lt;span class="n"&gt;yes&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;print&lt;/span&gt; &lt;span class="n"&gt;w&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;no&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ignore&lt;/span&gt; &lt;span class="n"&gt;w&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;pre class="code literal-block"&gt;Repeat
+    Generate a string w
+    Check if w belongs to L by a TM. If yes, print w; if no, ignore w.
+&lt;/pre&gt;
 
 
 &lt;h3&gt;Give and explain a method to enumerate the strings of a RE&lt;/h3&gt;
 &lt;p&gt;The idea is still generate and test but run each test on a separate thread. The number of thread is unbounded but always finite, any element of L will be printed out in finite time, because the ‘yes’ is guaranteed to halt.  &lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;Assume&lt;/span&gt; &lt;span class="n"&gt;TM1&lt;/span&gt; &lt;span class="n"&gt;accepts&lt;/span&gt; &lt;span class="n"&gt;language&lt;/span&gt; &lt;span class="n"&gt;L&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="n"&gt;A&lt;/span&gt; &lt;span class="n"&gt;TM2&lt;/span&gt; &lt;span class="n"&gt;generate&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;string&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;and&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="kr"&gt;thread&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;each&lt;/span&gt; &lt;span class="n"&gt;one&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;runs&lt;/span&gt; &lt;span class="n"&gt;TM1&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt; &lt;span class="n"&gt;string1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="n"&gt;Run&lt;/span&gt; &lt;span class="n"&gt;each&lt;/span&gt; &lt;span class="kr"&gt;thread&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;some&lt;/span&gt; &lt;span class="n"&gt;number&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;steps&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt; 
-        &lt;span class="n"&gt;If&lt;/span&gt; &lt;span class="n"&gt;one&lt;/span&gt; &lt;span class="kr"&gt;thread&lt;/span&gt; &lt;span class="n"&gt;halt&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;print&lt;/span&gt; &lt;span class="n"&gt;yes&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;If&lt;/span&gt; &lt;span class="n"&gt;not&lt;/span&gt; &lt;span class="n"&gt;halt&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;just&lt;/span&gt; &lt;span class="n"&gt;carry&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;pre class="code literal-block"&gt;Assume TM1 accepts language L;
+    A TM2 generate new string s, and start a new thread for each one that runs TM1 on string1;
+    Run each thread for some number of steps. 
+        If one thread halt, print yes; If not halt, just carry on.
+&lt;/pre&gt;
 
 
 &lt;h3&gt;Halting problem and its importance&lt;/h3&gt;
@@ -160,4 +160,4 @@ These could be expressed using polynomial size clauses. &lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;The NDTM is converted into a polysize SAT formula containing variables describing the states as a function of time and allowing the need of non-determinism. The SAT formula has a satisfying formula iff there is some sequence of states of the NDTM that lead to acceptance.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;(To be finished...)&lt;/em&gt;&lt;/p&gt;&lt;/div&gt;</description><category>Computability</category><category>Notes</category><guid>http://www.jiaqili.me/en/posts/g53com-computability-1314-revision-notes.html</guid><pubDate>Sun, 01 Jun 2014 20:54:42 GMT</pubDate></item></channel></rss>
+&lt;p&gt;&lt;em&gt;(To be finished...)&lt;/em&gt;&lt;/p&gt;&lt;/div&gt;</description><category>Computability</category><category>Notes</category><guid>http://www.jiaqili.me/en/posts/g53com-computability-revision-notes/</guid><pubDate>Sun, 01 Jun 2014 20:54:42 GMT</pubDate></item></channel></rss>

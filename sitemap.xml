@@ -1,59 +1,198 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
-  <loc>http://www.jiaqili.me/cn/archive.html</loc>
-  <lastmod>2014-06-01</lastmod>
+  <loc>http://www.jiaqili.me/</loc>
+  <lastmod>2015-11-26T16:39:00Z</lastmod>
  </url>
  <url>
-  <loc>http://www.jiaqili.me/cn/categories/index.html</loc>
-  <lastmod>2014-06-01</lastmod>
+  <loc>http://www.jiaqili.me/2010/</loc>
+  <lastmod>2015-11-24T17:13:00Z</lastmod>
  </url>
  <url>
-  <loc>http://www.jiaqili.me/cn/galleries/index.html</loc>
-  <lastmod>2014-06-01</lastmod>
+  <loc>http://www.jiaqili.me/2012/</loc>
+  <lastmod>2015-11-24T17:03:00Z</lastmod>
  </url>
  <url>
-  <loc>http://www.jiaqili.me/cn/galleries/rss.xml</loc>
-  <lastmod>2014-06-01</lastmod>
+  <loc>http://www.jiaqili.me/2014/</loc>
+  <lastmod>2015-11-26T15:04:00Z</lastmod>
  </url>
  <url>
-  <loc>http://www.jiaqili.me/cn/index.html</loc>
-  <lastmod>2014-06-01</lastmod>
+  <loc>http://www.jiaqili.me/2015/</loc>
+  <lastmod>2015-11-24T16:59:00Z</lastmod>
  </url>
  <url>
-  <loc>http://www.jiaqili.me/cn/rss.xml</loc>
-  <lastmod>2014-06-01</lastmod>
+  <loc>http://www.jiaqili.me/archive.html</loc>
+  <lastmod>2015-11-26T16:05:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/categories/</loc>
+  <lastmod>2015-11-26T16:05:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/categories/computability/</loc>
+  <lastmod>2015-11-26T15:17:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/categories/java-jvm/</loc>
+  <lastmod>2015-11-26T16:05:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/categories/java/</loc>
+  <lastmod>2015-11-26T15:46:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/categories/jvm/</loc>
+  <lastmod>2015-11-26T15:46:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/categories/notes/</loc>
+  <lastmod>2015-11-26T15:17:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/en/</loc>
+  <lastmod>2015-11-26T15:04:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/en/2010/</loc>
+  <lastmod>2015-11-24T17:13:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/en/2012/</loc>
+  <lastmod>2015-11-24T17:03:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/en/2014/</loc>
+  <lastmod>2015-11-26T15:04:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/en/2015/</loc>
+  <lastmod>2015-11-24T16:59:00Z</lastmod>
  </url>
  <url>
   <loc>http://www.jiaqili.me/en/archive.html</loc>
-  <lastmod>2014-06-01</lastmod>
+  <lastmod>2015-11-26T16:05:00Z</lastmod>
  </url>
  <url>
-  <loc>http://www.jiaqili.me/en/categories/index.html</loc>
-  <lastmod>2014-06-01</lastmod>
+  <loc>http://www.jiaqili.me/en/categories/</loc>
+  <lastmod>2015-11-26T16:05:00Z</lastmod>
  </url>
  <url>
-  <loc>http://www.jiaqili.me/en/galleries/index.html</loc>
-  <lastmod>2014-06-01</lastmod>
+  <loc>http://www.jiaqili.me/en/categories/computability/</loc>
+  <lastmod>2015-11-26T15:17:00Z</lastmod>
  </url>
  <url>
-  <loc>http://www.jiaqili.me/en/galleries/rss.xml</loc>
-  <lastmod>2014-06-01</lastmod>
+  <loc>http://www.jiaqili.me/en/categories/java-jvm/</loc>
+  <lastmod>2015-11-26T16:05:00Z</lastmod>
  </url>
  <url>
-  <loc>http://www.jiaqili.me/en/index.html</loc>
-  <lastmod>2014-06-01</lastmod>
+  <loc>http://www.jiaqili.me/en/categories/java/</loc>
+  <lastmod>2015-11-26T15:46:00Z</lastmod>
  </url>
  <url>
-  <loc>http://www.jiaqili.me/en/rss.xml</loc>
-  <lastmod>2014-06-01</lastmod>
+  <loc>http://www.jiaqili.me/en/categories/jvm/</loc>
+  <lastmod>2015-11-26T15:46:00Z</lastmod>
  </url>
  <url>
-  <loc>http://www.jiaqili.me/listings/index.html</loc>
-  <lastmod>2014-06-01</lastmod>
+  <loc>http://www.jiaqili.me/en/categories/notes/</loc>
+  <lastmod>2015-11-26T15:17:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/en/galleries/</loc>
+  <lastmod>2015-11-26T16:40:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/en/galleries/java-gc/</loc>
+  <lastmod>2015-11-26T16:40:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/en/posts/dynamic-memory-allocation/</loc>
+  <lastmod>2015-11-26T15:46:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="zh_cn" href="http://www.jiaqili.me/posts/dynamic-memory-allocation/" />
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/en/posts/g53com-computability-1314-revision-notes/</loc>
+  <lastmod>2015-11-26T15:17:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/en/posts/g53com-computability-revision-notes/</loc>
+  <lastmod>2015-11-26T16:05:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="zh_cn" href="http://www.jiaqili.me/posts/g53com-computability-revision-notes/" />
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/en/posts/java-gc/</loc>
+  <lastmod>2015-11-26T16:05:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="zh_cn" href="http://www.jiaqili.me/posts/java-gc/" />
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/en/posts/taught-master-in-computer-science-application/</loc>
+  <lastmod>2015-11-26T15:13:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="zh_cn" href="http://www.jiaqili.me/posts/taught-master-in-computer-science-application/" />
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/en/posts/testing-time-change/</loc>
+  <lastmod>2015-11-24T17:13:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/en/posts/this-is-my-first-post/</loc>
+  <lastmod>2015-11-24T16:59:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/en/stories/about-virtual-world/</loc>
+  <lastmod>2015-11-26T16:24:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="zh_cn" href="http://www.jiaqili.me/stories/about-virtual-world/" />
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/galleries/</loc>
+  <lastmod>2015-11-26T16:40:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/galleries/java-gc/</loc>
+  <lastmod>2015-11-26T17:13:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/listings/</loc>
+  <lastmod>2015-11-24T16:44:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/posts/dynamic-memory-allocation/</loc>
+  <lastmod>2015-11-26T15:46:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="en" href="http://www.jiaqili.me/en/posts/dynamic-memory-allocation/" />
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/posts/g53com-computability-1314-revision-notes/</loc>
+  <lastmod>2015-11-26T15:17:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/posts/g53com-computability-revision-notes/</loc>
+  <lastmod>2015-11-26T16:05:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="en" href="http://www.jiaqili.me/en/posts/g53com-computability-revision-notes/" />
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/posts/java-gc/</loc>
+  <lastmod>2015-11-26T16:05:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="en" href="http://www.jiaqili.me/en/posts/java-gc/" />
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/posts/taught-master-in-computer-science-application/</loc>
+  <lastmod>2015-11-26T15:13:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="en" href="http://www.jiaqili.me/en/posts/taught-master-in-computer-science-application/" />
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/posts/testing-time-change/</loc>
+  <lastmod>2015-11-24T17:13:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/posts/this-is-my-first-post/</loc>
+  <lastmod>2015-11-24T16:59:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/stories/about-virtual-world/</loc>
+  <lastmod>2015-11-26T16:24:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="en" href="http://www.jiaqili.me/en/stories/about-virtual-world/" />
  </url>
 </urlset>

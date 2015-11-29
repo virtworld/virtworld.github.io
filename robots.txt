@@ -1,0 +1,4 @@
+Sitemap: http://www.jiaqili.me/sitemapindex.xml
+
+User-Agent: *
+Host: www.jiaqili.me
