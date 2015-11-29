@@ -27,7 +27,7 @@
  </url>
  <url>
   <loc>http://www.jiaqili.me/archive.html</loc>
-  <lastmod>2015-11-26T16:05:00Z</lastmod>
+  <lastmod>2015-11-29T05:51:00Z</lastmod>
  </url>
  <url>
   <loc>http://www.jiaqili.me/categories/</loc>
@@ -75,7 +75,7 @@
  </url>
  <url>
   <loc>http://www.jiaqili.me/en/archive.html</loc>
-  <lastmod>2015-11-26T16:05:00Z</lastmod>
+  <lastmod>2015-11-29T05:51:00Z</lastmod>
  </url>
  <url>
   <loc>http://www.jiaqili.me/en/categories/</loc>
@@ -117,11 +117,11 @@
  <url>
   <loc>http://www.jiaqili.me/en/posts/g53com-computability-1314-revision-notes/</loc>
   <lastmod>2015-11-26T15:17:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="zh_cn" href="http://www.jiaqili.me/posts/g53com-computability-1314-revision-notes/" />
  </url>
  <url>
   <loc>http://www.jiaqili.me/en/posts/g53com-computability-revision-notes/</loc>
   <lastmod>2015-11-26T16:05:00Z</lastmod>
-  <xhtml:link rel="alternate" hreflang="zh_cn" href="http://www.jiaqili.me/posts/g53com-computability-revision-notes/" />
  </url>
  <url>
   <loc>http://www.jiaqili.me/en/posts/java-gc/</loc>
@@ -144,7 +144,11 @@
  <url>
   <loc>http://www.jiaqili.me/en/stories/about-virtual-world/</loc>
   <lastmod>2015-11-26T16:24:00Z</lastmod>
-  <xhtml:link rel="alternate" hreflang="zh_cn" href="http://www.jiaqili.me/stories/about-virtual-world/" />
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/en/stories/about/</loc>
+  <lastmod>2015-11-29T05:51:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="zh_cn" href="http://www.jiaqili.me/stories/about/" />
  </url>
  <url>
   <loc>http://www.jiaqili.me/galleries/</loc>
@@ -166,11 +170,11 @@
  <url>
   <loc>http://www.jiaqili.me/posts/g53com-computability-1314-revision-notes/</loc>
   <lastmod>2015-11-26T15:17:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="en" href="http://www.jiaqili.me/en/posts/g53com-computability-1314-revision-notes/" />
  </url>
  <url>
   <loc>http://www.jiaqili.me/posts/g53com-computability-revision-notes/</loc>
   <lastmod>2015-11-26T16:05:00Z</lastmod>
-  <xhtml:link rel="alternate" hreflang="en" href="http://www.jiaqili.me/en/posts/g53com-computability-revision-notes/" />
  </url>
  <url>
   <loc>http://www.jiaqili.me/posts/java-gc/</loc>
@@ -193,6 +197,10 @@
  <url>
   <loc>http://www.jiaqili.me/stories/about-virtual-world/</loc>
   <lastmod>2015-11-26T16:24:00Z</lastmod>
-  <xhtml:link rel="alternate" hreflang="en" href="http://www.jiaqili.me/en/stories/about-virtual-world/" />
+ </url>
+ <url>
+  <loc>http://www.jiaqili.me/stories/about/</loc>
+  <lastmod>2015-11-29T05:51:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="en" href="http://www.jiaqili.me/en/stories/about/" />
  </url>
 </urlset>

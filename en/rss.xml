@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Virtual World</title><link>http://www.jiaqili.me/</link><description>Jiaqi Li's personal blog.</description><atom:link href="http://www.jiaqili.me/en/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Thu, 26 Nov 2015 17:13:07 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Java垃圾收集技术</title><link>http://www.jiaqili.me/en/posts/java-gc/</link><dc:creator>Jiaqi Li</dc:creator><description>&lt;div&gt;&lt;p&gt;&lt;em&gt;这篇是对《深入理解Java虚拟机》的第三章的总结笔记，G1部分还没有细看&lt;/em&gt;&lt;/p&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Virtual World</title><link>http://www.jiaqili.me/</link><description>Jiaqi Li's personal blog.</description><atom:link href="http://www.jiaqili.me/en/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sun, 29 Nov 2015 05:51:53 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Java垃圾收集技术</title><link>http://www.jiaqili.me/en/posts/java-gc/</link><dc:creator>Jiaqi Li</dc:creator><description>&lt;div&gt;&lt;p&gt;&lt;em&gt;这篇是对《深入理解Java虚拟机》的第三章的总结笔记，G1部分还没有细看&lt;/em&gt;&lt;/p&gt;
 &lt;h3&gt;1 判断对象存活与否&lt;/h3&gt;
 &lt;h4&gt;1.1 引用计数器(没有GC使用)&lt;/h4&gt;
 &lt;ul&gt;
@@ -306,7 +306,7 @@
 &lt;ul&gt;
 &lt;li&gt;牛津MSc in Computer Science 12-13年申请人数是285人，13-14年录取名额是75。&lt;/li&gt;
 &lt;li&gt;帝国MSc计算机方面所有小专业，申请人数过千，录取一百多。&lt;/li&gt;
-&lt;/ul&gt;&lt;/div&gt;</description><guid>http://www.jiaqili.me/en/posts/taught-master-in-computer-science-application/</guid><pubDate>Wed, 23 Jul 2014 20:43:42 GMT</pubDate></item><item><title>G53COM Computability Revision Notes</title><link>http://www.jiaqili.me/en/posts/g53com-computability-revision-notes/</link><dc:creator>Jiaqi Li</dc:creator><description>&lt;div&gt;&lt;p&gt;&lt;em&gt;Contents based on G53COM lecture slides 1314 by &lt;a href="http://www.cs.nott.ac.uk/~ajp/"&gt;Dr Andrew Parkes&lt;/a&gt;&lt;/em&gt;&lt;br&gt;
+&lt;/ul&gt;&lt;/div&gt;</description><guid>http://www.jiaqili.me/en/posts/taught-master-in-computer-science-application/</guid><pubDate>Wed, 23 Jul 2014 20:43:42 GMT</pubDate></item><item><title>G53COM Computability Revision Notes</title><link>http://www.jiaqili.me/en/posts/g53com-computability-1314-revision-notes/</link><dc:creator>Jiaqi Li</dc:creator><description>&lt;div&gt;&lt;p&gt;&lt;em&gt;Contents based on G53COM lecture slides 1314 by &lt;a href="http://www.cs.nott.ac.uk/~ajp/"&gt;Dr Andrew Parkes&lt;/a&gt;&lt;/em&gt;&lt;br&gt;
 &lt;em&gt;These are &lt;strong&gt;NOT&lt;/strong&gt; sample answers. Any definition, explanation or example listed below could be imprecise or incorrect. Please refer to your own notes and lecture slides.&lt;/em&gt;&lt;/p&gt;
 &lt;h2&gt;1. Definitions&lt;/h2&gt;
 &lt;h3&gt;Problem Classes&lt;/h3&gt;
@@ -467,4 +467,4 @@ These could be expressed using polynomial size clauses. &lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;The NDTM is converted into a polysize SAT formula containing variables describing the states as a function of time and allowing the need of non-determinism. The SAT formula has a satisfying formula iff there is some sequence of states of the NDTM that lead to acceptance.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;(To be finished...)&lt;/em&gt;&lt;/p&gt;&lt;/div&gt;</description><category>Computability</category><category>Notes</category><guid>http://www.jiaqili.me/en/posts/g53com-computability-revision-notes/</guid><pubDate>Sun, 01 Jun 2014 20:54:42 GMT</pubDate></item></channel></rss>
+&lt;p&gt;&lt;em&gt;(To be finished...)&lt;/em&gt;&lt;/p&gt;&lt;/div&gt;</description><category>Computability</category><category>Notes</category><guid>http://www.jiaqili.me/en/posts/g53com-computability-1314-revision-notes/</guid><pubDate>Sun, 01 Jun 2014 20:54:42 GMT</pubDate></item></channel></rss>
