@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# fb: http://ogp.me/ns/fb# " lang="zh_cn">
+<head>
+<meta charset="utf-8">
+<base href="http://www.jiaqili.me/posts/java-class-file/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Java Class 文件 | Virtual World</title>
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<meta content="#5670d4" name="theme-color">
+<link rel="alternate" type="application/rss+xml" title="RSS (en)" href="../../en/rss.xml">
+<link rel="alternate" type="application/rss+xml" title="RSS (zh_cn)" href="../../rss.xml">
+<link rel="canonical" href="http://www.jiaqili.me/posts/java-class-file/">
+<meta property="fb:app_id" content="1523140791344197">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Jiaqi Li">
+<link rel="prev" href="../java-class-loading/" title="Java类加载机制" type="text/html">
+<meta property="og:site_name" content="Virtual World">
+<meta property="og:title" content="Java Class 文件">
+<meta property="og:url" content="http://www.jiaqili.me/posts/java-class-file/">
+<meta property="og:description" content="1 Class概述
+
+Class文件是一个以8位字节为基础单位的二进制流，多字节储存按照Big-endian的方式（既高位字节在地址低位，低位字节在地址高位）；
+每个Class对应一个类或接口，而类或者接口不一定以文件的形式存在磁盘上；
+Class文件储存的数据只有两种类型：无符号数和表
+无符号数：u1, u2, u4和 u8分别表示1个，2个，4个和8个字节;
+表(Table)：由多个无符号数或">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-12-28T10:57:42Z">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="JVM">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://www.jiaqili.me/">
+
+                <span id="blog-title">Virtual World</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../archive.html">存档</a>
+                </li>
+<li>
+<a href="../../categories/">标签</a>
+                </li>
+<li>
+<a href="../../rss.xml">RSS feed</a>
+                </li>
+<li>
+<a href="https://github.com/virtworld">GitHub</a>
+                </li>
+<li>
+<a href="../../stories/about/">关于</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+            </li>
+<li><a href="http://www.jiaqili.me/en/" rel="alternate" hreflang="en">English</a></li>
+
+                
+                    
+    <li>
+    <a href="index.md" id="sourcelink">源代码</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Java Class 文件</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                    Jiaqi Li
+            </span></p>
+            <p class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2015-12-28T10:57:42Z" itemprop="datePublished" title="2015-12-28 10:57">2015-12-28 10:57</time></a></p>
+                <p class="commentline">
+        
+<span class="fb-comments-count" data-url="/posts/java-class-file/">
+
+
+            
+        <p class="sourceline"><a href="index.md" id="sourcelink">源代码</a></p>
+
+        </span></p>
+</div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<h3>1 Class概述</h3>
+<ol>
+<li>Class文件是一个以8位字节为基础单位的二进制流，多字节储存按照Big-endian的方式（既高位字节在地址低位，低位字节在地址高位）；</li>
+<li>每个Class对应一个类或接口，而类或者接口不一定以文件的形式存在磁盘上；</li>
+<li>Class文件储存的数据只有两种类型：无符号数和表<ol>
+<li>无符号数：u1, u2, u4和 u8分别表示1个，2个，4个和8个字节;</li>
+<li>表(Table)：由多个无符号数或表组成的复合数据类型。</li>
+</ol>
+</li>
+</ol>
+<h3>2 内部名称表示</h3>
+<ol>
+<li>
+<strong>全限定名</strong>(Fully Qualified Name)是JVM中的绝对名称，比如java.lang.Object；<strong>非全限定名</strong>(Unqualified Name)是当前环境，比如类，中的相对名称，比如Object；</li>
+<li>类或接口的名称都用<strong>全限定名称</strong>来表示；</li>
+<li>全限定名称用CONSTANT_Utf8_info表（见下文）的结构来表示；</li>
+<li>类在Class文中中的表示：比如java.lang.Object被表示为“java/lang/Object;”其中“;”为了表示名称结束；</li>
+<li>方法名，字段名，局部变量名都使用<strong>非全限定名称</strong>来储存，比如inc；</li>
+<li>方法名，字段名，局部变量名不能包含"."、";"、"["、"/"和Unicode，另外方法除了类初始化方法<clinit>和实例初始化方法<init>以外不能使用"&lt;"、"&gt;"；</init></clinit>
+</li>
+</ol>
+<h3>3 描述符(Descriptor)和签名(Signature)</h3>
+<ol>
+<li>描述符描述字段的数据类型，方法的参数列表（数量，类型和顺序）以及返回值；</li>
+<li>签名描述字段、方法和类型定义中泛型信息的字符串；</li>
+<li>
+<p>描述符字符含义:</p>
+<p></p>
+<table>
+<tr>
+<td>B</td>
+    <td>byte</td>
+    <td>C</td>
+    <td>char</td>
+  </tr>
+<tr>
+<td>D</td>
+    <td>double</td>
+    <td>F</td>
+    <td>float</td>
+  </tr>
+<tr>
+<td>I</td>
+    <td>int</td>
+    <td>J</td>
+    <td>long</td>
+  </tr>
+<tr>
+<td>S</td>
+    <td>short</td>
+    <td>Z</td>
+    <td>boolean</td>
+  </tr>
+<tr>
+<td>L classname   </td>
+    <td>reference 一个名为&lt;Classname&gt;的实例   </td>
+    <td>[   </td>
+    <td>reference 一个一维数组</td>
+  </tr>
+</table>
+</li>
+<li>
+<p>字段描述符，比如int的实例描述符是"I"；java.lang.Object的实例描述符是"Ljava/lang/Object;"；double的三维数组的描述符为"[[[D"；</p>
+</li>
+<li>方法描述符，先参数后返回值，参数按顺序在圆括号内，比如Object mymethod(char[][] c, int i, double d, Thread t)的描述符为“([[CIDLjava/lang/Thread;)Ljava/lang/Object;”</li>
+<li>签名属于Java语言规范，不属于虚拟机的部分，包括泛型类型，方法描述，参数化类型描述，用于实现反射和跟踪调试（见JVS7-4.3.4）</li>
+</ol>
+<h3>4 Class文件结构</h3>
+<table>
+<tr>
+<th>类型</th>
+    <th>名称</th>
+    <th>数量</th>
+  </tr>
+<tr>
+<td>u4</td>
+    <td>magic</td>
+    <td>1</td>
+  </tr>
+<tr>
+<td>u2</td>
+    <td>minor_version</td>
+    <td>1</td>
+  </tr>
+<tr>
+<td>u2</td>
+    <td>major_version</td>
+    <td>1</td>
+  </tr>
+<tr>
+<td>u2</td>
+    <td>constant_pool_count</td>
+    <td>1</td>
+  </tr>
+<tr>
+<td>cp_info</td>
+    <td>constant_pool</td>
+    <td>constant_pool_count - 1</td>
+  </tr>
+<tr>
+<td>u2</td>
+    <td>access_flag</td>
+    <td>1</td>
+  </tr>
+<tr>
+<td>u2</td>
+    <td>this_class</td>
+    <td>1</td>
+  </tr>
+<tr>
+<td>u2</td>
+    <td>super_class</td>
+    <td>1</td>
+  </tr>
+<tr>
+<td>u2</td>
+    <td>interfaces_count</td>
+    <td>1</td>
+  </tr>
+<tr>
+<td>u2</td>
+    <td>interfaces</td>
+    <td>interfaces_count</td>
+  </tr>
+<tr>
+<td>u2</td>
+    <td>fields_count</td>
+    <td>1</td>
+  </tr>
+<tr>
+<td>field_info</td>
+    <td>fields</td>
+    <td>fields_count</td>
+  </tr>
+<tr>
+<td>u2</td>
+    <td>methods_count</td>
+    <td>1</td>
+  </tr>
+<tr>
+<td>method_info</td>
+    <td>methods</td>
+    <td>methods_count</td>
+  </tr>
+<tr>
+<td>u2</td>
+    <td>attributes_count</td>
+    <td>1</td>
+  </tr>
+<tr>
+<td>attribute_info</td>
+    <td>attributes</td>
+    <td>attributes_count</td>
+  </tr>
+</table>
+<ol>
+<li>magic 魔数
+    决定这个文件是不是Class文件，永远是0xCAFEBABE</li>
+<li>minor_version &amp; major_version 次版本号和主版本号</li>
+<li>constant_pool_count 常量池计数器
+    从1开始，比如计数器为20，则常量池有效索引为1 - 19</li>
+<li>
+<p>constant_pool 常量池</p>
+<ol>
+<li>是一个长度为 constant_pool_count - 1的表的数组，每一项都是一个表；</li>
+<li>所有的表的第一个字节为tag，表明它是何种类型的表；</li>
+<li>
+<p>共有14种不同的表，用来保存字面量和符号引用（类/接口的全限定名，字段/方法的名称和描述符）</p>
+<p></p>
+<table>
+<tr>
+<th>常量表</th>
+    <th>项目名称</th>
+    <th>类型       </th>
+    <th>内容</th>
+  </tr>
+<tr>
+<td>CONSTANT_Utf8_info</td>
+    <td>tag</td>
+    <td>u1</td>
+    <td>1</td>
+  </tr>
+<tr>
+<td></td>
+    <td>length</td>
+    <td>u2</td>
+    <td>第三项占用的字节数</td>
+  </tr>
+<tr>
+<td></td>
+    <td>bytes</td>
+    <td>u1</td>
+    <td>长度为length的UTF8编码的字符串</td>
+  </tr>
+<tr>
+<td>CONSTANT_Integer_info</td>
+    <td>tag</td>
+    <td>u1</td>
+    <td>3</td>
+  </tr>
+<tr>
+<td></td>
+    <td>bytes</td>
+    <td>u4</td>
+    <td>高位在前储存的int值</td>
+  </tr>
+<tr>
+<td>CONSTANT_Float_info</td>
+    <td>tag</td>
+    <td>u1</td>
+    <td>4</td>
+  </tr>
+<tr>
+<td></td>
+    <td>bytes</td>
+    <td>u4</td>
+    <td>高位在前储存的float值</td>
+  </tr>
+<tr>
+<td>CONSTANT_Long_info</td>
+    <td>tag</td>
+    <td>u1</td>
+    <td>5</td>
+  </tr>
+<tr>
+<td></td>
+    <td>bytes</td>
+    <td>u8</td>
+    <td>高位在前储存的long值</td>
+  </tr>
+<tr>
+<td>CONSTANT_Double_info</td>
+    <td>tag</td>
+    <td>u1</td>
+    <td>6</td>
+  </tr>
+<tr>
+<td></td>
+    <td>bytes</td>
+    <td>u8</td>
+    <td>高位在前储存的double值</td>
+  </tr>
+<tr>
+<td>CONSTANT_Class_info</td>
+    <td>tag</td>
+    <td>u1</td>
+    <td>7</td>
+  </tr>
+<tr>
+<td></td>
+    <td>index</td>
+    <td>u2</td>
+    <td>对常量池的一个有效索引，常量池在该索引的</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>位置必须是一个CONSTANT_Utf8_info的表，表</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>示一个类或接口的全限定名。</td>
+  </tr>
+<tr>
+<td>CONSTANT_String_info</td>
+    <td>tag</td>
+    <td>u1</td>
+    <td>8</td>
+  </tr>
+<tr>
+<td></td>
+    <td>index</td>
+    <td>u2</td>
+    <td>对常量池的一个有效索引，常量池在该索引的</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>位置必须是一个CONSTANT_Utf8_info的表。</td>
+  </tr>
+<tr>
+<td>CONSTANT_Fieldref_info</td>
+    <td>tag</td>
+    <td>u1</td>
+    <td>9</td>
+  </tr>
+<tr>
+<td></td>
+    <td>class_index</td>
+    <td>u2</td>
+    <td>常量池的一个有效索引，常量池在该索引的</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>位置必须是一个CONSTANT_Class_info的表。</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>当前字段是该类或接口的成员。</td>
+  </tr>
+<tr>
+<td></td>
+    <td>name_and_type_index</td>
+    <td>u2</td>
+    <td>常量池的一个有效索引，常量池在该索引的</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>位置必须是一个CONSTANT_NameAndType_info</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>的表。表示当前字段的名字和描述符。</td>
+  </tr>
+<tr>
+<td>CONSTANT_Methodref_info</td>
+    <td>tag</td>
+    <td>u1</td>
+    <td>10</td>
+  </tr>
+<tr>
+<td></td>
+    <td>class_index</td>
+    <td>u2</td>
+    <td>常量池的一个有效索引，常量池在该索引的</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>位置必须是一个CONSTANT_Class_info的表。</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>该项的类型必须是类。当前字段是该类的成员。</td>
+  </tr>
+<tr>
+<td></td>
+    <td>name_and_type_index</td>
+    <td>u2</td>
+    <td>常量池的一个有效索引，常量池在该索引的</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>位置必须是一个CONSTANT_NameAndType_info</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>的表。表示当前方法的名字和描述符。</td>
+  </tr>
+<tr>
+<td>CONSTANT_InterfaceMethodref_info    </td>
+    <td>tag</td>
+    <td>u1</td>
+    <td>11</td>
+  </tr>
+<tr>
+<td></td>
+    <td>class_index</td>
+    <td>u2</td>
+    <td>常量池的一个有效索引，常量池在该索引的</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>位置必须是一个CONSTANT_Class_info的表。</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>该项的类型必须是接口。当前字段是</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>该接口的成员。</td>
+  </tr>
+<tr>
+<td></td>
+    <td>name_and_type_index</td>
+    <td>u2</td>
+    <td>常量池的一个有效索引，常量池在该索引的</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>位置必须是一个CONSTANT_NameAndType_info</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>的表。表示当前方法的名字和描述符。</td>
+  </tr>
+<tr>
+<td>CONSTANT_NameAndType_info</td>
+    <td>tag</td>
+    <td>u1</td>
+    <td>12</td>
+  </tr>
+<tr>
+<td></td>
+    <td>index</td>
+    <td>u2</td>
+    <td>常量池的一个有效索引，常量池在该索引的</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>位置必须是一个CONSTANT_Utf8_info的表。</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>表示一个字段或方法的非限定名，或表示</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>特殊的方法名&lt;init&gt;</td>
+  </tr>
+<tr>
+<td></td>
+    <td>index</td>
+    <td>u2</td>
+    <td>常量池的一个有效索引，常量池在该索引的</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>位置必须是一个CONSTANT_Utf8_info的表。表示</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>一个字段或一个方法的描述符。</td>
+  </tr>
+<tr>
+<td>CONSTANT_MethodHandle_info</td>
+    <td>tag</td>
+    <td>u1</td>
+    <td>15</td>
+  </tr>
+<tr>
+<td></td>
+    <td>reference_kind</td>
+    <td>u1</td>
+    <td>1-9,决定方法句柄类型</td>
+  </tr>
+<tr>
+<td></td>
+    <td>reference_index</td>
+    <td>u2</td>
+    <td>常量池的一个有效索引</td>
+  </tr>
+<tr>
+<td>CONSTANT_MethodType_info</td>
+    <td>tag</td>
+    <td>u1</td>
+    <td>16</td>
+  </tr>
+<tr>
+<td></td>
+    <td>descriptor_index</td>
+    <td>u2</td>
+    <td>常量池的一个有效索引，常量池在该索引的</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>位置必须是一个CONSTANT_Utf8_info的表。表示</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>方法的描述符。</td>
+  </tr>
+<tr>
+<td>CONSTANT_InvokeDynamic</td>
+    <td>tag</td>
+    <td>u1</td>
+    <td>18</td>
+  </tr>
+<tr>
+<td></td>
+    <td>bootstrap_method_attr_   </td>
+    <td>u2</td>
+    <td>对当前Class文件中引导方法表的</td>
+  </tr>
+<tr>
+<td></td>
+    <td>index</td>
+    <td></td>
+    <td>bootstrap_methods[]数组的有效索引。</td>
+  </tr>
+<tr>
+<td></td>
+    <td>name_and_type_index</td>
+    <td>u2</td>
+    <td>常量池的一个有效索引，常量池在该索引的</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>位置必须是一个CONSTANT_NameAndType_info</td>
+  </tr>
+<tr>
+<td></td>
+    <td></td>
+    <td></td>
+    <td>的表。表示当前方法的名字和描述符。</td>
+  </tr>
+</table>
+</li>
+<li>
+<p>access_flags 访问标志
+    是一种掩码标志，共有16个标志位可用，当前定义了8个。</p>
+<p></p>
+<table>
+<tr>
+<td>ACC_PUBLIC</td>
+    <td>0x0001</td>
+    <td>是否为public</td>
+  </tr>
+<tr>
+<td>ACC_FINAL</td>
+    <td>0x0010</td>
+    <td>是否为final，只能是类</td>
+  </tr>
+<tr>
+<td>ACC_SUPER</td>
+    <td>0x0020</td>
+    <td>都为真</td>
+  </tr>
+<tr>
+<td>ACC_INTERFACE</td>
+    <td>0x0200</td>
+    <td>表示这是一个接口</td>
+  </tr>
+<tr>
+<td>ACC_ABSTRACT</td>
+    <td>0x0400</td>
+    <td>表示是否是abstract，对于抽象类和接口来说为真</td>
+  </tr>
+<tr>
+<td>ACC_SYNTHETIC</td>
+    <td>0x1000</td>
+    <td>表示这个类由非用户代码产生</td>
+  </tr>
+<tr>
+<td>ACC_ANNOTATION    </td>
+    <td>0X2000  </td>
+    <td>表示这是一个注解</td>
+  </tr>
+<tr>
+<td>ACC_ENUM</td>
+    <td>0x4000</td>
+    <td>表示这是一个枚举</td>
+  </tr>
+</table>
+</li>
+<li>
+<p>this_class 类索引
+    常量池里的一个有效索引，指向一个CONSTANT_Class_info的表，通过该表，确定类的全限定名。</p>
+</li>
+<li>super_class 父类索引
+    为0（父类为Object）或为一个指向CONSTANT_Class_info的表的有效索引。</li>
+<li>interfaces_count 接口计数器
+    当前类或接口的直接父类计数</li>
+<li>interfaces 接口索引集合<ol>
+<li>每个成员都是一个指向CONSTANT_Class_info的表的有效索引</li>
+<li>按照源代码implements旁边从左到右的顺序</li>
+</ol>
+</li>
+<li>fields_count 字段表计数器</li>
+<li>fields 字段表集合<ol>
+<li>用于描述接口或类中定义的变量，包括类级变量和实例级变量，但不包括方法内部的变量，也不包括继承来的。</li>
+<li>有可能包括代码中没有的字段，比如内部类为了访问外部类，添加指向外部类实例的字段。</li>
+<li>结构：<ol>
+<li>u2 access_flags; </li>
+<li>u2 name_index; </li>
+<li>u2 descriptor_index; </li>
+<li>u2 attributes_count; </li>
+<li>attribute_info attributes[attributes_count];</li>
+</ol>
+</li>
+<li>第一个访问标志，类似于类的访问标志，表示他是public,private,protected,static或者final之类</li>
+<li>第二个是指向常量池的一个CONSTANT_Utf8_info，表示字段的非全限定名</li>
+<li>第三个是指向常量池的一个CONSTANT_Utf8_info，表示字段的描述符</li>
+<li>第四个是属性表计数器</li>
+<li>第五个是属性表集合，用于描述0至多个字段的额外信息</li>
+</ol>
+</li>
+<li>methods_count 方法表计数器</li>
+<li>methods 方法表集合
+    结构与字段表类似，属性表code中保存代码</li>
+<li>attributes_count 属性表计数器</li>
+<li>attributes 属性表集合<ol>
+<li>通用格式如下<ol>
+<li>u2 attribute_name_index; </li>
+<li>u4 attribute_length; </li>
+<li>u1 info[attribute_length];</li>
+</ol>
+</li>
+<li>共有21种，没有顺序要求，比如方法体中的字节码储存在code属性内。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/java/" rel="tag">Java</a></li>
+            <li><a class="tag p-category" href="../../categories/jvm/" rel="tag">JVM</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../java-class-loading/" rel="prev" title="Java类加载机制">前一篇</a>
+            </li>
+        </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
+        
+        
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    // init the FB JS SDK
+    FB.init({
+      appId      : '1523140791344197',
+      status     : true,
+      xfbml      : true
+    });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script><div class="fb-comments" data-href="http://www.jiaqili.me/posts/java-class-file/" data-width="470"></div>
+
+
+        </section></article><div id="fb-root"></div>
+<script>
+    // thank lxml for this
+    $('.fb-comments-count').each(function(i, obj) {
+        var url = obj.attributes['data-url'].value;
+        // change here if you dislike the default way of displaying
+        // this
+        obj.innerHTML = '<fb:comments-count href="' + url + '"></fb:comments-count> comments';
+    });
+
+  window.fbAsyncInit = function() {
+    // init the FB JS SDK
+    FB.init({
+      appId      : '1523140791344197',
+      status     : true,
+      xfbml      : true
+    });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2015         <a href="mailto:jiaqi.li@outlook.com">Jiaqi Li</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../assets/js/all-nocdn.js"></script><script src="../../assets/js/colorbox-i18n/jquery.colorbox-zh-CN.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("zh-cn");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>
