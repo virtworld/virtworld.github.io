@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# fb: http://ogp.me/ns/fb# " lang="en">
+<head>
+<meta charset="utf-8">
+<base href="http://www.jiaqili.me/en/posts/java-class-loading/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Java类加载机制 | Virtual World</title>
+<link href="../../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<meta content="#5670d4" name="theme-color">
+<link rel="alternate" type="application/rss+xml" title="RSS (en)" href="../../rss.xml">
+<link rel="alternate" type="application/rss+xml" title="RSS (zh_cn)" href="../../../rss.xml">
+<link rel="canonical" href="http://www.jiaqili.me/en/posts/java-class-loading/">
+<meta property="fb:app_id" content="1523140791344197">
+<!--[if lt IE 9]><script src="../../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Jiaqi Li">
+<link rel="prev" href="../java-concurrency-2/" title="《Java并发实践》总结二：结构化并发应用程序" type="text/html">
+<meta property="og:site_name" content="Virtual World">
+<meta property="og:title" content="Java类加载机制">
+<meta property="og:url" content="http://www.jiaqili.me/en/posts/java-class-loading/">
+<meta property="og:description" content="本文是对《深入理解JVM》第七章的总结
+虚拟机把描述类的数据从Class文件加载到内存，对数据进行校验，转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型，就是虚拟机的类加载机制。
+1 触发类加载的条件：
+
+碰到new， invokestatic， getstatic， putstatic四条指令时，如果类没有经过初始化，则要初始化类。通常在用new关键字实例化对象，设置静态变量（被fi">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-12-28T10:09:30Z">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="JVM">
+<link rel="alternate" hreflang="zh_cn" href="../../../posts/java-class-loading/">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://www.jiaqili.me/en/">
+
+                <span id="blog-title">Virtual World</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../archive.html">Archive</a>
+                </li>
+<li>
+<a href="../../categories/">Tags</a>
+                </li>
+<li>
+<a href="../../rss.xml">RSS feed</a>
+                </li>
+<li>
+<a href="https://github.com/virtworld">GitHub</a>
+                </li>
+<li>
+<a href="../../../stories/about/">About</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+            </li>
+<li><a href="http://www.jiaqili.me/" rel="alternate" hreflang="zh_cn">简体中文</a></li>
+
+                
+                    
+    <li>
+    <a href="index.md" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Java类加载机制</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                    Jiaqi Li
+            </span></p>
+            <p class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2015-12-28T10:09:30Z" itemprop="datePublished" title="2015-12-28 10:09">2015-12-28 10:09</time></a></p>
+                <p class="commentline">
+        
+<span class="fb-comments-count" data-url="/en/posts/java-class-loading/">
+
+
+            
+        <p class="sourceline"><a href="index.md" id="sourcelink">Source</a></p>
+
+        </span></p>
+</div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p><em>本文是对《深入理解JVM》第七章的总结</em></p>
+<p>虚拟机把描述类的数据从Class文件加载到内存，对数据进行校验，转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型，就是虚拟机的类加载机制。</p>
+<h3>1 触发类加载的条件：</h3>
+<ol>
+<li>碰到new， invokestatic， getstatic， putstatic四条指令时，如果类没有经过初始化，则要初始化类。通常在用new关键字实例化对象，设置静态变量（被final修饰的除外），调用静态方法时发生。</li>
+<li>进行反射调用，如果类没有经过初始化，则要触发初始化。反射：可以把类、类的方法、类的字段当做对象，在运行时动态操作他们。</li>
+<li>当初始化类时，其父类没有经过初始化，需要初始化其父类。</li>
+<li>main所在方法的主类，在虚拟机启动时要被初始化。</li>
+</ol>
+<h3>2 类加载分为五个阶段（其中2-4称为连接）</h3>
+<ol>
+<li>加载：通过类的全限定名来获取此类的二进制字节流，将此字节流转换为方法区运行时数据结构，在内存中创建一个这个类的java.lang.Class对象（对于HotSpot而言，Class对象不在堆中，而在方法区中），作为方法区这个类的访问入口。</li>
+<li>验证：确保Class文件符合虚拟机的要求，不会危害虚拟机自身安全。<ol>
+<li>文件格式验证: 验证字节流是否符合Class文件规范，比如魔数，版本号，常量池tag，各种索引是否有效等，通过后字节码进入内存的方法区储存。</li>
+<li>元数据验证：语义分析，来验证是否符合Java语言规范，比如继承是否合法，是否实现了所有抽象方法等。</li>
+<li>方法体的字节码验证：保证方法运行时不会危害虚拟机，比如类型转换是否合法，跳转指令不会跳到方法体以外的字节码指令上。</li>
+<li>符号引用验证：对类自身以外的信息进行匹配性校验，比如符号引用中的全限定名是否能找到对应的类，符号引用中的类、字段、方法的访问性是否可以被当前类访问等。这个验证发生在将符号引用转化成直接引用时。</li>
+</ol>
+</li>
+<li>准备：将类变量分配内存，并赋初始值。这里指的是被static修饰的类的变量，而非实例变量；初始值则一般被设为该类型的默认值，比如<ol>
+<li>public static int value = 123; value将会被设置为0而不是123，因为设置123是在类构造器<clinit>方法中进行的，该方法在初始化阶段才会进行；</clinit>
+</li>
+<li>public static final int value = 123; value将会被设置成123而不是0，因为final会在类字段的字段属性表中设置ConstantValue属性，准备阶段就会被初始化成ConstantValue属性所指定的值。</li>
+</ol>
+</li>
+<li>解析：将常量池中的符号引用替换为直接引用。符号引用即为Class文件结构中提到的CONSTANT_Class_info、CONSTANT_Fieldref_info之类的，可以是任何字面量，只要无歧义地定位到目标即可。各个虚拟机能接受的符号引用必须一致，因为它们定义在Java虚拟机规范的Class文件格式中。直接引用可以是指针，相对偏移量或者能定位到目标的句柄。</li>
+<li>初始化：执行类的构造器<clinit>():<ol>
+<li>由编译器所收集的所有类变量的赋值语句和静态语句块（static{}）组成类构造器，反过来说，如果一个类或接口没有静态语句块，并且也没有对变量的赋值操作，编译器可以不产生<clinit>。</clinit>
+</li>
+<li>顺序是由语句在代码中的顺序决定的。静态语句块中只能使用定义在它之前的变量，之后的变量只能赋值，不能使用；</li>
+<li>类构造器<clinit>不同于实例构造器<init>, 它不需要调用父类的类构造器，因为虚拟机保证在执行当前类的构造器之前，它的父类的类构造器已经执行完毕。因此父类的静态语句块执行要先于子类的变量赋值操作。</init></clinit>
+</li>
+<li>虚拟机保证一个类的构造器方法在多线程环境下被正确的加锁，同步，如果一个多个线程同时初始化一个类，那么只有一个线程去执行这个类的构造器，其他线程阻塞，知道活动线程执行完毕。</li>
+</ol></clinit>
+</li>
+</ol>
+<h3>3 类加载器</h3>
+<ol>
+<li>类加载器实现"通过类的全限定名获取描述此类的二进制字节流"的步骤。</li>
+<li>类和加载它的类加载器共同确定一个类在虚拟机中的唯一性，也就是说只有在两个类时由同一个类加载器加载的前提下才能比较它们是否相等，否则即使两个类来自同一个Class文件，加载到同一个虚拟机，但是加载器不同，这两个类就一定不相等。</li>
+<li>
+<p>双亲委派模型(Parents Delegation Model)</p>
+<ol>
+<li>启动类加载器(Bootstrap ClassLoader), 虚拟机的一部分，其他类加载器都独立于虚拟机外部，并且继承自java.lang.ClassLoader。这个加载器负责<java_home>\lib目录中或者被-Xbootclasspath参数指定的路径中的被虚拟机识别的(比如rt.jar)类库加载到内存中。</java_home>
+</li>
+<li>扩展类加载器(Extension ClassLoader), 负责加载<java_home>\lib\ext目录下或者java.ext.dirs系统变量制定的路径中的所有类库，开发者可以直接使用此加载器。</java_home>
+</li>
+<li>应用程序类加载器(Application ClassLoader)，是ClassLoader的getSystemClassLoader()的返回值，也称为为系统类加载器，负责加载用户类路径ClassPath上所指定的类库，开发者可以直接使用此加载器。如果应用程序没有定义过类加载器，这是程序中默认的类加载器。</li>
+<li>双亲委派模型要求除了顶层的启动类加载器以外，其他类加载器都有自己的父类加载器，这里不是继承关系，而是使用组合(Composition)关系来复用父类加载器。</li>
+</ol>
+<p>工作原理是：如果一个类加载器收到类加载请求，它会委派给它的父类，如此最终都被传送到顶层的启动类加载器中，只有当父类加载器无法完成这个加载的时候，子加载器才会尝试自己去加载。这能保证Java程序运行的稳定性，比如Object类在程序中都是由同一个加载器加载，所以他们都是同一个类。</p>
+</li>
+</ol>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/java/" rel="tag">Java</a></li>
+            <li><a class="tag p-category" href="../../categories/jvm/" rel="tag">JVM</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../java-concurrency-2/" rel="prev" title="《Java并发实践》总结二：结构化并发应用程序">Previous post</a>
+            </li>
+        </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
+        
+        
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    // init the FB JS SDK
+    FB.init({
+      appId      : '1523140791344197',
+      status     : true,
+      xfbml      : true
+    });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script><div class="fb-comments" data-href="http://www.jiaqili.me/en/posts/java-class-loading/" data-width="470"></div>
+
+
+        </section></article><div id="fb-root"></div>
+<script>
+    // thank lxml for this
+    $('.fb-comments-count').each(function(i, obj) {
+        var url = obj.attributes['data-url'].value;
+        // change here if you dislike the default way of displaying
+        // this
+        obj.innerHTML = '<fb:comments-count href="' + url + '"></fb:comments-count> comments';
+    });
+
+  window.fbAsyncInit = function() {
+    // init the FB JS SDK
+    FB.init({
+      appId      : '1523140791344197',
+      status     : true,
+      xfbml      : true
+    });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2015         <a href="mailto:jiaqi.li@outlook.com">Jiaqi Li</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>
