@@ -10,12 +10,16 @@
   <lastmod>2015-11-29T04:42:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>http://www.jiaqili.me/categories/concurrency.xml</loc>
+  <lastmod>2015-12-28T08:24:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>http://www.jiaqili.me/categories/java-jvm.xml</loc>
   <lastmod>2015-11-26T16:05:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://www.jiaqili.me/categories/java.xml</loc>
-  <lastmod>2015-11-26T17:13:00Z</lastmod>
+  <lastmod>2015-12-28T08:24:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://www.jiaqili.me/categories/jvm.xml</loc>
@@ -30,12 +34,16 @@
   <lastmod>2015-11-29T04:42:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>http://www.jiaqili.me/en/categories/concurrency.xml</loc>
+  <lastmod>2015-12-28T08:24:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>http://www.jiaqili.me/en/categories/java-jvm.xml</loc>
   <lastmod>2015-11-26T16:05:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://www.jiaqili.me/en/categories/java.xml</loc>
-  <lastmod>2015-11-26T17:13:00Z</lastmod>
+  <lastmod>2015-12-28T08:24:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://www.jiaqili.me/en/categories/jvm.xml</loc>
@@ -55,7 +63,7 @@
  </sitemap>
  <sitemap>
   <loc>http://www.jiaqili.me/en/rss.xml</loc>
-  <lastmod>2015-11-29T05:51:00Z</lastmod>
+  <lastmod>2015-12-28T08:24:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://www.jiaqili.me/galleries/java-gc/rss.xml</loc>
@@ -67,10 +75,10 @@
  </sitemap>
  <sitemap>
   <loc>http://www.jiaqili.me/rss.xml</loc>
-  <lastmod>2015-11-29T05:51:00Z</lastmod>
+  <lastmod>2015-12-28T08:24:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://www.jiaqili.me/sitemap.xml</loc>
-  <lastmod>2015-11-29T05:51:00Z</lastmod>
+  <lastmod>2015-12-28T08:24:00Z</lastmod>
  </sitemap>
 </sitemapindex>

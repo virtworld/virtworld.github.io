@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# fb: http://ogp.me/ns/fb# " lang="zh_cn">
+<head>
+<meta charset="utf-8">
+<base href="http://www.jiaqili.me/posts/java-concurrency-2/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>《Java并发实践》总结二：结构化并发应用程序 | Virtual World</title>
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<meta content="#5670d4" name="theme-color">
+<link rel="alternate" type="application/rss+xml" title="RSS (en)" href="../../en/rss.xml">
+<link rel="alternate" type="application/rss+xml" title="RSS (zh_cn)" href="../../rss.xml">
+<link rel="canonical" href="http://www.jiaqili.me/posts/java-concurrency-2/">
+<meta property="fb:app_id" content="1523140791344197">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Jiaqi Li">
+<link rel="prev" href="../java-concurrency-1/" title="《Java并发实践》总结一：线程安全基础知识" type="text/html">
+<meta property="og:site_name" content="Virtual World">
+<meta property="og:title" content="《Java并发实践》总结二：结构化并发应用程序">
+<meta property="og:url" content="http://www.jiaqili.me/posts/java-concurrency-2/">
+<meta property="og:description" content="1 Executor框架
+任务是一个逻辑执行单元，而线程是使任务异步执行的机制。串行执行会降低响应性和吞吐量；每个任务都分配一个线程会造成很大开销也不利于资源管理。
+该框架包括一个灵活的线程池，提供了不同类型的任务的执行策略，并将任务提交过程和执行过程解耦，用Runnable来表示一个任务。此外Executor框架还提供了对生命周期的支持，以及统计信息的收集、应用程序管理机制和性能监视等机制。
+执">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-12-28T08:10:20Z">
+<meta property="article:tag" content="Concurrency">
+<meta property="article:tag" content="Java">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://www.jiaqili.me/">
+
+                <span id="blog-title">Virtual World</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../archive.html">存档</a>
+                </li>
+<li>
+<a href="../../categories/">标签</a>
+                </li>
+<li>
+<a href="../../rss.xml">RSS feed</a>
+                </li>
+<li>
+<a href="https://github.com/virtworld">GitHub</a>
+                </li>
+<li>
+<a href="../../stories/about/">关于</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+            </li>
+<li><a href="http://www.jiaqili.me/en/" rel="alternate" hreflang="en">English</a></li>
+
+                
+                    
+    <li>
+    <a href="index.md" id="sourcelink">源代码</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">《Java并发实践》总结二：结构化并发应用程序</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                    Jiaqi Li
+            </span></p>
+            <p class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2015-12-28T08:10:20Z" itemprop="datePublished" title="2015-12-28 08:10">2015-12-28 08:10</time></a></p>
+                <p class="commentline">
+        
+<span class="fb-comments-count" data-url="/posts/java-concurrency-2/">
+
+
+            
+        <p class="sourceline"><a href="index.md" id="sourcelink">源代码</a></p>
+
+        </span></p>
+</div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<h2>1 Executor框架</h2>
+<p>任务是一个逻辑执行单元，而线程是使任务异步执行的机制。串行执行会降低响应性和吞吐量；每个任务都分配一个线程会造成很大开销也不利于资源管理。</p>
+<p>该框架包括一个灵活的线程池，提供了不同类型的任务的执行策略，并将任务提交过程和执行过程解耦，用Runnable来表示一个任务。此外Executor框架还提供了对生命周期的支持，以及统计信息的收集、应用程序管理机制和性能监视等机制。</p>
+<p>执行策略定义了任务执行的"what, where, when, how"等方面。比如在什么线程中执行任务，按什么顺序执行，多少个任务可以并发执行，队列了可以有多少个任务在等待，在任务执行之前和之后应该进行哪些操作，如果要拒绝一个任务，应该选择哪一个？等等</p>
+<p>当需要灵活的执行策略时，用Executor框架来代替手动编写Thread。</p>
+<h3>1.1 Executor</h3>
+<p>Executor接口如下，它是java.util.concurrent异步执行框架的基础。</p>
+<pre class="code literal-block">public interface Executor{
+    void execute(Runnable command);
+}
+</pre>
+
+
+<p>Executor基于生产者消费者模式，提交任务的线程相当于生产者，执行任务的线程相当于消费者</p>
+<h3>1.2 ExecutorService</h3>
+<p>ExecutorService接口扩展了Executor，提供了生命周期的支持和提交任务的方法。ThreadPoolExecutor实现了这个接口，但一般通过Executors的工厂方法来创建和配置线程池。</p>
+<h4>1.2.1 线程池</h4>
+<p>线程池与任务队列密切相关，工作线程从任务队列里获取一个任务，执行完成任务，返回线程池，等待下一个任务。</p>
+<p>线程池通过重用现有的线程而不是对每个任务创建新的线程来，1. 减少线程创建和销毁时的开销; 2. 当请求到达时，工作线程通常已经存在，提高了响应性。</p>
+<p>Executors的工厂方法可以配置很多种线程池，比如
+1. newFixedThreadPool: 固定大小的线程池，每提交一个任务就创建一个线程，直到达到指定的最大数量；
+2. newCachedThreadPool: 一个可缓存的线程池，当线程池规模超过需要处理的任务数量时，将回收空闲线程，当需要增加时，将添加新的线程，规模不存在限制;
+3. newSingleThreadExecutor: 创建单线程的Executor，确保任务依照队列中的顺序执行；
+4. NewScheduledThreadPool: 固定长度的线程池，通过延时或定时的方法执行任务。</p>
+<h4>1.2.2 生命周期支持</h4>
+<p>因为向Executor提交的任务是异步执行，有一些可能已经完成，一些在运行，一些在等待，所以关闭ExecutorService提供了一些方法来关闭Executor。</p>
+<p>ExecutorService有三种状态，运行、关闭和已终止。在创建后它即处于运行状态。shutdown方法执行后，它将不再接受新的任务，同时等待已提交的（包括还在等待的）任务执行完成；shudownNow方法将尝试取消所有运行的任务，不再启动等待的任务。ExecutorService关闭后，提交的任务将由Rejected execution handler处理，它会抛弃任务，或者抛出一个RejectedExecutionException。等所有任务都完成后，ExecutorService进入已停止状态，可以调用awaitTermination来等待ExecutorService停止，或者通过isTerminated来轮训。</p>
+<p>比如下面的一个web服务器：</p>
+<pre class="code literal-block"><span class="k">class</span> <span class="n">LifecycleWebServer</span> {
+    <span class="n">private</span> <span class="n">final</span> <span class="n">ExecutorService</span> <span class="n">exec</span> = ...;
+
+    <span class="n">public</span> <span class="nb">void</span> <span class="n">start</span>() <span class="n">throws</span> <span class="n">IOException</span> {
+        <span class="n">ServerSocket</span> <span class="n">socket</span> = <span class="nb">new</span> <span class="n">ServerSocket</span>(<span class="mi">80</span>);
+        <span class="k">while</span> (!<span class="n">exec</span>.<span class="n">isShutdown</span>()) {
+            <span class="k">try</span> {
+                <span class="n">final</span> <span class="n">Socket</span> <span class="n">conn</span> = <span class="n">socket</span>.<span class="n">accept</span>();
+                <span class="n">exec</span>.<span class="n">execute</span>(<span class="nb">new</span> <span class="n">Runnable</span>() {
+                    <span class="n">public</span> <span class="nb">void</span> <span class="nb">run</span>() { <span class="n">handleRequest</span>(<span class="n">conn</span>); }
+                });
+             } <span class="n">catch</span> (<span class="n">RejectedExecutionException</span> <span class="nb">e</span>) {
+                <span class="k">if</span> (!<span class="n">exec</span>.<span class="n">isShutdown</span>())
+                    <span class="nb">log</span>(<span class="s">"task submission rejected"</span>, <span class="nb">e</span>);
+             }
+        }
+    }
+
+    <span class="n">public</span> <span class="nb">void</span> <span class="n">stop</span>() { <span class="n">exec</span>.<span class="n">shutdown</span>(); }
+
+    <span class="nb">void</span> <span class="n">handleRequest</span>(<span class="n">Socket</span> <span class="n">connection</span>) {
+        <span class="n">Request</span> <span class="n">req</span> = <span class="n">readRequest</span>(<span class="n">connection</span>);
+        <span class="k">if</span> (<span class="n">isShutdownRequest</span>(<span class="n">req</span>))
+            <span class="n">stop</span>();
+        <span class="k">else</span>
+            <span class="n">dispatchRequest</span>(<span class="n">req</span>);
+    }
+}
+</pre>
+
+
+<h4>1.2.3 任务提交，完成和取消</h4>
+<p>Exectuor接口的execute方法只能接受Runnable，Runnable没有返回值。而扩展了的ExecutorService添加了submit方法允许提交Callable，Callable的call方法将返回一个值或者抛出异常。</p>
+<p>Executor执行的任务有4个生命周期，创建，提交，开始和完成。Future表示一个任务的生命周期。将一个Runnable或者Callable通过submit方法提交给ExecutorService后返回一个Future，这个Future可以用来判断任务是否完成或者取消，以及获取任务的结果或者取消任务。</p>
+<p>将Runnable或者Callable提交到ExecutorService的过程包括了一个安全地将Runnable或者Callable从提交线程发布到执行线程的过程；设置Future结果的过程也包括了，将计算结果从执行线程发布到任何通过get获得它的线程。</p>
+<ol>
+<li>
+<p>Future的get方法：如果任务已经完成，将立即返回结果或抛出异常；如果没有完成，get将阻塞，如果设置了超时参数，那么在指定时间内仍旧没有完成将抛出TimeoutException，然后再通过Future来取消任务；如果计算过程中抛出异常，该异常被封装成ExecutionException由get重新抛出，通过getCause来获取最初的异常；如果任务被取消，将抛出CancellationException。</p>
+</li>
+<li>
+<p>使用CompletionService：提交到ExecutorService的任务返回一个Future引用，要知道是否完成任务，需要一个个检查任务；而实现了CompletionService结合了Executor和一个BlockingQueue，把完成的Future<v>放入到一个BlockingQueue，这样就可以只要不断地从一个队列中获取完成的任务就可以了。</v></p>
+<p>ExecutorCompletionService实现了CompletionSetrvice接口，它的构造函数需要一个Executor，并创建一个BlockingQueue来保存计算完的结果。当提交任务时，该任务会被包装为QueueingFuture（一个Future的子类），然后改写了该子类的done方法，当计算完后，FutureTask的done方法会被调用，结果就被放到了BlockingQueue中国。</p>
+<p>摘自Stackoverflow：
+ExecutorService = incoming queue + worker threads
+CompletionService = incoming queue + worker threads + output queue</p>
+</li>
+<li>
+<p>使用invokeAll：如果有一组任务，一般的做法是一个个提交，获取n个Future，然后一个个获取结果。如果使用invokeAll，它需要一组任务并返回一组Future。它按照参数中任务结合的顺序添加任务，并将返回Future全部添加到返回的集合里。当所有任务都执行完毕后，或者调用线程被中断，或者超时，invokeAll将返回，超时未完成的任务会被取消。所以invokeAll返回的任务要么是已经完成的，要么是被取消的。注意：调用invokeAll本身会导致阻塞，直到所有任务结束或超时，这和CompletionService是不同的。通过后者可以按照任务完成的顺序从BlockingQueue中获取完成的任务。</p>
+</li>
+</ol>
+<h3>1.3 ScheduledExecutorService</h3>
+<p>该接口继承了ExecutorService，用于定时或者延时的任务。ScheduledThreadPoolExecutor实现了这个接口，并继承了TreadPoolExecutor。可以通过上文的Executors的工厂方法newScheduledThreadPool来创建该对象或者直接用它的构造函数。</p>
+<p>应该用它来替代Timer类，因为在定时的精准性以及异常处理上，ScheduledThreadPoolExecutor更好。</p>
+<h3>1.4 Executor框架的UML图</h3>
+<p>Image from http://www.uml-diagrams.org/java-7-concurrent-uml-class-diagram-example.html</p>
+<p><img alt="ExecutorUML.png" src="http://www.uml-diagrams.org/examples/java-7-concurrent-executors-uml-class-diagram-example.png" title=" "></p>
+<p><em>(未完待续)</em></p>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/concurrency/" rel="tag">Concurrency</a></li>
+            <li><a class="tag p-category" href="../../categories/java/" rel="tag">Java</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../java-concurrency-1/" rel="prev" title="《Java并发实践》总结一：线程安全基础知识">前一篇</a>
+            </li>
+        </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
+        
+        
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    // init the FB JS SDK
+    FB.init({
+      appId      : '1523140791344197',
+      status     : true,
+      xfbml      : true
+    });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script><div class="fb-comments" data-href="http://www.jiaqili.me/posts/java-concurrency-2/" data-width="470"></div>
+
+
+        </section></article><div id="fb-root"></div>
+<script>
+    // thank lxml for this
+    $('.fb-comments-count').each(function(i, obj) {
+        var url = obj.attributes['data-url'].value;
+        // change here if you dislike the default way of displaying
+        // this
+        obj.innerHTML = '<fb:comments-count href="' + url + '"></fb:comments-count> comments';
+    });
+
+  window.fbAsyncInit = function() {
+    // init the FB JS SDK
+    FB.init({
+      appId      : '1523140791344197',
+      status     : true,
+      xfbml      : true
+    });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2015         <a href="mailto:jiaqi.li@outlook.com">Jiaqi Li</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../assets/js/all-nocdn.js"></script><script src="../../assets/js/colorbox-i18n/jquery.colorbox-zh-CN.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("zh-cn");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>
