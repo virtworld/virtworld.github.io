@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Virtual World</title>
+    <link>http://virtworld.github.io/tags/</link>
+    <description>Recent content in Tags on Virtual World</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 25 Feb 2018 12:41:00 +0800</lastBuildDate>
+    
+	<atom:link href="http://virtworld.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Algorithm</title>
+      <link>http://virtworld.github.io/tags/algorithm/</link>
+      <pubDate>Sun, 25 Feb 2018 12:41:00 +0800</pubDate>
+      
+      <guid>http://virtworld.github.io/tags/algorithm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Computability</title>
+      <link>http://virtworld.github.io/tags/computability/</link>
+      <pubDate>Sun, 01 Jun 2014 20:54:42 +0000</pubDate>
+      
+      <guid>http://virtworld.github.io/tags/computability/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Concurrency</title>
+      <link>http://virtworld.github.io/tags/concurrency/</link>
+      <pubDate>Mon, 28 Dec 2015 08:10:20 +0000</pubDate>
+      
+      <guid>http://virtworld.github.io/tags/concurrency/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Java</title>
+      <link>http://virtworld.github.io/tags/java/</link>
+      <pubDate>Fri, 26 Jan 2018 11:33:00 +0800</pubDate>
+      
+      <guid>http://virtworld.github.io/tags/java/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Jvm</title>
+      <link>http://virtworld.github.io/tags/jvm/</link>
+      <pubDate>Mon, 28 Dec 2015 10:57:42 +0000</pubDate>
+      
+      <guid>http://virtworld.github.io/tags/jvm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Naive Bayes Classification</title>
+      <link>http://virtworld.github.io/tags/naive-bayes-classification/</link>
+      <pubDate>Sun, 25 Feb 2018 12:41:00 +0800</pubDate>
+      
+      <guid>http://virtworld.github.io/tags/naive-bayes-classification/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Oracle</title>
+      <link>http://virtworld.github.io/tags/oracle/</link>
+      <pubDate>Wed, 21 Feb 2018 20:09:00 +0800</pubDate>
+      
+      <guid>http://virtworld.github.io/tags/oracle/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>内存分配</title>
+      <link>http://virtworld.github.io/tags/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/</link>
+      <pubDate>Thu, 26 Nov 2015 15:40:00 +0800</pubDate>
+      
+      <guid>http://virtworld.github.io/tags/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>性能调优</title>
+      <link>http://virtworld.github.io/tags/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/</link>
+      <pubDate>Fri, 26 Jan 2018 11:33:00 +0800</pubDate>
+      
+      <guid>http://virtworld.github.io/tags/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>批处理</title>
+      <link>http://virtworld.github.io/tags/%E6%89%B9%E5%A4%84%E7%90%86/</link>
+      <pubDate>Wed, 21 Feb 2018 20:09:00 +0800</pubDate>
+      
+      <guid>http://virtworld.github.io/tags/%E6%89%B9%E5%A4%84%E7%90%86/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

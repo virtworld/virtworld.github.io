@@ -1,254 +1,208 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset
-    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-    xmlns:xhtml="http://www.w3.org/1999/xhtml"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-                        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
- <url>
-  <loc>http://www.jiaqili.me/</loc>
-  <lastmod>2015-11-26T16:39:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/2010/</loc>
-  <lastmod>2015-11-24T17:13:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/2012/</loc>
-  <lastmod>2015-11-24T17:03:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/2014/</loc>
-  <lastmod>2015-11-26T15:04:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/2015/</loc>
-  <lastmod>2015-11-24T16:59:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/archive.html</loc>
-  <lastmod>2015-12-28T11:00:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/categories/</loc>
-  <lastmod>2015-12-28T07:52:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/categories/computability/</loc>
-  <lastmod>2015-11-26T15:17:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/categories/concurrency/</loc>
-  <lastmod>2015-12-28T07:52:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/categories/java-jvm/</loc>
-  <lastmod>2015-11-26T16:05:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/categories/java/</loc>
-  <lastmod>2015-11-26T15:46:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/categories/jvm/</loc>
-  <lastmod>2015-11-26T15:46:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/categories/notes/</loc>
-  <lastmod>2015-11-26T15:17:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/</loc>
-  <lastmod>2015-11-26T15:04:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/2010/</loc>
-  <lastmod>2015-11-24T17:13:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/2012/</loc>
-  <lastmod>2015-11-24T17:03:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/2014/</loc>
-  <lastmod>2015-11-26T15:04:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/2015/</loc>
-  <lastmod>2015-11-24T16:59:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/archive.html</loc>
-  <lastmod>2015-12-28T11:00:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/categories/</loc>
-  <lastmod>2015-12-28T07:52:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/categories/computability/</loc>
-  <lastmod>2015-11-26T15:17:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/categories/concurrency/</loc>
-  <lastmod>2015-12-28T07:52:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/categories/java-jvm/</loc>
-  <lastmod>2015-11-26T16:05:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/categories/java/</loc>
-  <lastmod>2015-11-26T15:46:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/categories/jvm/</loc>
-  <lastmod>2015-11-26T15:46:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/categories/notes/</loc>
-  <lastmod>2015-11-26T15:17:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/galleries/</loc>
-  <lastmod>2015-11-26T16:40:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/galleries/java-gc/</loc>
-  <lastmod>2015-11-26T16:40:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/posts/dynamic-memory-allocation/</loc>
-  <lastmod>2015-11-26T15:46:00Z</lastmod>
-  <xhtml:link rel="alternate" hreflang="zh_cn" href="http://www.jiaqili.me/posts/dynamic-memory-allocation/" />
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/posts/g53com-computability-1314-revision-notes/</loc>
-  <lastmod>2015-11-26T15:17:00Z</lastmod>
-  <xhtml:link rel="alternate" hreflang="zh_cn" href="http://www.jiaqili.me/posts/g53com-computability-1314-revision-notes/" />
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/posts/g53com-computability-revision-notes/</loc>
-  <lastmod>2015-11-26T16:05:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/posts/java-class-file/</loc>
-  <lastmod>2015-12-28T11:00:00Z</lastmod>
-  <xhtml:link rel="alternate" hreflang="zh_cn" href="http://www.jiaqili.me/posts/java-class-file/" />
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/posts/java-class-loading/</loc>
-  <lastmod>2015-12-28T10:14:00Z</lastmod>
-  <xhtml:link rel="alternate" hreflang="zh_cn" href="http://www.jiaqili.me/posts/java-class-loading/" />
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/posts/java-concurrency-1/</loc>
-  <lastmod>2015-12-28T07:48:00Z</lastmod>
-  <xhtml:link rel="alternate" hreflang="zh_cn" href="http://www.jiaqili.me/posts/java-concurrency-1/" />
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/posts/java-concurrency-2/</loc>
-  <lastmod>2015-12-28T08:24:00Z</lastmod>
-  <xhtml:link rel="alternate" hreflang="zh_cn" href="http://www.jiaqili.me/posts/java-concurrency-2/" />
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/posts/java-gc/</loc>
-  <lastmod>2015-11-26T16:05:00Z</lastmod>
-  <xhtml:link rel="alternate" hreflang="zh_cn" href="http://www.jiaqili.me/posts/java-gc/" />
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/posts/taught-master-in-computer-science-application/</loc>
-  <lastmod>2015-11-26T15:13:00Z</lastmod>
-  <xhtml:link rel="alternate" hreflang="zh_cn" href="http://www.jiaqili.me/posts/taught-master-in-computer-science-application/" />
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/posts/testing-time-change/</loc>
-  <lastmod>2015-11-24T17:13:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/posts/this-is-my-first-post/</loc>
-  <lastmod>2015-11-24T16:59:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/stories/about-virtual-world/</loc>
-  <lastmod>2015-11-26T16:24:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/en/stories/about/</loc>
-  <lastmod>2015-11-29T05:51:00Z</lastmod>
-  <xhtml:link rel="alternate" hreflang="zh_cn" href="http://www.jiaqili.me/stories/about/" />
- </url>
- <url>
-  <loc>http://www.jiaqili.me/galleries/</loc>
-  <lastmod>2015-11-26T16:40:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/galleries/java-gc/</loc>
-  <lastmod>2015-11-26T17:13:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/listings/</loc>
-  <lastmod>2015-11-24T16:44:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/posts/dynamic-memory-allocation/</loc>
-  <lastmod>2015-11-26T15:46:00Z</lastmod>
-  <xhtml:link rel="alternate" hreflang="en" href="http://www.jiaqili.me/en/posts/dynamic-memory-allocation/" />
- </url>
- <url>
-  <loc>http://www.jiaqili.me/posts/g53com-computability-1314-revision-notes/</loc>
-  <lastmod>2015-11-26T15:17:00Z</lastmod>
-  <xhtml:link rel="alternate" hreflang="en" href="http://www.jiaqili.me/en/posts/g53com-computability-1314-revision-notes/" />
- </url>
- <url>
-  <loc>http://www.jiaqili.me/posts/g53com-computability-revision-notes/</loc>
-  <lastmod>2015-11-26T16:05:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/posts/java-class-file/</loc>
-  <lastmod>2015-12-28T11:00:00Z</lastmod>
-  <xhtml:link rel="alternate" hreflang="en" href="http://www.jiaqili.me/en/posts/java-class-file/" />
- </url>
- <url>
-  <loc>http://www.jiaqili.me/posts/java-class-loading/</loc>
-  <lastmod>2015-12-28T10:14:00Z</lastmod>
-  <xhtml:link rel="alternate" hreflang="en" href="http://www.jiaqili.me/en/posts/java-class-loading/" />
- </url>
- <url>
-  <loc>http://www.jiaqili.me/posts/java-concurrency-1/</loc>
-  <lastmod>2015-12-28T07:48:00Z</lastmod>
-  <xhtml:link rel="alternate" hreflang="en" href="http://www.jiaqili.me/en/posts/java-concurrency-1/" />
- </url>
- <url>
-  <loc>http://www.jiaqili.me/posts/java-concurrency-2/</loc>
-  <lastmod>2015-12-28T08:24:00Z</lastmod>
-  <xhtml:link rel="alternate" hreflang="en" href="http://www.jiaqili.me/en/posts/java-concurrency-2/" />
- </url>
- <url>
-  <loc>http://www.jiaqili.me/posts/java-gc/</loc>
-  <lastmod>2015-11-26T16:05:00Z</lastmod>
-  <xhtml:link rel="alternate" hreflang="en" href="http://www.jiaqili.me/en/posts/java-gc/" />
- </url>
- <url>
-  <loc>http://www.jiaqili.me/posts/taught-master-in-computer-science-application/</loc>
-  <lastmod>2015-11-26T15:13:00Z</lastmod>
-  <xhtml:link rel="alternate" hreflang="en" href="http://www.jiaqili.me/en/posts/taught-master-in-computer-science-application/" />
- </url>
- <url>
-  <loc>http://www.jiaqili.me/posts/testing-time-change/</loc>
-  <lastmod>2015-11-24T17:13:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/posts/this-is-my-first-post/</loc>
-  <lastmod>2015-11-24T16:59:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/stories/about-virtual-world/</loc>
-  <lastmod>2015-11-26T16:24:00Z</lastmod>
- </url>
- <url>
-  <loc>http://www.jiaqili.me/stories/about/</loc>
-  <lastmod>2015-11-29T05:51:00Z</lastmod>
-  <xhtml:link rel="alternate" hreflang="en" href="http://www.jiaqili.me/en/stories/about/" />
- </url>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml-stylesheet type="text/xsl" href="http://virtworld.github.io/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://virtworld.github.io/about/</loc>
+    <lastmod>2018-02-20T19:25:10+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/post/orgnization-name-classification-using-nbc/</loc>
+    <lastmod>2018-02-25T14:41:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/post/oracle-exchange-partition-chn/</loc>
+    <lastmod>2018-02-21T20:09:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/post/java-batch-performance-tuning-chn/</loc>
+    <lastmod>2018-01-26T11:33:56+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/post/java-class-file/</loc>
+    <lastmod>2015-12-28T10:57:42+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/post/java-class-loading/</loc>
+    <lastmod>2015-12-28T10:09:30+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/post/java-concurrency-2/</loc>
+    <lastmod>2015-12-28T08:10:20+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/post/java-concurrency-1/</loc>
+    <lastmod>2015-12-28T07:50:12+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/post/java-gc/</loc>
+    <lastmod>2015-11-26T16:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/post/dynamic-memory-allocation/</loc>
+    <lastmod>2015-11-26T15:40:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/post/g53com-computability-1314-revision-notes/</loc>
+    <lastmod>2014-06-01T20:54:42+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/tags/algorithm/</loc>
+    <lastmod>2018-02-25T14:41:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/categories/algorithm/</loc>
+    <lastmod>2018-02-25T14:41:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/categories/</loc>
+    <lastmod>2018-02-25T14:41:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/tags/computability/</loc>
+    <lastmod>2014-06-01T20:54:42+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/categories/computer-science/</loc>
+    <lastmod>2014-06-01T20:54:42+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/tags/concurrency/</loc>
+    <lastmod>2015-12-28T08:10:20+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/tags/java/</loc>
+    <lastmod>2018-01-26T11:33:56+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/categories/java/</loc>
+    <lastmod>2018-01-26T11:33:56+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/tags/jvm/</loc>
+    <lastmod>2015-12-28T10:57:42+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/tags/naive-bayes-classification/</loc>
+    <lastmod>2018-02-25T14:41:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/tags/oracle/</loc>
+    <lastmod>2018-02-21T20:09:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/categories/oracle/</loc>
+    <lastmod>2018-02-21T20:09:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/post/</loc>
+    <lastmod>2018-02-25T14:41:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/tags/</loc>
+    <lastmod>2018-02-25T14:41:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/</loc>
+    <lastmod>2018-02-20T19:25:10+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/tags/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/</loc>
+    <lastmod>2015-11-26T15:40:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/tags/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/</loc>
+    <lastmod>2018-01-26T11:33:56+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://virtworld.github.io/tags/%E6%89%B9%E5%A4%84%E7%90%86/</loc>
+    <lastmod>2018-02-21T20:09:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
 </urlset>

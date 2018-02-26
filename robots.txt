@@ -1,4 +1,2 @@
-Sitemap: http://www.jiaqili.me/sitemapindex.xml
-
-User-Agent: *
-Host: www.jiaqili.me
+User-agent: *
+Sitemap: http://virtworld.github.io/sitemap.xml
