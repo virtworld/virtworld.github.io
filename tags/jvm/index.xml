@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Jvm on Virtual World</title>
-    <link>http://virtworld.github.io/tags/jvm/</link>
+    <link>http://www.jiaqili.me/tags/jvm/</link>
     <description>Recent content in Jvm on Virtual World</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Mon, 28 Dec 2015 10:57:42 +0000</lastBuildDate>
     
-	<atom:link href="http://virtworld.github.io/tags/jvm/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://www.jiaqili.me/tags/jvm/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Java Class 文件</title>
-      <link>http://virtworld.github.io/post/java-class-file/</link>
+      <link>http://www.jiaqili.me/post/jvm-class-file/</link>
       <pubDate>Mon, 28 Dec 2015 10:57:42 +0000</pubDate>
       
-      <guid>http://virtworld.github.io/post/java-class-file/</guid>
+      <guid>http://www.jiaqili.me/post/jvm-class-file/</guid>
       <description>&lt;h2 id=&#34;1-class概述&#34;&gt;1 Class概述&lt;/h2&gt;
 
 &lt;ol&gt;
@@ -35,10 +35,10 @@
     
     <item>
       <title>Java类加载机制</title>
-      <link>http://virtworld.github.io/post/java-class-loading/</link>
+      <link>http://www.jiaqili.me/post/jvm-class-loading/</link>
       <pubDate>Mon, 28 Dec 2015 10:09:30 +0000</pubDate>
       
-      <guid>http://virtworld.github.io/post/java-class-loading/</guid>
+      <guid>http://www.jiaqili.me/post/jvm-class-loading/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;这篇是对《深入理解Java虚拟机》的第七章的总结笔记&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -59,10 +59,10 @@
     
     <item>
       <title>Java垃圾收集技术</title>
-      <link>http://virtworld.github.io/post/java-gc/</link>
+      <link>http://www.jiaqili.me/post/jvm-gc/</link>
       <pubDate>Thu, 26 Nov 2015 16:00:00 +0000</pubDate>
       
-      <guid>http://virtworld.github.io/post/java-gc/</guid>
+      <guid>http://www.jiaqili.me/post/jvm-gc/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;这篇是对《深入理解Java虚拟机》的第三章的总结笔记，G1部分还没有细看&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -88,10 +88,10 @@
     
     <item>
       <title>Java动态内存分配机制</title>
-      <link>http://virtworld.github.io/post/dynamic-memory-allocation/</link>
+      <link>http://www.jiaqili.me/post/jvm-dynamic-memory-allocation/</link>
       <pubDate>Thu, 26 Nov 2015 15:40:00 +0800</pubDate>
       
-      <guid>http://virtworld.github.io/post/dynamic-memory-allocation/</guid>
+      <guid>http://www.jiaqili.me/post/jvm-dynamic-memory-allocation/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;这篇是对《深入理解Java虚拟机》的第二章的总结笔记&lt;/p&gt;
 &lt;/blockquote&gt;

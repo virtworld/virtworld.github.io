@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Algorithm on Virtual World</title>
-    <link>http://virtworld.github.io/categories/algorithm/</link>
+    <link>http://www.jiaqili.me/categories/algorithm/</link>
     <description>Recent content in Algorithm on Virtual World</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Sun, 25 Feb 2018 12:41:00 +0800</lastBuildDate>
     
-	<atom:link href="http://virtworld.github.io/categories/algorithm/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://www.jiaqili.me/categories/algorithm/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>使用朴素贝叶斯将不同的机构名称分为不同的行业</title>
-      <link>http://virtworld.github.io/post/orgnization-name-classification-using-nbc/</link>
+      <link>http://www.jiaqili.me/post/algorithm-orgnization-name-classification-using-nbc/</link>
       <pubDate>Sun, 25 Feb 2018 12:41:00 +0800</pubDate>
       
-      <guid>http://virtworld.github.io/post/orgnization-name-classification-using-nbc/</guid>
+      <guid>http://www.jiaqili.me/post/algorithm-orgnization-name-classification-using-nbc/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;本文介绍使用朴素贝叶斯分类器将机构按照其名称分类为不同的行业的方法。&lt;/p&gt;
 &lt;/blockquote&gt;

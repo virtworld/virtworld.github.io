@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Java on Virtual World</title>
-    <link>http://virtworld.github.io/tags/java/</link>
+    <link>http://www.jiaqili.me/tags/java/</link>
     <description>Recent content in Java on Virtual World</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Fri, 26 Jan 2018 11:33:00 +0800</lastBuildDate>
     
-	<atom:link href="http://virtworld.github.io/tags/java/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://www.jiaqili.me/tags/java/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>一次Java批处理程序的性能调优</title>
-      <link>http://virtworld.github.io/post/java-batch-performance-tuning-chn/</link>
+      <link>http://www.jiaqili.me/post/java-tuning-batch/</link>
       <pubDate>Fri, 26 Jan 2018 11:33:00 +0800</pubDate>
       
-      <guid>http://virtworld.github.io/post/java-batch-performance-tuning-chn/</guid>
+      <guid>http://www.jiaqili.me/post/java-tuning-batch/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;本文记录的是一次对某系统的批处理应用程序的调优过程。主要涉及统计信息收集、代码分析调优、JVM调优以及从单机批处理向多机的拆分过程。&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -29,7 +29,7 @@
 
 &lt;figure class=&#34;center&#34;&gt;
     
-        &lt;img src=&#34;http://virtworld.github.io/images/java-batch-performance-tuning-chn/batch_model.png&#34; alt=&#34;批处理程序模型&#34; /&gt;
+        &lt;img src=&#34;http://www.jiaqili.me/images/java-batch-performance-tuning-chn/batch_model.png&#34; alt=&#34;批处理程序模型&#34; /&gt;
     
     
     &lt;figcaption&gt;
@@ -60,7 +60,7 @@
 
 &lt;figure class=&#34;center&#34;&gt;
     
-        &lt;img src=&#34;http://virtworld.github.io/images/java-batch-performance-tuning-chn/batch_branch.png&#34; alt=&#34;作业内步骤的条件分支&#34; /&gt;
+        &lt;img src=&#34;http://www.jiaqili.me/images/java-batch-performance-tuning-chn/batch_branch.png&#34; alt=&#34;作业内步骤的条件分支&#34; /&gt;
     
     
     &lt;figcaption&gt;
@@ -76,7 +76,7 @@
 
 &lt;figure class=&#34;center&#34;&gt;
     
-        &lt;img src=&#34;http://virtworld.github.io/images/java-batch-performance-tuning-chn/batch_jobs.png&#34; alt=&#34;作业嵌套和并行执行&#34; /&gt;
+        &lt;img src=&#34;http://www.jiaqili.me/images/java-batch-performance-tuning-chn/batch_jobs.png&#34; alt=&#34;作业嵌套和并行执行&#34; /&gt;
     
     
     &lt;figcaption&gt;
@@ -92,10 +92,10 @@
     
     <item>
       <title>Java Class 文件</title>
-      <link>http://virtworld.github.io/post/java-class-file/</link>
+      <link>http://www.jiaqili.me/post/jvm-class-file/</link>
       <pubDate>Mon, 28 Dec 2015 10:57:42 +0000</pubDate>
       
-      <guid>http://virtworld.github.io/post/java-class-file/</guid>
+      <guid>http://www.jiaqili.me/post/jvm-class-file/</guid>
       <description>&lt;h2 id=&#34;1-class概述&#34;&gt;1 Class概述&lt;/h2&gt;
 
 &lt;ol&gt;
@@ -114,10 +114,10 @@
     
     <item>
       <title>Java类加载机制</title>
-      <link>http://virtworld.github.io/post/java-class-loading/</link>
+      <link>http://www.jiaqili.me/post/jvm-class-loading/</link>
       <pubDate>Mon, 28 Dec 2015 10:09:30 +0000</pubDate>
       
-      <guid>http://virtworld.github.io/post/java-class-loading/</guid>
+      <guid>http://www.jiaqili.me/post/jvm-class-loading/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;这篇是对《深入理解Java虚拟机》的第七章的总结笔记&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -138,10 +138,10 @@
     
     <item>
       <title>结构化并发应用程序</title>
-      <link>http://virtworld.github.io/post/java-concurrency-2/</link>
+      <link>http://www.jiaqili.me/post/java-concurrency-2/</link>
       <pubDate>Mon, 28 Dec 2015 08:10:20 +0000</pubDate>
       
-      <guid>http://virtworld.github.io/post/java-concurrency-2/</guid>
+      <guid>http://www.jiaqili.me/post/java-concurrency-2/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;这篇是《Java并发实践》的第二篇总结&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -161,10 +161,10 @@
     
     <item>
       <title>线程安全基础知识</title>
-      <link>http://virtworld.github.io/post/java-concurrency-1/</link>
+      <link>http://www.jiaqili.me/post/java-concurrency-1/</link>
       <pubDate>Mon, 28 Dec 2015 07:50:12 +0000</pubDate>
       
-      <guid>http://virtworld.github.io/post/java-concurrency-1/</guid>
+      <guid>http://www.jiaqili.me/post/java-concurrency-1/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;这篇是《Java并发实践》的第一篇笔记，针对第2-3,5,13,15章的总结。书中所介绍的非阻塞的并发算法和数据结构比较粗略，仅限于特性和应用介绍，很少有具体实现，这里也做简单记录。更多的内容可以参考《多处理器编程的艺术》第一修订版以及&lt;a href=&#34;https://www.cs.ox.ac.uk/teaching/materials15-16/cads。以后单独总结。&#34;&gt;https://www.cs.ox.ac.uk/teaching/materials15-16/cads。以后单独总结。&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -186,10 +186,10 @@
     
     <item>
       <title>Java垃圾收集技术</title>
-      <link>http://virtworld.github.io/post/java-gc/</link>
+      <link>http://www.jiaqili.me/post/jvm-gc/</link>
       <pubDate>Thu, 26 Nov 2015 16:00:00 +0000</pubDate>
       
-      <guid>http://virtworld.github.io/post/java-gc/</guid>
+      <guid>http://www.jiaqili.me/post/jvm-gc/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;这篇是对《深入理解Java虚拟机》的第三章的总结笔记，G1部分还没有细看&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -215,10 +215,10 @@
     
     <item>
       <title>Java动态内存分配机制</title>
-      <link>http://virtworld.github.io/post/dynamic-memory-allocation/</link>
+      <link>http://www.jiaqili.me/post/jvm-dynamic-memory-allocation/</link>
       <pubDate>Thu, 26 Nov 2015 15:40:00 +0800</pubDate>
       
-      <guid>http://virtworld.github.io/post/dynamic-memory-allocation/</guid>
+      <guid>http://www.jiaqili.me/post/jvm-dynamic-memory-allocation/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;这篇是对《深入理解Java虚拟机》的第二章的总结笔记&lt;/p&gt;
 &lt;/blockquote&gt;

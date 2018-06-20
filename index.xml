@@ -2,30 +2,49 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Virtual World</title>
-    <link>http://virtworld.github.io/</link>
+    <link>http://www.jiaqili.me/</link>
     <description>Recent content on Virtual World</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Tue, 20 Feb 2018 19:25:10 +0800</lastBuildDate>
     
-	<atom:link href="http://virtworld.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://www.jiaqili.me/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>About</title>
-      <link>http://virtworld.github.io/about/</link>
+      <link>http://www.jiaqili.me/about/</link>
       <pubDate>Tue, 20 Feb 2018 19:25:10 +0800</pubDate>
       
-      <guid>http://virtworld.github.io/about/</guid>
+      <guid>http://www.jiaqili.me/about/</guid>
       <description>Contact: jiaqi [dot] li [at] outlook [dot] com</description>
     </item>
     
     <item>
+      <title>Solr和ANSJ的同义词、自定义词库的数据库配置和实时更新</title>
+      <link>http://www.jiaqili.me/post/solr-ansj-config/</link>
+      <pubDate>Mon, 11 Jun 2018 22:10:12 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/solr-ansj-config/</guid>
+      <description>&lt;p&gt;Solr可以检索很多种类的原始数据，而在这篇文章中，笔者的业务场景是检索数据库中大量的记录，也因为此，我们希望将自定义词库、同义词库等一并放入到数据库中而不是以默认的文本形式存放。&lt;/p&gt;
+
+&lt;p&gt;同时，我们选择ANSJ作为中文分词器，一是它的分词速度和准确性不错，二是它支持从文本、数据库等来源加载自定义词库，三是它支持词性标注（本文暂时中不会用到这点）。&lt;/p&gt;
+
+&lt;p&gt;我们将使用&lt;code&gt;Solr 7.3.1&lt;/code&gt;和&lt;code&gt;ANSJ 5.1.6&lt;/code&gt;，数据库使用的是MySQL 5.7.12以及Oracle 11g，操作系统为Ubuntu 16/Redhat。网上很多文章介绍的还是Solr 4或者Solr 5版本，但是Solr 6以后发生了很多变化，笔者在查找相关技术资料的时候饶了些弯路，所以特此记录下来。&lt;/p&gt;
+
+&lt;p&gt;我们首先介绍Solr和ANSJ的整合，然后是在Solr中引入Data Importer从数据库中导入数据，配置自定义此词库和同义词库，之后是扩展Solr的RequestHandler来实现ANSJ自定义词库的动态更新，最后是扩展Solr的SynonymGraphFilterFactory来实现从数据库中加载同义词库。&lt;/p&gt;
+
+&lt;p&gt;这篇文章不会介绍如何在Tomcat或其它服务器上部署Solr（我们内置的Jetty服务器），这篇文章也不会涉及到Solr集群。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>使用朴素贝叶斯将不同的机构名称分为不同的行业</title>
-      <link>http://virtworld.github.io/post/orgnization-name-classification-using-nbc/</link>
+      <link>http://www.jiaqili.me/post/algorithm-orgnization-name-classification-using-nbc/</link>
       <pubDate>Sun, 25 Feb 2018 12:41:00 +0800</pubDate>
       
-      <guid>http://virtworld.github.io/post/orgnization-name-classification-using-nbc/</guid>
+      <guid>http://www.jiaqili.me/post/algorithm-orgnization-name-classification-using-nbc/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;本文介绍使用朴素贝叶斯分类器将机构按照其名称分类为不同的行业的方法。&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -53,10 +72,10 @@
     
     <item>
       <title>使用Oracle交换分区实现快速数据换入/换出</title>
-      <link>http://virtworld.github.io/post/oracle-exchange-partition-chn/</link>
+      <link>http://www.jiaqili.me/post/oracle-exchange-partition-chn/</link>
       <pubDate>Wed, 21 Feb 2018 20:09:00 +0800</pubDate>
       
-      <guid>http://virtworld.github.io/post/oracle-exchange-partition-chn/</guid>
+      <guid>http://www.jiaqili.me/post/oracle-exchange-partition-chn/</guid>
       <description>&lt;p&gt;对于一些系统的晚间批处理来讲，首先需要从上游系统获取数据，然后进行批处理运算，最后（可能）再准备数据给下游系统。而一个系统内部通常只保留一定时间段的数据，对于“过期的”数据要么放入仓库，要么归档备份。这个涉及到大量数据一进一出的过程，称为“滑动窗口”(sliding window)。&lt;/p&gt;
 
 &lt;p&gt;对于这类需要按天或者按月批量进出数据的表，一般按照日期字段分区。Oracle里常用Range或者List分区表，然后建立本地索引(local index)。对于“过期的”数据只需要：&lt;/p&gt;
@@ -83,10 +102,10 @@
     
     <item>
       <title>一次Java批处理程序的性能调优</title>
-      <link>http://virtworld.github.io/post/java-batch-performance-tuning-chn/</link>
+      <link>http://www.jiaqili.me/post/java-tuning-batch/</link>
       <pubDate>Fri, 26 Jan 2018 11:33:00 +0800</pubDate>
       
-      <guid>http://virtworld.github.io/post/java-batch-performance-tuning-chn/</guid>
+      <guid>http://www.jiaqili.me/post/java-tuning-batch/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;本文记录的是一次对某系统的批处理应用程序的调优过程。主要涉及统计信息收集、代码分析调优、JVM调优以及从单机批处理向多机的拆分过程。&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -99,7 +118,7 @@
 
 &lt;figure class=&#34;center&#34;&gt;
     
-        &lt;img src=&#34;http://virtworld.github.io/images/java-batch-performance-tuning-chn/batch_model.png&#34; alt=&#34;批处理程序模型&#34; /&gt;
+        &lt;img src=&#34;http://www.jiaqili.me/images/java-batch-performance-tuning-chn/batch_model.png&#34; alt=&#34;批处理程序模型&#34; /&gt;
     
     
     &lt;figcaption&gt;
@@ -130,7 +149,7 @@
 
 &lt;figure class=&#34;center&#34;&gt;
     
-        &lt;img src=&#34;http://virtworld.github.io/images/java-batch-performance-tuning-chn/batch_branch.png&#34; alt=&#34;作业内步骤的条件分支&#34; /&gt;
+        &lt;img src=&#34;http://www.jiaqili.me/images/java-batch-performance-tuning-chn/batch_branch.png&#34; alt=&#34;作业内步骤的条件分支&#34; /&gt;
     
     
     &lt;figcaption&gt;
@@ -146,7 +165,7 @@
 
 &lt;figure class=&#34;center&#34;&gt;
     
-        &lt;img src=&#34;http://virtworld.github.io/images/java-batch-performance-tuning-chn/batch_jobs.png&#34; alt=&#34;作业嵌套和并行执行&#34; /&gt;
+        &lt;img src=&#34;http://www.jiaqili.me/images/java-batch-performance-tuning-chn/batch_jobs.png&#34; alt=&#34;作业嵌套和并行执行&#34; /&gt;
     
     
     &lt;figcaption&gt;
@@ -162,10 +181,10 @@
     
     <item>
       <title>Java Class 文件</title>
-      <link>http://virtworld.github.io/post/java-class-file/</link>
+      <link>http://www.jiaqili.me/post/jvm-class-file/</link>
       <pubDate>Mon, 28 Dec 2015 10:57:42 +0000</pubDate>
       
-      <guid>http://virtworld.github.io/post/java-class-file/</guid>
+      <guid>http://www.jiaqili.me/post/jvm-class-file/</guid>
       <description>&lt;h2 id=&#34;1-class概述&#34;&gt;1 Class概述&lt;/h2&gt;
 
 &lt;ol&gt;
@@ -184,10 +203,10 @@
     
     <item>
       <title>Java类加载机制</title>
-      <link>http://virtworld.github.io/post/java-class-loading/</link>
+      <link>http://www.jiaqili.me/post/jvm-class-loading/</link>
       <pubDate>Mon, 28 Dec 2015 10:09:30 +0000</pubDate>
       
-      <guid>http://virtworld.github.io/post/java-class-loading/</guid>
+      <guid>http://www.jiaqili.me/post/jvm-class-loading/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;这篇是对《深入理解Java虚拟机》的第七章的总结笔记&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -208,10 +227,10 @@
     
     <item>
       <title>结构化并发应用程序</title>
-      <link>http://virtworld.github.io/post/java-concurrency-2/</link>
+      <link>http://www.jiaqili.me/post/java-concurrency-2/</link>
       <pubDate>Mon, 28 Dec 2015 08:10:20 +0000</pubDate>
       
-      <guid>http://virtworld.github.io/post/java-concurrency-2/</guid>
+      <guid>http://www.jiaqili.me/post/java-concurrency-2/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;这篇是《Java并发实践》的第二篇总结&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -231,10 +250,10 @@
     
     <item>
       <title>线程安全基础知识</title>
-      <link>http://virtworld.github.io/post/java-concurrency-1/</link>
+      <link>http://www.jiaqili.me/post/java-concurrency-1/</link>
       <pubDate>Mon, 28 Dec 2015 07:50:12 +0000</pubDate>
       
-      <guid>http://virtworld.github.io/post/java-concurrency-1/</guid>
+      <guid>http://www.jiaqili.me/post/java-concurrency-1/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;这篇是《Java并发实践》的第一篇笔记，针对第2-3,5,13,15章的总结。书中所介绍的非阻塞的并发算法和数据结构比较粗略，仅限于特性和应用介绍，很少有具体实现，这里也做简单记录。更多的内容可以参考《多处理器编程的艺术》第一修订版以及&lt;a href=&#34;https://www.cs.ox.ac.uk/teaching/materials15-16/cads。以后单独总结。&#34;&gt;https://www.cs.ox.ac.uk/teaching/materials15-16/cads。以后单独总结。&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -256,10 +275,10 @@
     
     <item>
       <title>Java垃圾收集技术</title>
-      <link>http://virtworld.github.io/post/java-gc/</link>
+      <link>http://www.jiaqili.me/post/jvm-gc/</link>
       <pubDate>Thu, 26 Nov 2015 16:00:00 +0000</pubDate>
       
-      <guid>http://virtworld.github.io/post/java-gc/</guid>
+      <guid>http://www.jiaqili.me/post/jvm-gc/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;这篇是对《深入理解Java虚拟机》的第三章的总结笔记，G1部分还没有细看&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -285,10 +304,10 @@
     
     <item>
       <title>Java动态内存分配机制</title>
-      <link>http://virtworld.github.io/post/dynamic-memory-allocation/</link>
+      <link>http://www.jiaqili.me/post/jvm-dynamic-memory-allocation/</link>
       <pubDate>Thu, 26 Nov 2015 15:40:00 +0800</pubDate>
       
-      <guid>http://virtworld.github.io/post/dynamic-memory-allocation/</guid>
+      <guid>http://www.jiaqili.me/post/jvm-dynamic-memory-allocation/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;这篇是对《深入理解Java虚拟机》的第二章的总结笔记&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -311,10 +330,10 @@
     
     <item>
       <title>G53COM Computability 可计算性 复习笔记</title>
-      <link>http://virtworld.github.io/post/g53com-computability-1314-revision-notes/</link>
+      <link>http://www.jiaqili.me/post/computability-notes/</link>
       <pubDate>Sun, 01 Jun 2014 20:54:42 +0000</pubDate>
       
-      <guid>http://virtworld.github.io/post/g53com-computability-1314-revision-notes/</guid>
+      <guid>http://www.jiaqili.me/post/computability-notes/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;这是一篇课程总结笔记，内容基于 G53COM 1314 年度的课件，讲师为 &lt;a href=&#34;http://www.cs.nott.ac.uk/~ajp/&#34;&gt;Dr Andrew Parkes&lt;/a&gt;。这篇文章&lt;strong&gt;并非&lt;/strong&gt;标准答案。 任何定义，解释和示例可能是不准确的或者错误的。请参考您自己的笔记。&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -343,6 +362,15 @@
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.jiaqili.me/post/security-asymmetric-key-ciphers/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/security-asymmetric-key-ciphers/</guid>
+      <description></description>
     </item>
     
   </channel>

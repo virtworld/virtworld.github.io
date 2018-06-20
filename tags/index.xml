@@ -2,102 +2,147 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Virtual World</title>
-    <link>http://virtworld.github.io/tags/</link>
+    <link>http://www.jiaqili.me/tags/</link>
     <description>Recent content in Tags on Virtual World</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Sun, 25 Feb 2018 12:41:00 +0800</lastBuildDate>
     
-	<atom:link href="http://virtworld.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://www.jiaqili.me/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Algorithm</title>
-      <link>http://virtworld.github.io/tags/algorithm/</link>
+      <link>http://www.jiaqili.me/tags/algorithm/</link>
       <pubDate>Sun, 25 Feb 2018 12:41:00 +0800</pubDate>
       
-      <guid>http://virtworld.github.io/tags/algorithm/</guid>
+      <guid>http://www.jiaqili.me/tags/algorithm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ansj</title>
+      <link>http://www.jiaqili.me/tags/ansj/</link>
+      <pubDate>Mon, 11 Jun 2018 22:10:12 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/tags/ansj/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Batch</title>
+      <link>http://www.jiaqili.me/tags/batch/</link>
+      <pubDate>Wed, 21 Feb 2018 20:09:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/tags/batch/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Classloader</title>
+      <link>http://www.jiaqili.me/tags/classloader/</link>
+      <pubDate>Mon, 28 Dec 2015 10:09:30 +0000</pubDate>
+      
+      <guid>http://www.jiaqili.me/tags/classloader/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Computability</title>
-      <link>http://virtworld.github.io/tags/computability/</link>
+      <link>http://www.jiaqili.me/tags/computability/</link>
       <pubDate>Sun, 01 Jun 2014 20:54:42 +0000</pubDate>
       
-      <guid>http://virtworld.github.io/tags/computability/</guid>
+      <guid>http://www.jiaqili.me/tags/computability/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Computer Science</title>
+      <link>http://www.jiaqili.me/tags/computer-science/</link>
+      <pubDate>Sun, 01 Jun 2014 20:54:42 +0000</pubDate>
+      
+      <guid>http://www.jiaqili.me/tags/computer-science/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Concurrency</title>
-      <link>http://virtworld.github.io/tags/concurrency/</link>
+      <link>http://www.jiaqili.me/tags/concurrency/</link>
       <pubDate>Mon, 28 Dec 2015 08:10:20 +0000</pubDate>
       
-      <guid>http://virtworld.github.io/tags/concurrency/</guid>
+      <guid>http://www.jiaqili.me/tags/concurrency/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Gc</title>
+      <link>http://www.jiaqili.me/tags/gc/</link>
+      <pubDate>Thu, 26 Nov 2015 16:00:00 +0000</pubDate>
+      
+      <guid>http://www.jiaqili.me/tags/gc/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Java</title>
-      <link>http://virtworld.github.io/tags/java/</link>
+      <link>http://www.jiaqili.me/tags/java/</link>
       <pubDate>Fri, 26 Jan 2018 11:33:00 +0800</pubDate>
       
-      <guid>http://virtworld.github.io/tags/java/</guid>
+      <guid>http://www.jiaqili.me/tags/java/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Jvm</title>
-      <link>http://virtworld.github.io/tags/jvm/</link>
+      <link>http://www.jiaqili.me/tags/jvm/</link>
       <pubDate>Mon, 28 Dec 2015 10:57:42 +0000</pubDate>
       
-      <guid>http://virtworld.github.io/tags/jvm/</guid>
+      <guid>http://www.jiaqili.me/tags/jvm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Memory Allocation</title>
+      <link>http://www.jiaqili.me/tags/memory-allocation/</link>
+      <pubDate>Thu, 26 Nov 2015 15:40:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/tags/memory-allocation/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Naive Bayes Classification</title>
-      <link>http://virtworld.github.io/tags/naive-bayes-classification/</link>
+      <link>http://www.jiaqili.me/tags/naive-bayes-classification/</link>
       <pubDate>Sun, 25 Feb 2018 12:41:00 +0800</pubDate>
       
-      <guid>http://virtworld.github.io/tags/naive-bayes-classification/</guid>
+      <guid>http://www.jiaqili.me/tags/naive-bayes-classification/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Oracle</title>
-      <link>http://virtworld.github.io/tags/oracle/</link>
+      <link>http://www.jiaqili.me/tags/oracle/</link>
       <pubDate>Wed, 21 Feb 2018 20:09:00 +0800</pubDate>
       
-      <guid>http://virtworld.github.io/tags/oracle/</guid>
+      <guid>http://www.jiaqili.me/tags/oracle/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>内存分配</title>
-      <link>http://virtworld.github.io/tags/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/</link>
-      <pubDate>Thu, 26 Nov 2015 15:40:00 +0800</pubDate>
-      
-      <guid>http://virtworld.github.io/tags/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>性能调优</title>
-      <link>http://virtworld.github.io/tags/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/</link>
+      <title>Performance Tuning</title>
+      <link>http://www.jiaqili.me/tags/performance-tuning/</link>
       <pubDate>Fri, 26 Jan 2018 11:33:00 +0800</pubDate>
       
-      <guid>http://virtworld.github.io/tags/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/</guid>
+      <guid>http://www.jiaqili.me/tags/performance-tuning/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>批处理</title>
-      <link>http://virtworld.github.io/tags/%E6%89%B9%E5%A4%84%E7%90%86/</link>
-      <pubDate>Wed, 21 Feb 2018 20:09:00 +0800</pubDate>
+      <title>Solr</title>
+      <link>http://www.jiaqili.me/tags/solr/</link>
+      <pubDate>Mon, 11 Jun 2018 22:10:12 +0800</pubDate>
       
-      <guid>http://virtworld.github.io/tags/%E6%89%B9%E5%A4%84%E7%90%86/</guid>
+      <guid>http://www.jiaqili.me/tags/solr/</guid>
       <description></description>
     </item>
     

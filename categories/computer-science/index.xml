@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Computer Science on Virtual World</title>
-    <link>http://virtworld.github.io/categories/computer-science/</link>
+    <link>http://www.jiaqili.me/categories/computer-science/</link>
     <description>Recent content in Computer Science on Virtual World</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Sun, 01 Jun 2014 20:54:42 +0000</lastBuildDate>
     
-	<atom:link href="http://virtworld.github.io/categories/computer-science/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://www.jiaqili.me/categories/computer-science/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>G53COM Computability 可计算性 复习笔记</title>
-      <link>http://virtworld.github.io/post/g53com-computability-1314-revision-notes/</link>
+      <link>http://www.jiaqili.me/post/computability-notes/</link>
       <pubDate>Sun, 01 Jun 2014 20:54:42 +0000</pubDate>
       
-      <guid>http://virtworld.github.io/post/g53com-computability-1314-revision-notes/</guid>
+      <guid>http://www.jiaqili.me/post/computability-notes/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;这是一篇课程总结笔记，内容基于 G53COM 1314 年度的课件，讲师为 &lt;a href=&#34;http://www.cs.nott.ac.uk/~ajp/&#34;&gt;Dr Andrew Parkes&lt;/a&gt;。这篇文章&lt;strong&gt;并非&lt;/strong&gt;标准答案。 任何定义，解释和示例可能是不准确的或者错误的。请参考您自己的笔记。&lt;/p&gt;
 &lt;/blockquote&gt;

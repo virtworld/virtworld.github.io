@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gc on Virtual World</title>
+    <link>http://www.jiaqili.me/tags/gc/</link>
+    <description>Recent content in Gc on Virtual World</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 26 Nov 2015 16:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://www.jiaqili.me/tags/gc/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Java垃圾收集技术</title>
+      <link>http://www.jiaqili.me/post/jvm-gc/</link>
+      <pubDate>Thu, 26 Nov 2015 16:00:00 +0000</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/jvm-gc/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;这篇是对《深入理解Java虚拟机》的第三章的总结笔记，G1部分还没有细看&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;1-判断对象存活与否&#34;&gt;1 判断对象存活与否&lt;/h2&gt;
+
+&lt;h3 id=&#34;1-1-引用计数器-没有gc使用&#34;&gt;1.1 引用计数器(没有GC使用)&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;每当有一个地方引用对象时，数值就+1，引用失效时，数值就-1。&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;问题是无法解决对象之间的循环引用问题，比如对象A的一个字段引用B，对象B的一个字段引用A，然后对象A和B被设置为null，这时无法回收A和B。&lt;/p&gt;
+
+&lt;h3 id=&#34;1-2-可达性分析&#34;&gt;1.2 可达性分析&lt;/h3&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;从一系列GC Roots开始搜索，如果GC Roots到这个对象不可达时，则该对象是不可用的。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;GC Roots包括虚拟机栈中引用的对象，本地方法栈中引用的对象，方法区中类静态属性引用的对象，方法区中常量引用的对象。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

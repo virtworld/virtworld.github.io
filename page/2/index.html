@@ -23,12 +23,12 @@
 
 
 
-<meta name="generator" content="Hugo 0.31.1" />
+<meta name="generator" content="Hugo 0.41" />
 
 
-<link rel="canonical" href="http://virtworld.github.io/" />
-<link href="http://virtworld.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Virtual World" />
-  <link href="http://virtworld.github.io/index.xml" rel="feed" type="application/rss+xml" title="Virtual World" />
+<link rel="canonical" href="http://www.jiaqili.me/" />
+<link href="http://www.jiaqili.me/index.xml" rel="alternate" type="application/rss+xml" title="Virtual World" />
+  <link href="http://www.jiaqili.me/index.xml" rel="feed" type="application/rss+xml" title="Virtual World" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -49,11 +49,11 @@
 <meta property="og:title" content="Virtual World" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="http://virtworld.github.io/" />
+<meta property="og:url" content="http://www.jiaqili.me/" />
 
 
 
-<meta property="og:updated_time" content="2015-12-28T08:10:20&#43;00:00"/>
+<meta property="og:updated_time" content="2014-06-01T20:54:42&#43;00:00"/>
 
 
 
@@ -67,7 +67,8 @@
 <meta itemprop="name" content="Virtual World">
 <meta itemprop="description" content="">
 
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Virtual World"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Virtual World"/>
 <meta name="twitter:description" content=""/>
 
 <!--[if lte IE 9]>
@@ -139,178 +140,7 @@
     
       <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/java-concurrency-2/">结构化并发应用程序</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2015-12-28 </span>
-      <div class="post-category">
-          
-            <a href="/categories/java/"> Java </a>
-          
-        </div>
-      <span class="more-meta"> 2964 word </span>
-      <span class="more-meta"> 6 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <blockquote>
-<p>这篇是《Java并发实践》的第二篇总结</p>
-</blockquote>
-
-<h1 id="1-executor框架">1 Executor框架</h1>
-
-<p>任务是一个逻辑执行单元，而线程是使任务异步执行的机制。串行执行会降低响应性和吞吐量；每个任务都分配一个线程会造成很大开销也不利于资源管理。</p>
-
-<p>该框架包括一个灵活的线程池，提供了不同类型的任务的执行策略，并将任务提交过程和执行过程解耦，用Runnable来表示一个任务。此外Executor框架还提供了对生命周期的支持，以及统计信息的收集、应用程序管理机制和性能监视等机制。</p>
-
-<p>执行策略定义了任务执行的&rdquo;what, where, when, how&rdquo;等方面。比如在什么线程中执行任务，按什么顺序执行，多少个任务可以并发执行，队列了可以有多少个任务在等待，在任务执行之前和之后应该进行哪些操作，如果要拒绝一个任务，应该选择哪一个？等等</p>
-
-<p>当需要灵活的执行策略时，用Executor框架来代替手动编写Thread。</p>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/java-concurrency-2/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/java-concurrency-1/">线程安全基础知识</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2015-12-28 </span>
-      <div class="post-category">
-          
-            <a href="/categories/java/"> Java </a>
-          
-        </div>
-      <span class="more-meta"> 9951 word </span>
-      <span class="more-meta"> 20 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <blockquote>
-<p>这篇是《Java并发实践》的第一篇笔记，针对第2-3,5,13,15章的总结。书中所介绍的非阻塞的并发算法和数据结构比较粗略，仅限于特性和应用介绍，很少有具体实现，这里也做简单记录。更多的内容可以参考《多处理器编程的艺术》第一修订版以及<a href="https://www.cs.ox.ac.uk/teaching/materials15-16/cads。以后单独总结。">https://www.cs.ox.ac.uk/teaching/materials15-16/cads。以后单独总结。</a></p>
-</blockquote>
-
-<p>编写线程安全代码的核心在于对共享的可变的状态的访问操作进行管理。状态指储存在实例或静态域中的数据；共享表示变量可被多个线程同时访问；可变意味着变量值在其生命周期内可以发生变化。</p>
-
-<p>当多个线程访问某个可变的状态变量，并且至少有一个写线程时，需要采用同步机制。Java的同步机制，主要是Synchronized关键词，volatile变量，显示锁(Explicit Lock)，以及原子变量(Atomic Variables)。否则，要么该变量不在多线程中共享，要么将其设置为不可变。</p>
-
-<h1 id="1-线程安全性">1 线程安全性</h1>
-
-<p>线程安全的程序并不一定完全由线程安全类构成，完全由线程安全类构成的程序也未必是线程安全的。线程安全性只与状态相关，只能用于封装其状态的整个代码，比如线程安全类，或者线程安全程序。</p>
-
-<p>定义：当多个线程访问某个类时，不管运行时环境采取何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步或协同，这个类都能表现出正确的行为，那么这个类时线程安全的。</p>
-
-<p>线程安全类中封装了必要的同步机制，因此客户端无需进一步采取同步措施。一个无状态的类肯定是线程安全的。</p>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/java-concurrency-1/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/java-gc/">Java垃圾收集技术</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2015-11-26 </span>
-      <div class="post-category">
-          
-            <a href="/categories/java/"> Java </a>
-          
-        </div>
-      <span class="more-meta"> 2980 word </span>
-      <span class="more-meta"> 6 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <blockquote>
-<p>这篇是对《深入理解Java虚拟机》的第三章的总结笔记，G1部分还没有细看</p>
-</blockquote>
-
-<h2 id="1-判断对象存活与否">1 判断对象存活与否</h2>
-
-<h3 id="1-1-引用计数器-没有gc使用">1.1 引用计数器(没有GC使用)</h3>
-
-<ul>
-<li>每当有一个地方引用对象时，数值就+1，引用失效时，数值就-1。</li>
-
-<li><p>问题是无法解决对象之间的循环引用问题，比如对象A的一个字段引用B，对象B的一个字段引用A，然后对象A和B被设置为null，这时无法回收A和B。</p>
-
-<h3 id="1-2-可达性分析">1.2 可达性分析</h3></li>
-
-<li><p>从一系列GC Roots开始搜索，如果GC Roots到这个对象不可达时，则该对象是不可用的。</p></li>
-
-<li><p>GC Roots包括虚拟机栈中引用的对象，本地方法栈中引用的对象，方法区中类静态属性引用的对象，方法区中常量引用的对象。</p></li>
-</ul>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/java-gc/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/dynamic-memory-allocation/">Java动态内存分配机制</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2015-11-26 </span>
-      <div class="post-category">
-          
-            <a href="/categories/java/"> Java </a>
-          
-        </div>
-      <span class="more-meta"> 2216 word </span>
-      <span class="more-meta"> 5 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <blockquote>
-<p>这篇是对《深入理解Java虚拟机》的第二章的总结笔记</p>
-</blockquote>
-
-<h2 id="1-运行时数据区-runtime-data-areas">1 运行时数据区 (Runtime Data Areas)</h2>
-
-<h3 id="1-1-java堆-java-heap">1.1 Java堆  (Java Heap)</h3>
-
-<ul>
-<li>虚拟机启动时创建，<strong>线程独立</strong>：所有线程共享；</li>
-<li>目的是存放对象实例和数组，几乎所有对象都在堆中分配内存；</li>
-<li>垃圾收集器的管理的主要区域，又叫GC堆；</li>
-<li>因为GC大多采用分代收集算法，堆又可以分成<strong>新生代</strong>和<strong>老年代</strong>，新生代又可分为<strong>伊甸园</strong>，<strong>幸存者空间1</strong>，<strong>幸存者空间2</strong>；</li>
-<li>堆在物理上可以是在不连续的空间，但是逻辑上是连续的；</li>
-<li>主流虚拟机的堆是可扩展的（JVM标准规定可以实现成固定大小的），通过-Xmx/-Xms决定，如果堆中内存不足以分配实例，且不能扩展，就会抛出OutOfMemoryError异常。</li>
-</ul>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/dynamic-memory-allocation/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/g53com-computability-1314-revision-notes/">G53COM Computability 可计算性 复习笔记</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/computability-notes/">G53COM Computability 可计算性 复习笔记</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2014-06-01 </span>
       <div class="post-category">
@@ -355,7 +185,29 @@
 <p></p>
     </div>
     <div class="read-more">
-      <a href="/post/g53com-computability-1314-revision-notes/" class="read-more-link">Read more..</a>
+      <a href="/post/computability-notes/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/security-asymmetric-key-ciphers/"></a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 0001-01-01 </span>
+      
+      <span class="more-meta"> 0 word </span>
+      <span class="more-meta"> 0 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      
+    </div>
+    <div class="read-more">
+      <a href="/post/security-asymmetric-key-ciphers/" class="read-more-link">Read more..</a>
     </div>
   </div>
 </article>
@@ -382,7 +234,7 @@
       <a href="https://www.instagram.com/binaryexplorer/" class="iconfont icon-instagram" title="instagram"></a>
       <a href="https://www.linkedin.com/in/alexjiaqili/" class="iconfont icon-linkedin" title="linkedin"></a>
       <a href="https://github.com/virtworld" class="iconfont icon-github" title="github"></a>
-  <a href="http://virtworld.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+  <a href="http://www.jiaqili.me/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
 </div>
 
 <div class="copyright">

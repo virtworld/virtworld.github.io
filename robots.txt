@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: http://virtworld.github.io/sitemap.xml
+Sitemap: http://www.jiaqili.me/sitemap.xml

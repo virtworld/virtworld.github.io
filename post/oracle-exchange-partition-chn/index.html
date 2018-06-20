@@ -32,10 +32,10 @@ ALTER INDEX index_name REBUILD;  但是如果分区很多，索引重建过程�
 
 
 
-<meta name="generator" content="Hugo 0.31.1" />
+<meta name="generator" content="Hugo 0.41" />
 
 
-<link rel="canonical" href="http://virtworld.github.io/post/oracle-exchange-partition-chn/" />
+<link rel="canonical" href="http://www.jiaqili.me/post/oracle-exchange-partition-chn/" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -77,7 +77,7 @@ ALTER INDEX index_name REBUILD;
 
 " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://virtworld.github.io/post/oracle-exchange-partition-chn/" />
+<meta property="og:url" content="http://www.jiaqili.me/post/oracle-exchange-partition-chn/" />
 
 
 
@@ -126,8 +126,9 @@ ALTER INDEX index_name REBUILD;
 
 
 
-<meta itemprop="keywords" content="Oracle,批处理," />
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="使用Oracle交换分区实现快速数据换入/换出"/>
+<meta itemprop="keywords" content="Oracle,Batch," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="使用Oracle交换分区实现快速数据换入/换出"/>
 <meta name="twitter:description" content="对于一些系统的晚间批处理来讲，首先需要从上游系统获取数据，然后进行批处理运算，最后（可能）再准备数据给下游系统。而一个系统内部通常只保留一定时间段的数据，对于“过期的”数据要么放入仓库，要么归档备份。这个涉及到大量数据一进一出的过程，称为“滑动窗口”(sliding window)。
 
 对于这类需要按天或者按月批量进出数据的表，一般按照日期字段分区。Oracle里常用Range或者List分区表，然后建立本地索引(local index)。对于“过期的”数据只需要：
@@ -317,20 +318,20 @@ ALTER INDEX index_name REBUILD;
           
           <a href="/tags/oracle/">Oracle</a>
           
-          <a href="/tags/%E6%89%B9%E5%A4%84%E7%90%86/">批处理</a>
+          <a href="/tags/batch/">Batch</a>
           
         </div>
 
       
       <nav class="post-nav">
         
-          <a class="prev" href="/post/orgnization-name-classification-using-nbc/">
+          <a class="prev" href="/post/algorithm-orgnization-name-classification-using-nbc/">
             <i class="iconfont icon-left"></i>
             <span class="prev-text nav-default">使用朴素贝叶斯将不同的机构名称分为不同的行业</span>
             <span class="prev-text nav-mobile">Prev</span>
           </a>
         
-          <a class="next" href="/post/java-batch-performance-tuning-chn/">
+          <a class="next" href="/post/java-tuning-batch/">
             <span class="next-text nav-default">一次Java批处理程序的性能调优</span>
             <span class="prev-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
@@ -354,7 +355,7 @@ ALTER INDEX index_name REBUILD;
       <a href="https://www.instagram.com/binaryexplorer/" class="iconfont icon-instagram" title="instagram"></a>
       <a href="https://www.linkedin.com/in/alexjiaqili/" class="iconfont icon-linkedin" title="linkedin"></a>
       <a href="https://github.com/virtworld" class="iconfont icon-github" title="github"></a>
-  <a href="http://virtworld.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+  <a href="http://www.jiaqili.me/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
 </div>
 
 <div class="copyright">
