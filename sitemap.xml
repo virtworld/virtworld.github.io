@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml-stylesheet type="text/xsl" href="http://www.jiaqili.me/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://www.jiaqili.me/about/</loc>
+    <lastmod>2018-02-20T19:25:10+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/solr-ansj-config/</loc>
+    <lastmod>2018-06-20T16:09:12+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/algorithm-orgnization-name-classification-using-nbc/</loc>
+    <lastmod>2018-02-25T14:41:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/oracle-exchange-partition-chn/</loc>
+    <lastmod>2018-02-21T20:09:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-tuning-batch/</loc>
+    <lastmod>2018-01-26T11:33:56+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/jvm-class-file/</loc>
+    <lastmod>2015-12-28T10:57:42+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/jvm-class-loading/</loc>
+    <lastmod>2015-12-28T10:09:30+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-concurrency-2/</loc>
+    <lastmod>2015-12-28T08:10:20+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-concurrency-1/</loc>
+    <lastmod>2015-12-28T07:50:12+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/jvm-gc/</loc>
+    <lastmod>2015-11-26T16:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/jvm-dynamic-memory-allocation/</loc>
+    <lastmod>2015-11-26T15:40:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/computability-notes/</loc>
+    <lastmod>2014-06-01T20:54:42+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/categories/algorithm/</loc>
+    <lastmod>2018-02-25T14:41:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/algorithm/</loc>
+    <lastmod>2018-02-25T14:41:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/ansj/</loc>
+    <lastmod>2018-06-20T16:09:12+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/batch/</loc>
+    <lastmod>2018-02-21T20:09:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/categories/</loc>
+    <lastmod>2018-02-25T14:41:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/classloader/</loc>
+    <lastmod>2015-12-28T10:09:30+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/computability/</loc>
+    <lastmod>2014-06-01T20:54:42+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/categories/computer-science/</loc>
+    <lastmod>2014-06-01T20:54:42+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/computer-science/</loc>
+    <lastmod>2014-06-01T20:54:42+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/concurrency/</loc>
+    <lastmod>2015-12-28T08:10:20+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/gc/</loc>
+    <lastmod>2015-11-26T16:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/categories/java/</loc>
+    <lastmod>2018-01-26T11:33:56+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/java/</loc>
+    <lastmod>2018-01-26T11:33:56+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/categories/jvm/</loc>
+    <lastmod>2015-12-28T10:57:42+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/jvm/</loc>
+    <lastmod>2015-12-28T10:57:42+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/memory-allocation/</loc>
+    <lastmod>2015-11-26T15:40:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/naive-bayes-classification/</loc>
+    <lastmod>2018-02-25T14:41:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/categories/oracle/</loc>
+    <lastmod>2018-02-21T20:09:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/oracle/</loc>
+    <lastmod>2018-02-21T20:09:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/performance-tuning/</loc>
+    <lastmod>2018-01-26T11:33:56+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/</loc>
+    <lastmod>2018-06-20T16:09:12+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/categories/search/</loc>
+    <lastmod>2018-06-20T16:09:12+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/solr/</loc>
+    <lastmod>2018-06-20T16:09:12+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/</loc>
+    <lastmod>2018-02-25T14:41:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/</loc>
+    <lastmod>2018-02-20T19:25:10+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+</urlset>

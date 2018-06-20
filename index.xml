@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Virtual World</title>
+    <link>http://www.jiaqili.me/</link>
+    <description>Recent content on Virtual World</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 20 Feb 2018 19:25:10 +0800</lastBuildDate>
+    
+	<atom:link href="http://www.jiaqili.me/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>About</title>
+      <link>http://www.jiaqili.me/about/</link>
+      <pubDate>Tue, 20 Feb 2018 19:25:10 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/about/</guid>
+      <description>Contact: jiaqi [dot] li [at] outlook [dot] com</description>
+    </item>
+    
+    <item>
+      <title>Solr和ANSJ的同义词、自定义词库的数据库配置和实时更新</title>
+      <link>http://www.jiaqili.me/post/solr-ansj-config/</link>
+      <pubDate>Mon, 11 Jun 2018 22:10:12 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/solr-ansj-config/</guid>
+      <description>&lt;p&gt;Solr可以检索很多种类的原始数据，而在这篇文章中，笔者的业务场景是检索数据库中大量的记录，也因为此，我们希望将自定义词库、同义词库等一并放入到数据库中而不是以默认的文本形式存放。&lt;/p&gt;
+
+&lt;p&gt;同时，我们选择ANSJ作为中文分词器，一是它的分词速度和准确性不错，二是它支持从文本、数据库等来源加载自定义词库，三是它支持词性标注（本文暂时中不会用到这点）。&lt;/p&gt;
+
+&lt;p&gt;我们将使用&lt;code&gt;Solr 7.3.1&lt;/code&gt;和&lt;code&gt;ANSJ 5.1.6&lt;/code&gt;，数据库使用的是MySQL 5.7.12以及Oracle 11g，操作系统为Ubuntu 16/Redhat。网上很多文章介绍的还是Solr 4或者Solr 5版本，但是Solr 6以后发生了很多变化，笔者在查找相关技术资料的时候饶了些弯路，所以特此记录下来。&lt;/p&gt;
+
+&lt;p&gt;我们首先介绍Solr和ANSJ的整合，然后是在Solr中引入Data Importer从数据库中导入数据，配置自定义此词库和同义词库，之后是扩展Solr的RequestHandler来实现ANSJ自定义词库的动态更新，最后是扩展Solr的SynonymGraphFilterFactory来实现从数据库中加载同义词库。&lt;/p&gt;
+
+&lt;p&gt;这篇文章不会介绍如何在Tomcat或其它服务器上部署Solr（我们内置的Jetty服务器），这篇文章也不会涉及到Solr集群。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>使用朴素贝叶斯将不同的机构名称分为不同的行业</title>
+      <link>http://www.jiaqili.me/post/algorithm-orgnization-name-classification-using-nbc/</link>
+      <pubDate>Sun, 25 Feb 2018 12:41:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/algorithm-orgnization-name-classification-using-nbc/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文介绍使用朴素贝叶斯分类器将机构按照其名称分类为不同的行业的方法。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;为什么要对机构名称进行分类&#34;&gt;&lt;strong&gt;为什么要对机构名称进行分类？&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;机构名称是指单位名称或者组织机构的名称，比如&lt;code&gt;浙江大学&lt;/code&gt;、&lt;code&gt;深圳市腾讯计算机系统有限公司&lt;/code&gt;、&lt;code&gt;杭州市法院&lt;/code&gt;等等；行业分类根据实际业务需求变化而变化，一个相对标准的行业分类是国家统计局公布的《国民经济行业分类》，但是本文使用了一套自己定义的行业分类。&lt;/p&gt;
+
+&lt;p&gt;首先，为什么要进行行业分类？机构所属的行业其实是机构的一个属性，将机构信息标准化的过程中当然也需要将其行业信息标准化。通常的做法是让用户在填写的时候选择机构的行业类型，但是自动化的行业分类也有很多用处&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;改善用户体验。因为行业可能有很多层级，比如《国民经济行业分类》就有四级行业分类，如果能在用户选择前提供一个系统推荐的分类，则可以减少用户的操作；&lt;/li&gt;
+&lt;li&gt;填补行业分类缺失。可能因为多种原因，比如用户自己不清楚、用户不想填写或者前端未强制要求用户填写等，造成行业分类信息缺失，自动化分类可以作为一个补充。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;但是使用机构名称来做行业分类也有很多问题，比如从有些名称里面根本看不出行业信息。比如，如果没有名称以外的认知，光看&lt;code&gt;腾讯&lt;/code&gt;两个字是看不出来这家机构是做什么的，而&lt;code&gt;深圳市腾讯计算机系统有限公司&lt;/code&gt;则可以猜出个大概。那么为什么还要通过单位名称进行行业分类？&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;首先是简单。分类函数仅需要一个机构名称的输入，就可以输出结果。&lt;/li&gt;
+&lt;li&gt;其次是对于标准企业名称是有效的。标准的企业名称是由&lt;code&gt;行政区划 + 字号 + 行业 + 组织形式&lt;/code&gt;，也就是说如果企业名称是标准的，那么行业信息是很容易识别的；不标准的企业名称，比如简称，则是机构信息标准化中的另一个问题。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>使用Oracle交换分区实现快速数据换入/换出</title>
+      <link>http://www.jiaqili.me/post/oracle-exchange-partition-chn/</link>
+      <pubDate>Wed, 21 Feb 2018 20:09:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/oracle-exchange-partition-chn/</guid>
+      <description>&lt;p&gt;对于一些系统的晚间批处理来讲，首先需要从上游系统获取数据，然后进行批处理运算，最后（可能）再准备数据给下游系统。而一个系统内部通常只保留一定时间段的数据，对于“过期的”数据要么放入仓库，要么归档备份。这个涉及到大量数据一进一出的过程，称为“滑动窗口”(sliding window)。&lt;/p&gt;
+
+&lt;p&gt;对于这类需要按天或者按月批量进出数据的表，一般按照日期字段分区。Oracle里常用Range或者List分区表，然后建立本地索引(local index)。对于“过期的”数据只需要：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;ALTER TABLE partitioned_table DROP PARTITION partition_name;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;而对于换入数据的过程来讲，如果有很多索引的话，插入操作会很慢。有同事做过对比，禁用索引（或者删除索引）后插入数据再重建索引会比正常插入要快一点。首先，将表的所有索引置为不可用：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;ALTER INDEX index_name UNUSABLE;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后用SQLLDR加载数据到新的分区里，然后重建索引：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;ALTER INDEX index_name REBUILD;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;但是如果分区很多，索引重建过程会变成一个噩梦。而且没有索引期间数据是不可用的。&lt;/p&gt;
+
+&lt;p&gt;这时候其实可以用到Oracle的交换分区的功能。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>一次Java批处理程序的性能调优</title>
+      <link>http://www.jiaqili.me/post/java-tuning-batch/</link>
+      <pubDate>Fri, 26 Jan 2018 11:33:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-tuning-batch/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文记录的是一次对某系统的批处理应用程序的调优过程。主要涉及统计信息收集、代码分析调优、JVM调优以及从单机批处理向多机的拆分过程。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;批处理模式&#34;&gt;&lt;strong&gt;批处理模式&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;不论需要处理的业务逻辑如何，大部分批处理程序（也包括我们要讨论的）都遵照一种通用的编程模型。虽然不同的公司内部可能对批处理的各种术语有不同的表述，但为了描述清晰，
+下文将采用&lt;a rel=&#34;JSR-352&#34; href=&#34;https://www.jcp.org/en/jsr/detail?id=352&#34;&gt;&lt;code&gt;JSR-352&lt;/code&gt;&lt;/a&gt;标准定义的批处理领域语言(Domain Language)。下面我们会对一些基本概念做简略描述。&lt;/p&gt;
+
+
+&lt;figure class=&#34;center&#34;&gt;
+    
+        &lt;img src=&#34;http://www.jiaqili.me/images/java-batch-performance-tuning-chn/batch_model.png&#34; alt=&#34;批处理程序模型&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;批处理程序模型&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+
+
+&lt;p&gt;如上图所示，我们的批处理程序包含多个作业(Job)，一个作业又包含多个步骤(Step)，一个步骤内部的执行逻辑遵循经典的读取、处理和写入模式。
+我们称一个正在运行的批处理程序为批处理实例(Batch Instance)， 同样的有作业实例(Job Instance)和步骤实例(Step Instance)。
+不同的批处理会定时运行，根据运行时间点和频率分为日终(End-of-Day)和月末(End-of-Month)批处理。
+我们称批处理时间和业务数据时间挂钩，而非日历时间。比如，一个在2018年1月15日03:00am开始运行的批处理，它处理的是2018年1月14日产生的数据，那么我们称它为2018/01/14日终批处理实例。
+批处理虽然是非实时数据处理，但是也有需要在XX时间段内完成的要求，这通常是因为要满足为下游系统提供数据的要求。&lt;/p&gt;
+
+&lt;p&gt;作业以及其步骤的执行规则一般定义在XML或者数据库中。首先，我们来看一个作业的内部。
+一个作业的正常执行步骤通常有先后逻辑关系，所以一般是串行地按顺序执行(&lt;code&gt;Step1-&amp;gt;Step2-&amp;gt;Step3-&amp;gt;END&lt;/code&gt;)。
+但在一个步骤失败的情况下，可以采用不同的策略：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;尝试重复执行该步骤，并在重复指定次数仍失败后改用其他策略(&lt;code&gt;Step1-&amp;gt;Step1&#39;-&amp;gt;Step1&#39;&#39;...&lt;/code&gt;);&lt;/li&gt;
+&lt;li&gt;跳过该步骤，继续执行下一个步骤(&lt;code&gt;Step1-&amp;gt;Step3-&amp;gt;END&lt;/code&gt;);&lt;/li&gt;
+&lt;li&gt;终止作业(&lt;code&gt;Step1-&amp;gt;END&lt;/code&gt;);&lt;/li&gt;
+&lt;li&gt;进入条件分支(&lt;code&gt;Step1-&amp;gt;Step4-&amp;gt;Step5-&amp;gt;END&lt;/code&gt;)， 如下图。&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;figure class=&#34;center&#34;&gt;
+    
+        &lt;img src=&#34;http://www.jiaqili.me/images/java-batch-performance-tuning-chn/batch_branch.png&#34; alt=&#34;作业内步骤的条件分支&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;作业内步骤的条件分支&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+
+
+&lt;p&gt;接着，我们再来看作业间的关系。作业可以作业一个步骤嵌套在另一个作业中，多个相互独立的作业也可以并行执行。如下图：&lt;/p&gt;
+
+
+&lt;figure class=&#34;center&#34;&gt;
+    
+        &lt;img src=&#34;http://www.jiaqili.me/images/java-batch-performance-tuning-chn/batch_jobs.png&#34; alt=&#34;作业嵌套和并行执行&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;作业嵌套和并行执行&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java Class 文件</title>
+      <link>http://www.jiaqili.me/post/jvm-class-file/</link>
+      <pubDate>Mon, 28 Dec 2015 10:57:42 +0000</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/jvm-class-file/</guid>
+      <description>&lt;h2 id=&#34;1-class概述&#34;&gt;1 Class概述&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Class文件是一个以8位字节为基础单位的二进制流，多字节储存按照Big-endian的方式（既高位字节在地址低位，低位字节在地址高位）；&lt;/li&gt;
+&lt;li&gt;每个Class对应一个类或接口，而类或者接口不一定以文件的形式存在磁盘上；&lt;/li&gt;
+&lt;li&gt;Class文件储存的数据只有两种类型：无符号数和表
+
+&lt;ol&gt;
+&lt;li&gt;无符号数：u1, u2, u4和 u8分别表示1个，2个，4个和8个字节;&lt;/li&gt;
+&lt;li&gt;表(Table)：由多个无符号数或表组成的复合数据类型。&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java类加载机制</title>
+      <link>http://www.jiaqili.me/post/jvm-class-loading/</link>
+      <pubDate>Mon, 28 Dec 2015 10:09:30 +0000</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/jvm-class-loading/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;这篇是对《深入理解Java虚拟机》的第七章的总结笔记&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;虚拟机把描述类的数据从Class文件加载到内存，对数据进行校验，转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型，就是虚拟机的类加载机制。&lt;/p&gt;
+
+&lt;h2 id=&#34;1-触发类加载的条件&#34;&gt;1 触发类加载的条件：&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;碰到new， invokestatic， getstatic， putstatic四条指令时，如果类没有经过初始化，则要初始化类。通常在用new关键字实例化对象，设置静态变量（被final修饰的除外），调用静态方法时发生。&lt;/li&gt;
+&lt;li&gt;进行反射调用，如果类没有经过初始化，则要触发初始化。反射：可以把类、类的方法、类的字段当做对象，在运行时动态操作他们。&lt;/li&gt;
+&lt;li&gt;当初始化类时，其父类没有经过初始化，需要初始化其父类。&lt;/li&gt;
+&lt;li&gt;main所在方法的主类，在虚拟机启动时要被初始化。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>结构化并发应用程序</title>
+      <link>http://www.jiaqili.me/post/java-concurrency-2/</link>
+      <pubDate>Mon, 28 Dec 2015 08:10:20 +0000</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-concurrency-2/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;这篇是《Java并发实践》的第二篇总结&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;1-executor框架&#34;&gt;1 Executor框架&lt;/h1&gt;
+
+&lt;p&gt;任务是一个逻辑执行单元，而线程是使任务异步执行的机制。串行执行会降低响应性和吞吐量；每个任务都分配一个线程会造成很大开销也不利于资源管理。&lt;/p&gt;
+
+&lt;p&gt;该框架包括一个灵活的线程池，提供了不同类型的任务的执行策略，并将任务提交过程和执行过程解耦，用Runnable来表示一个任务。此外Executor框架还提供了对生命周期的支持，以及统计信息的收集、应用程序管理机制和性能监视等机制。&lt;/p&gt;
+
+&lt;p&gt;执行策略定义了任务执行的&amp;rdquo;what, where, when, how&amp;rdquo;等方面。比如在什么线程中执行任务，按什么顺序执行，多少个任务可以并发执行，队列了可以有多少个任务在等待，在任务执行之前和之后应该进行哪些操作，如果要拒绝一个任务，应该选择哪一个？等等&lt;/p&gt;
+
+&lt;p&gt;当需要灵活的执行策略时，用Executor框架来代替手动编写Thread。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>线程安全基础知识</title>
+      <link>http://www.jiaqili.me/post/java-concurrency-1/</link>
+      <pubDate>Mon, 28 Dec 2015 07:50:12 +0000</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-concurrency-1/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;这篇是《Java并发实践》的第一篇笔记，针对第2-3,5,13,15章的总结。书中所介绍的非阻塞的并发算法和数据结构比较粗略，仅限于特性和应用介绍，很少有具体实现，这里也做简单记录。更多的内容可以参考《多处理器编程的艺术》第一修订版以及&lt;a href=&#34;https://www.cs.ox.ac.uk/teaching/materials15-16/cads。以后单独总结。&#34;&gt;https://www.cs.ox.ac.uk/teaching/materials15-16/cads。以后单独总结。&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;编写线程安全代码的核心在于对共享的可变的状态的访问操作进行管理。状态指储存在实例或静态域中的数据；共享表示变量可被多个线程同时访问；可变意味着变量值在其生命周期内可以发生变化。&lt;/p&gt;
+
+&lt;p&gt;当多个线程访问某个可变的状态变量，并且至少有一个写线程时，需要采用同步机制。Java的同步机制，主要是Synchronized关键词，volatile变量，显示锁(Explicit Lock)，以及原子变量(Atomic Variables)。否则，要么该变量不在多线程中共享，要么将其设置为不可变。&lt;/p&gt;
+
+&lt;h1 id=&#34;1-线程安全性&#34;&gt;1 线程安全性&lt;/h1&gt;
+
+&lt;p&gt;线程安全的程序并不一定完全由线程安全类构成，完全由线程安全类构成的程序也未必是线程安全的。线程安全性只与状态相关，只能用于封装其状态的整个代码，比如线程安全类，或者线程安全程序。&lt;/p&gt;
+
+&lt;p&gt;定义：当多个线程访问某个类时，不管运行时环境采取何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步或协同，这个类都能表现出正确的行为，那么这个类时线程安全的。&lt;/p&gt;
+
+&lt;p&gt;线程安全类中封装了必要的同步机制，因此客户端无需进一步采取同步措施。一个无状态的类肯定是线程安全的。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java垃圾收集技术</title>
+      <link>http://www.jiaqili.me/post/jvm-gc/</link>
+      <pubDate>Thu, 26 Nov 2015 16:00:00 +0000</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/jvm-gc/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;这篇是对《深入理解Java虚拟机》的第三章的总结笔记，G1部分还没有细看&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;1-判断对象存活与否&#34;&gt;1 判断对象存活与否&lt;/h2&gt;
+
+&lt;h3 id=&#34;1-1-引用计数器-没有gc使用&#34;&gt;1.1 引用计数器(没有GC使用)&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;每当有一个地方引用对象时，数值就+1，引用失效时，数值就-1。&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;问题是无法解决对象之间的循环引用问题，比如对象A的一个字段引用B，对象B的一个字段引用A，然后对象A和B被设置为null，这时无法回收A和B。&lt;/p&gt;
+
+&lt;h3 id=&#34;1-2-可达性分析&#34;&gt;1.2 可达性分析&lt;/h3&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;从一系列GC Roots开始搜索，如果GC Roots到这个对象不可达时，则该对象是不可用的。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;GC Roots包括虚拟机栈中引用的对象，本地方法栈中引用的对象，方法区中类静态属性引用的对象，方法区中常量引用的对象。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java动态内存分配机制</title>
+      <link>http://www.jiaqili.me/post/jvm-dynamic-memory-allocation/</link>
+      <pubDate>Thu, 26 Nov 2015 15:40:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/jvm-dynamic-memory-allocation/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;这篇是对《深入理解Java虚拟机》的第二章的总结笔记&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;1-运行时数据区-runtime-data-areas&#34;&gt;1 运行时数据区 (Runtime Data Areas)&lt;/h2&gt;
+
+&lt;h3 id=&#34;1-1-java堆-java-heap&#34;&gt;1.1 Java堆  (Java Heap)&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;虚拟机启动时创建，&lt;strong&gt;线程独立&lt;/strong&gt;：所有线程共享；&lt;/li&gt;
+&lt;li&gt;目的是存放对象实例和数组，几乎所有对象都在堆中分配内存；&lt;/li&gt;
+&lt;li&gt;垃圾收集器的管理的主要区域，又叫GC堆；&lt;/li&gt;
+&lt;li&gt;因为GC大多采用分代收集算法，堆又可以分成&lt;strong&gt;新生代&lt;/strong&gt;和&lt;strong&gt;老年代&lt;/strong&gt;，新生代又可分为&lt;strong&gt;伊甸园&lt;/strong&gt;，&lt;strong&gt;幸存者空间1&lt;/strong&gt;，&lt;strong&gt;幸存者空间2&lt;/strong&gt;；&lt;/li&gt;
+&lt;li&gt;堆在物理上可以是在不连续的空间，但是逻辑上是连续的；&lt;/li&gt;
+&lt;li&gt;主流虚拟机的堆是可扩展的（JVM标准规定可以实现成固定大小的），通过-Xmx/-Xms决定，如果堆中内存不足以分配实例，且不能扩展，就会抛出OutOfMemoryError异常。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>G53COM Computability 可计算性 复习笔记</title>
+      <link>http://www.jiaqili.me/post/computability-notes/</link>
+      <pubDate>Sun, 01 Jun 2014 20:54:42 +0000</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/computability-notes/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;这是一篇课程总结笔记，内容基于 G53COM 1314 年度的课件，讲师为 &lt;a href=&#34;http://www.cs.nott.ac.uk/~ajp/&#34;&gt;Dr Andrew Parkes&lt;/a&gt;。这篇文章&lt;strong&gt;并非&lt;/strong&gt;标准答案。 任何定义，解释和示例可能是不准确的或者错误的。请参考您自己的笔记。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;1-定义&#34;&gt;1. 定义&lt;/h1&gt;
+
+&lt;h2 id=&#34;问题分类&#34;&gt;问题分类&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;NC&lt;/strong&gt; is a set of problem that can be solved in polylog time using polynomial a number of processors.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DTIME(f(n))&lt;/strong&gt; is a set of problem that can be solved using some DTM in time f(n).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;P = U&lt;sub&gt;k&lt;/sub&gt; DTIME(n&lt;sup&gt;k&lt;/sup&gt;)&lt;/strong&gt; is a set of problem that can be solved using a DTM in any polynomial time.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;P-hard&lt;/strong&gt;: if a problem X is said to be P-hard iff all problems within P can be reduced to X using polylog time on a polynomial number of processors.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;P-complete&lt;/strong&gt;: if a problem X is said to be P-complete iff it is in P and it is P-hard.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NTIME(f(n))&lt;/strong&gt; is a set of problem that can be solved using some NDTM in time f(n).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NP = U&lt;sub&gt;k&lt;/sub&gt; NTIME(n&lt;sup&gt;k&lt;/sup&gt;)&lt;/strong&gt; is a set of problem that can be solved using some NDTM in any polynomial time. A language is accepted by a NDTM is a set of strings that there exists one or more than one execution path of NDTM that gives yes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reduction from X to Y&lt;/strong&gt;: convert any instance of X to some instance of Y.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NP-hard&lt;/strong&gt;: if a problem X is said to be NP-hard iff any problem in NP can be reduced to X in polynomial time.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NP-complete&lt;/strong&gt;: if a problem X is sad to be NP-complete iff it’s in NP and it’s NP-hard.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DSPACE(f(n))&lt;/strong&gt; is a set of problem that can be solved using some DTM with space f(n).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PSPACE = U&lt;sub&gt;k&lt;/sub&gt; DSPACE(n&lt;sup&gt;k&lt;/sup&gt;)&lt;/strong&gt; is a set of problem that can be solved by a DTM using polynomial space.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PSPACE-hard&lt;/strong&gt;: if a problem X is said to be PSPACE-hard iff any problem in PSPACE can be reduced to X within polynomial time.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PSPACE-complete&lt;/strong&gt;: if a problem is PSPACE-complete if it is in PSPACE and it is PSPACE-hard.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NSPACE(f(n))&lt;/strong&gt; is a set of problem that can be solved using some NTDM with space f(n).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NPSPACE = U&lt;sub&gt;k&lt;/sub&gt; NSPACE(n&lt;sup&gt;k&lt;/sup&gt;)&lt;/strong&gt; is a set of problem that can be solved using a NTDM with polynomial space.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

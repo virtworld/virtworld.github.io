@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Solr on Virtual World</title>
+    <link>http://www.jiaqili.me/tags/solr/</link>
+    <description>Recent content in Solr on Virtual World</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 11 Jun 2018 22:10:12 +0800</lastBuildDate>
+    
+	<atom:link href="http://www.jiaqili.me/tags/solr/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Solr和ANSJ的同义词、自定义词库的数据库配置和实时更新</title>
+      <link>http://www.jiaqili.me/post/solr-ansj-config/</link>
+      <pubDate>Mon, 11 Jun 2018 22:10:12 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/solr-ansj-config/</guid>
+      <description>&lt;p&gt;Solr可以检索很多种类的原始数据，而在这篇文章中，笔者的业务场景是检索数据库中大量的记录，也因为此，我们希望将自定义词库、同义词库等一并放入到数据库中而不是以默认的文本形式存放。&lt;/p&gt;
+
+&lt;p&gt;同时，我们选择ANSJ作为中文分词器，一是它的分词速度和准确性不错，二是它支持从文本、数据库等来源加载自定义词库，三是它支持词性标注（本文暂时中不会用到这点）。&lt;/p&gt;
+
+&lt;p&gt;我们将使用&lt;code&gt;Solr 7.3.1&lt;/code&gt;和&lt;code&gt;ANSJ 5.1.6&lt;/code&gt;，数据库使用的是MySQL 5.7.12以及Oracle 11g，操作系统为Ubuntu 16/Redhat。网上很多文章介绍的还是Solr 4或者Solr 5版本，但是Solr 6以后发生了很多变化，笔者在查找相关技术资料的时候饶了些弯路，所以特此记录下来。&lt;/p&gt;
+
+&lt;p&gt;我们首先介绍Solr和ANSJ的整合，然后是在Solr中引入Data Importer从数据库中导入数据，配置自定义此词库和同义词库，之后是扩展Solr的RequestHandler来实现ANSJ自定义词库的动态更新，最后是扩展Solr的SynonymGraphFilterFactory来实现从数据库中加载同义词库。&lt;/p&gt;
+
+&lt;p&gt;这篇文章不会介绍如何在Tomcat或其它服务器上部署Solr（我们内置的Jetty服务器），这篇文章也不会涉及到Solr集群。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
