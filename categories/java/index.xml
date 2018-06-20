@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java on Virtual World</title>
+    <link>http://www.jiaqili.me/categories/java/</link>
+    <description>Recent content in Java on Virtual World</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 26 Jan 2018 11:33:00 +0800</lastBuildDate>
+    
+	<atom:link href="http://www.jiaqili.me/categories/java/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>一次Java批处理程序的性能调优</title>
+      <link>http://www.jiaqili.me/post/java-tuning-batch/</link>
+      <pubDate>Fri, 26 Jan 2018 11:33:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-tuning-batch/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文记录的是一次对某系统的批处理应用程序的调优过程。主要涉及统计信息收集、代码分析调优、JVM调优以及从单机批处理向多机的拆分过程。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;批处理模式&#34;&gt;&lt;strong&gt;批处理模式&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;不论需要处理的业务逻辑如何，大部分批处理程序（也包括我们要讨论的）都遵照一种通用的编程模型。虽然不同的公司内部可能对批处理的各种术语有不同的表述，但为了描述清晰，
+下文将采用&lt;a rel=&#34;JSR-352&#34; href=&#34;https://www.jcp.org/en/jsr/detail?id=352&#34;&gt;&lt;code&gt;JSR-352&lt;/code&gt;&lt;/a&gt;标准定义的批处理领域语言(Domain Language)。下面我们会对一些基本概念做简略描述。&lt;/p&gt;
+
+
+&lt;figure class=&#34;center&#34;&gt;
+    
+        &lt;img src=&#34;http://www.jiaqili.me/images/java-batch-performance-tuning-chn/batch_model.png&#34; alt=&#34;批处理程序模型&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;批处理程序模型&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+
+
+&lt;p&gt;如上图所示，我们的批处理程序包含多个作业(Job)，一个作业又包含多个步骤(Step)，一个步骤内部的执行逻辑遵循经典的读取、处理和写入模式。
+我们称一个正在运行的批处理程序为批处理实例(Batch Instance)， 同样的有作业实例(Job Instance)和步骤实例(Step Instance)。
+不同的批处理会定时运行，根据运行时间点和频率分为日终(End-of-Day)和月末(End-of-Month)批处理。
+我们称批处理时间和业务数据时间挂钩，而非日历时间。比如，一个在2018年1月15日03:00am开始运行的批处理，它处理的是2018年1月14日产生的数据，那么我们称它为2018/01/14日终批处理实例。
+批处理虽然是非实时数据处理，但是也有需要在XX时间段内完成的要求，这通常是因为要满足为下游系统提供数据的要求。&lt;/p&gt;
+
+&lt;p&gt;作业以及其步骤的执行规则一般定义在XML或者数据库中。首先，我们来看一个作业的内部。
+一个作业的正常执行步骤通常有先后逻辑关系，所以一般是串行地按顺序执行(&lt;code&gt;Step1-&amp;gt;Step2-&amp;gt;Step3-&amp;gt;END&lt;/code&gt;)。
+但在一个步骤失败的情况下，可以采用不同的策略：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;尝试重复执行该步骤，并在重复指定次数仍失败后改用其他策略(&lt;code&gt;Step1-&amp;gt;Step1&#39;-&amp;gt;Step1&#39;&#39;...&lt;/code&gt;);&lt;/li&gt;
+&lt;li&gt;跳过该步骤，继续执行下一个步骤(&lt;code&gt;Step1-&amp;gt;Step3-&amp;gt;END&lt;/code&gt;);&lt;/li&gt;
+&lt;li&gt;终止作业(&lt;code&gt;Step1-&amp;gt;END&lt;/code&gt;);&lt;/li&gt;
+&lt;li&gt;进入条件分支(&lt;code&gt;Step1-&amp;gt;Step4-&amp;gt;Step5-&amp;gt;END&lt;/code&gt;)， 如下图。&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;figure class=&#34;center&#34;&gt;
+    
+        &lt;img src=&#34;http://www.jiaqili.me/images/java-batch-performance-tuning-chn/batch_branch.png&#34; alt=&#34;作业内步骤的条件分支&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;作业内步骤的条件分支&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+
+
+&lt;p&gt;接着，我们再来看作业间的关系。作业可以作业一个步骤嵌套在另一个作业中，多个相互独立的作业也可以并行执行。如下图：&lt;/p&gt;
+
+
+&lt;figure class=&#34;center&#34;&gt;
+    
+        &lt;img src=&#34;http://www.jiaqili.me/images/java-batch-performance-tuning-chn/batch_jobs.png&#34; alt=&#34;作业嵌套和并行执行&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;作业嵌套和并行执行&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>结构化并发应用程序</title>
+      <link>http://www.jiaqili.me/post/java-concurrency-2/</link>
+      <pubDate>Mon, 28 Dec 2015 08:10:20 +0000</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-concurrency-2/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;这篇是《Java并发实践》的第二篇总结&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;1-executor框架&#34;&gt;1 Executor框架&lt;/h1&gt;
+
+&lt;p&gt;任务是一个逻辑执行单元，而线程是使任务异步执行的机制。串行执行会降低响应性和吞吐量；每个任务都分配一个线程会造成很大开销也不利于资源管理。&lt;/p&gt;
+
+&lt;p&gt;该框架包括一个灵活的线程池，提供了不同类型的任务的执行策略，并将任务提交过程和执行过程解耦，用Runnable来表示一个任务。此外Executor框架还提供了对生命周期的支持，以及统计信息的收集、应用程序管理机制和性能监视等机制。&lt;/p&gt;
+
+&lt;p&gt;执行策略定义了任务执行的&amp;rdquo;what, where, when, how&amp;rdquo;等方面。比如在什么线程中执行任务，按什么顺序执行，多少个任务可以并发执行，队列了可以有多少个任务在等待，在任务执行之前和之后应该进行哪些操作，如果要拒绝一个任务，应该选择哪一个？等等&lt;/p&gt;
+
+&lt;p&gt;当需要灵活的执行策略时，用Executor框架来代替手动编写Thread。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>线程安全基础知识</title>
+      <link>http://www.jiaqili.me/post/java-concurrency-1/</link>
+      <pubDate>Mon, 28 Dec 2015 07:50:12 +0000</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-concurrency-1/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;这篇是《Java并发实践》的第一篇笔记，针对第2-3,5,13,15章的总结。书中所介绍的非阻塞的并发算法和数据结构比较粗略，仅限于特性和应用介绍，很少有具体实现，这里也做简单记录。更多的内容可以参考《多处理器编程的艺术》第一修订版以及&lt;a href=&#34;https://www.cs.ox.ac.uk/teaching/materials15-16/cads。以后单独总结。&#34;&gt;https://www.cs.ox.ac.uk/teaching/materials15-16/cads。以后单独总结。&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;编写线程安全代码的核心在于对共享的可变的状态的访问操作进行管理。状态指储存在实例或静态域中的数据；共享表示变量可被多个线程同时访问；可变意味着变量值在其生命周期内可以发生变化。&lt;/p&gt;
+
+&lt;p&gt;当多个线程访问某个可变的状态变量，并且至少有一个写线程时，需要采用同步机制。Java的同步机制，主要是Synchronized关键词，volatile变量，显示锁(Explicit Lock)，以及原子变量(Atomic Variables)。否则，要么该变量不在多线程中共享，要么将其设置为不可变。&lt;/p&gt;
+
+&lt;h1 id=&#34;1-线程安全性&#34;&gt;1 线程安全性&lt;/h1&gt;
+
+&lt;p&gt;线程安全的程序并不一定完全由线程安全类构成，完全由线程安全类构成的程序也未必是线程安全的。线程安全性只与状态相关，只能用于封装其状态的整个代码，比如线程安全类，或者线程安全程序。&lt;/p&gt;
+
+&lt;p&gt;定义：当多个线程访问某个类时，不管运行时环境采取何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步或协同，这个类都能表现出正确的行为，那么这个类时线程安全的。&lt;/p&gt;
+
+&lt;p&gt;线程安全类中封装了必要的同步机制，因此客户端无需进一步采取同步措施。一个无状态的类肯定是线程安全的。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
