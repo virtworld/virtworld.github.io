@@ -571,11 +571,12 @@ create table cssename.cname (
 
 <p>然后修改同一个配置目录下的solrconfig.xml文件，添加一个requestHandler。这个handler用到的是我们刚刚添加的dataImporter的jar包。</p>
 
-<p><requestHandler name="/dataimport" class="org.apache.solr.handler.dataimport.DataImportHandler">
-    <lst name="defaults">
-      <str name="config">data-config.xml</str>
-    </lst>
-</requestHandler></p>
+<pre><code class="language-xml">&lt;requestHandler name=&quot;/dataimport&quot; class=&quot;org.apache.solr.handler.dataimport.DataImportHandler&quot;&gt;
+    &lt;lst name=&quot;defaults&quot;&gt;
+      &lt;str name=&quot;config&quot;&gt;data-config.xml&lt;/str&gt;
+    &lt;/lst&gt;
+&lt;/requestHandler&gt;
+</code></pre>
 
 <h2 id="2-4-导入数据">2.4 导入数据</h2>
 
