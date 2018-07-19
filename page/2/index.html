@@ -53,7 +53,7 @@
 
 
 
-<meta property="og:updated_time" content="2014-06-01T20:54:42&#43;00:00"/>
+<meta property="og:updated_time" content="2015-11-26T15:40:00&#43;08:00"/>
 
 
 
@@ -137,6 +137,49 @@
   <section id="posts" class="posts">
     
     
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/jvm-dynamic-memory-allocation/">Java动态内存分配机制</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2015-11-26 </span>
+      <div class="post-category">
+          
+            <a href="/categories/jvm/"> JVM </a>
+          
+        </div>
+      <span class="more-meta"> 2216 word </span>
+      <span class="more-meta"> 5 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <blockquote>
+<p>这篇是对《深入理解Java虚拟机》的第二章的总结笔记</p>
+</blockquote>
+
+<h2 id="1-运行时数据区-runtime-data-areas">1 运行时数据区 (Runtime Data Areas)</h2>
+
+<h3 id="1-1-java堆-java-heap">1.1 Java堆  (Java Heap)</h3>
+
+<ul>
+<li>虚拟机启动时创建，<strong>线程独立</strong>：所有线程共享；</li>
+<li>目的是存放对象实例和数组，几乎所有对象都在堆中分配内存；</li>
+<li>垃圾收集器的管理的主要区域，又叫GC堆；</li>
+<li>因为GC大多采用分代收集算法，堆又可以分成<strong>新生代</strong>和<strong>老年代</strong>，新生代又可分为<strong>伊甸园</strong>，<strong>幸存者空间1</strong>，<strong>幸存者空间2</strong>；</li>
+<li>堆在物理上可以是在不连续的空间，但是逻辑上是连续的；</li>
+<li>主流虚拟机的堆是可扩展的（JVM标准规定可以实现成固定大小的），通过-Xmx/-Xms决定，如果堆中内存不足以分配实例，且不能扩展，就会抛出OutOfMemoryError异常。</li>
+</ul>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/jvm-dynamic-memory-allocation/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
     
       <article class="post">
   <header class="post-header">

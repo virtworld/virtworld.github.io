@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>http://www.jiaqili.me/post/se-oodesign/</loc>
+    <lastmod>2018-07-19T20:31:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>http://www.jiaqili.me/post/solr-ansj-config/</loc>
     <lastmod>2018-06-20T16:09:12+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -87,14 +94,14 @@
   </url>
   
   <url>
-    <loc>http://www.jiaqili.me/categories/algorithm/</loc>
+    <loc>http://www.jiaqili.me/tags/algorithm/</loc>
     <lastmod>2018-02-25T14:41:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://www.jiaqili.me/tags/algorithm/</loc>
+    <loc>http://www.jiaqili.me/categories/algorithm/</loc>
     <lastmod>2018-02-25T14:41:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
@@ -136,14 +143,14 @@
   </url>
   
   <url>
-    <loc>http://www.jiaqili.me/categories/computer-science/</loc>
+    <loc>http://www.jiaqili.me/tags/computer-science/</loc>
     <lastmod>2014-06-01T20:54:42+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://www.jiaqili.me/tags/computer-science/</loc>
+    <loc>http://www.jiaqili.me/categories/computer-science/</loc>
     <lastmod>2014-06-01T20:54:42+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
@@ -164,13 +171,6 @@
   </url>
   
   <url>
-    <loc>http://www.jiaqili.me/categories/java/</loc>
-    <lastmod>2018-01-26T11:33:56+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>http://www.jiaqili.me/tags/java/</loc>
     <lastmod>2018-01-26T11:33:56+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -178,14 +178,21 @@
   </url>
   
   <url>
-    <loc>http://www.jiaqili.me/categories/jvm/</loc>
-    <lastmod>2015-12-28T10:57:42+00:00</lastmod>
+    <loc>http://www.jiaqili.me/categories/java/</loc>
+    <lastmod>2018-01-26T11:33:56+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://www.jiaqili.me/tags/jvm/</loc>
+    <lastmod>2015-12-28T10:57:42+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/categories/jvm/</loc>
     <lastmod>2015-12-28T10:57:42+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
@@ -206,14 +213,21 @@
   </url>
   
   <url>
-    <loc>http://www.jiaqili.me/categories/oracle/</loc>
-    <lastmod>2018-02-21T20:09:00+08:00</lastmod>
+    <loc>http://www.jiaqili.me/tags/object-oriented-design/</loc>
+    <lastmod>2018-07-19T20:31:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://www.jiaqili.me/tags/oracle/</loc>
+    <lastmod>2018-02-21T20:09:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/categories/oracle/</loc>
     <lastmod>2018-02-21T20:09:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
@@ -228,7 +242,7 @@
   
   <url>
     <loc>http://www.jiaqili.me/post/</loc>
-    <lastmod>2018-06-20T16:09:12+08:00</lastmod>
+    <lastmod>2018-07-19T20:31:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -236,6 +250,20 @@
   <url>
     <loc>http://www.jiaqili.me/categories/search/</loc>
     <lastmod>2018-06-20T16:09:12+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/software-engineering/</loc>
+    <lastmod>2018-07-19T20:31:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/categories/software-engineering/</loc>
+    <lastmod>2018-07-19T20:31:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
