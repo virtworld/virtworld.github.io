@@ -6,10 +6,80 @@
     <description>Recent content in Java on Virtual World</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 26 Jan 2018 11:33:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 11 Aug 2018 13:00:00 +0800</lastBuildDate>
     
 	<atom:link href="http://www.jiaqili.me/categories/java/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Java基础知识系列3： Object类</title>
+      <link>http://www.jiaqili.me/post/java-basics-3-object/</link>
+      <pubDate>Sat, 11 Aug 2018 13:00:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-basics-3-object/</guid>
+      <description>&lt;p&gt;Java中每个类都是继承自Object，如果一个类没有显示地指明父类，Object就是它的父类。除了基本类型外，对象、对象数组、基本类型数组都是继承自Object类。本文主要介绍Object的方法。&lt;/p&gt;
+
+&lt;h1 id=&#34;equals方法&#34;&gt;equals方法&lt;/h1&gt;
+
+&lt;p&gt;Object的equals方法使用两个对象的地址是否相同来判断对象是否等价。如果子类没有覆盖equals
+方法，那么它也将如此判断，但很多时候我们希望通过对象的状态，即私有数据域中的数据，来判断两个对象是否相同。&lt;/p&gt;
+
+&lt;p&gt;Java语言规范要求equals方法具有以下方面特性：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;自反性&lt;/strong&gt;。对于任何非空的x，x.equals(x)返回true;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;对称性&lt;/strong&gt;。对于任何引用x和y。当且仅当x.equals(y)返回true，y.equals(x)也应该返回true;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;传递性&lt;/strong&gt;。对于任何引用x、y 和z。如果x.equals(y)返回true，y.equals(z)返回true，那么x.equals(z)也应该返回true;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;一致性&lt;/strong&gt;。如果x和y引用的对象没有发生变化，反复调用x.equals(y)应该返回一样的结果;&lt;/li&gt;
+&lt;li&gt;对于任何非空引用x。x.equals(null) 应该返回false。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java基础知识系列2：修饰符</title>
+      <link>http://www.jiaqili.me/post/java-basics-2-modifiers/</link>
+      <pubDate>Sat, 11 Aug 2018 12:59:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-basics-2-modifiers/</guid>
+      <description>&lt;h1 id=&#34;final数据-方法和类&#34;&gt;final数据、方法和类&lt;/h1&gt;
+
+&lt;h2 id=&#34;final数据&#34;&gt;final数据&lt;/h2&gt;
+
+&lt;p&gt;对基本类型使用final修饰词时，该基本类型在初始化后不能被修改；对对象引用使用final修饰词时，该引用被初始化后不能指向其他对象，但是所指向的对象本身仍旧是可变的。比如final数组引用，这个引用只能指向同一个数组，但是数组本身的元素却是可变的。&lt;/p&gt;
+
+&lt;p&gt;如果某个域被定义为final，则必须在定义处或者构造器中对其进行初始化。final只表示一旦被初始化，其值将不会改变，但不是说在编译期就能知道其值：我们可以使用随机函数初始化它。&lt;/p&gt;
+
+&lt;p&gt;一个既是static又是final 的变量只占据一段不能改变的内存：static表示只有一份，final表示常量。final数据一般出现在不可变的基本类型域或者不可变类的域，对于可变的类，使用final修饰某实例域容易造成混乱。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java基础知识系列1：常见问题</title>
+      <link>http://www.jiaqili.me/post/java-basics-1-basics/</link>
+      <pubDate>Sat, 11 Aug 2018 12:58:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-basics-1-basics/</guid>
+      <description>&lt;p&gt;本章不是对Java语言语法的总结，而是摘录了一些容易容易出错、遗忘或混淆的基础知识点。&lt;/p&gt;
+
+&lt;h1 id=&#34;操作符&#34;&gt;操作符&lt;/h1&gt;
+
+&lt;ol&gt;
+&lt;li&gt;前缀递增++a，为先计算后生成值；后缀递增a++，为生成值后递增；&lt;/li&gt;
+&lt;li&gt;对于对象，==操作符比较的是引用；对于基本类型，==比较的是值。要比较对象的实际内容应该使用equals，详见&lt;code&gt;Java基础知识系列3： Object类&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;布尔值不能被赋值给int类型；在应该是用String的地方使用了布尔值，它们会被转换为恰当的文本形式，比如false；&lt;/li&gt;
+&lt;li&gt;直接常量后面加上后缀表示其类型，比如L表示long，D表示double，F表示float；&lt;/li&gt;
+&lt;li&gt;八进制用0开头，后面跟0-7的数字；十六进制用0x开头，后面跟0-F；&lt;/li&gt;
+&lt;li&gt;布尔类型可以进行的运算很有限，不能进行加减，但是可以进行位运算，可以执行按位与(&amp;amp;)、或(|)、异或(^)，但是不能执行按位非(~);&lt;/li&gt;
+&lt;li&gt;移位操作符只能用来处理整数类型，&amp;lt;&amp;lt;左移操作符按操作符右边的位数将操作符左边的操作数向左移动，低位补0；&amp;gt;&amp;gt;有符号右移操作符，符合为正则高位插0，符号为负则高位插1；&amp;gt;&amp;gt;&amp;gt;无符号右移操作符，无论符号如何，高位补0。如果对char, byte, short 等类型进行移位操作，它们会先被转换为int；&lt;/li&gt;
+&lt;li&gt;Java允许我们把任何基本类型转换为任何基本类型，但是布尔类型除外，它不能进行任何类型转换；&lt;/li&gt;
+&lt;li&gt;float和double转换为整型时，小数部分被舍弃，如果需要四舍五入，则需要用Math.round方法；&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>一次Java批处理程序的性能调优</title>

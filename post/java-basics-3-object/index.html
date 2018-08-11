@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Java基础知识系列3： Object类 - Virtual World</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Jiaqi Li" />
+  <meta name="description" content="Java中每个类都是继承自Object，如果一个类没有显示地指明父类，Object就是它的父类。除了基本类型外，对象、对象数组、基本类型数组都是继承自Object类。本文主要介绍Object的方法。
+equals方法 Object的equals方法使用两个对象的地址是否相同来判断对象是否等价。如果子类没有覆盖equals 方法，那么它也将如此判断，但很多时候我们希望通过对象的状态，即私有数据域中的数据，来判断两个对象是否相同。
+Java语言规范要求equals方法具有以下方面特性：
+ 自反性。对于任何非空的x，x.equals(x)返回true; 对称性。对于任何引用x和y。当且仅当x.equals(y)返回true，y.equals(x)也应该返回true; 传递性。对于任何引用x、y 和z。如果x.equals(y)返回true，y.equals(z)返回true，那么x.equals(z)也应该返回true; 一致性。如果x和y引用的对象没有发生变化，反复调用x.equals(y)应该返回一样的结果; 对于任何非空引用x。x.equals(null) 应该返回false。  
+" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.41" />
+
+
+<link rel="canonical" href="http://www.jiaqili.me/post/java-basics-3-object/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=2.7.1" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="Java基础知识系列3： Object类" />
+<meta property="og:description" content="Java中每个类都是继承自Object，如果一个类没有显示地指明父类，Object就是它的父类。除了基本类型外，对象、对象数组、基本类型数组都是继承自Object类。本文主要介绍Object的方法。
+
+equals方法
+
+Object的equals方法使用两个对象的地址是否相同来判断对象是否等价。如果子类没有覆盖equals
+方法，那么它也将如此判断，但很多时候我们希望通过对象的状态，即私有数据域中的数据，来判断两个对象是否相同。
+
+Java语言规范要求equals方法具有以下方面特性：
+
+
+自反性。对于任何非空的x，x.equals(x)返回true;
+对称性。对于任何引用x和y。当且仅当x.equals(y)返回true，y.equals(x)也应该返回true;
+传递性。对于任何引用x、y 和z。如果x.equals(y)返回true，y.equals(z)返回true，那么x.equals(z)也应该返回true;
+一致性。如果x和y引用的对象没有发生变化，反复调用x.equals(y)应该返回一样的结果;
+对于任何非空引用x。x.equals(null) 应该返回false。
+
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.jiaqili.me/post/java-basics-3-object/" />
+
+
+
+<meta property="article:published_time" content="2018-08-11T13:00:00&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-08-11T13:00:00&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Java基础知识系列3： Object类">
+<meta itemprop="description" content="Java中每个类都是继承自Object，如果一个类没有显示地指明父类，Object就是它的父类。除了基本类型外，对象、对象数组、基本类型数组都是继承自Object类。本文主要介绍Object的方法。
+
+equals方法
+
+Object的equals方法使用两个对象的地址是否相同来判断对象是否等价。如果子类没有覆盖equals
+方法，那么它也将如此判断，但很多时候我们希望通过对象的状态，即私有数据域中的数据，来判断两个对象是否相同。
+
+Java语言规范要求equals方法具有以下方面特性：
+
+
+自反性。对于任何非空的x，x.equals(x)返回true;
+对称性。对于任何引用x和y。当且仅当x.equals(y)返回true，y.equals(x)也应该返回true;
+传递性。对于任何引用x、y 和z。如果x.equals(y)返回true，y.equals(z)返回true，那么x.equals(z)也应该返回true;
+一致性。如果x和y引用的对象没有发生变化，反复调用x.equals(y)应该返回一样的结果;
+对于任何非空引用x。x.equals(null) 应该返回false。
+
+
+">
+
+
+<meta itemprop="datePublished" content="2018-08-11T13:00:00&#43;08:00" />
+<meta itemprop="dateModified" content="2018-08-11T13:00:00&#43;08:00" />
+<meta itemprop="wordCount" content="4310">
+
+
+
+<meta itemprop="keywords" content="Java,Object," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java基础知识系列3： Object类"/>
+<meta name="twitter:description" content="Java中每个类都是继承自Object，如果一个类没有显示地指明父类，Object就是它的父类。除了基本类型外，对象、对象数组、基本类型数组都是继承自Object类。本文主要介绍Object的方法。
+
+equals方法
+
+Object的equals方法使用两个对象的地址是否相同来判断对象是否等价。如果子类没有覆盖equals
+方法，那么它也将如此判断，但很多时候我们希望通过对象的状态，即私有数据域中的数据，来判断两个对象是否相同。
+
+Java语言规范要求equals方法具有以下方面特性：
+
+
+自反性。对于任何非空的x，x.equals(x)返回true;
+对称性。对于任何引用x和y。当且仅当x.equals(y)返回true，y.equals(x)也应该返回true;
+传递性。对于任何引用x、y 和z。如果x.equals(y)返回true，y.equals(z)返回true，那么x.equals(z)也应该返回true;
+一致性。如果x和y引用的对象没有发生变化，反复调用x.equals(y)应该返回一样的结果;
+对于任何非空引用x。x.equals(null) 应该返回false。
+
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Virtual World</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Virtual World</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Java基础知识系列3： Object类</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-08-11 </span>
+        <div class="post-category">
+            
+              <a href="/categories/java/"> Java </a>
+            
+          </div>
+        <span class="more-meta"> 4310 word </span>
+        <span class="more-meta"> 9 min read </span>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#equals方法">equals方法</a></li>
+<li><a href="#hascode方法">hasCode方法</a></li>
+<li><a href="#tostring方法">toString方法</a></li>
+<li><a href="#clone方法">clone方法</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <p>Java中每个类都是继承自Object，如果一个类没有显示地指明父类，Object就是它的父类。除了基本类型外，对象、对象数组、基本类型数组都是继承自Object类。本文主要介绍Object的方法。</p>
+
+<h1 id="equals方法">equals方法</h1>
+
+<p>Object的equals方法使用两个对象的地址是否相同来判断对象是否等价。如果子类没有覆盖equals
+方法，那么它也将如此判断，但很多时候我们希望通过对象的状态，即私有数据域中的数据，来判断两个对象是否相同。</p>
+
+<p>Java语言规范要求equals方法具有以下方面特性：</p>
+
+<ul>
+<li><strong>自反性</strong>。对于任何非空的x，x.equals(x)返回true;</li>
+<li><strong>对称性</strong>。对于任何引用x和y。当且仅当x.equals(y)返回true，y.equals(x)也应该返回true;</li>
+<li><strong>传递性</strong>。对于任何引用x、y 和z。如果x.equals(y)返回true，y.equals(z)返回true，那么x.equals(z)也应该返回true;</li>
+<li><strong>一致性</strong>。如果x和y引用的对象没有发生变化，反复调用x.equals(y)应该返回一样的结果;</li>
+<li>对于任何非空引用x。x.equals(null) 应该返回false。</li>
+</ul>
+
+<p></p>
+
+<p>下面以Employee及其子类Manager为例，展示<code>equals</code>方法的重写方法：</p>
+
+<pre><code class="language-java">class Employee{
+
+    private String id;
+    private String name;
+    private double salary;
+
+    @Override
+    public boolean equals(Object other){
+
+        // 地址都相同的， 说明两个引用肯定指向同一个对象
+        if( this == other) return true;
+
+        // 如果参数对象为空， 返回false
+        if( other == null) return false;
+
+        // 如果类信息不匹配， 返回false
+        if( getClass() != other.getClass()) return false;
+
+        // 到这一步， 我们已经知道other 是一个非空的Employee 对象了
+        Employee otherEmployee = (Employee)other;
+
+        // 测试两个对象的域是否等价， 对象测试使用Objects.equals(a, b) 方法：
+        // 如果两个参数都为null 返回true ， 如果其中一个为null 返回false ，
+        // 如果都不为null ， 则调用a.equals(b)
+        return Objects.equals(name , otherEmployee.name)
+               &amp;&amp; salary == otherEmployee.salary
+               &amp;&amp; Objects.equals(id, otherEmployee.id);
+    }
+}
+
+class Manager extends Employee{
+
+    private double bonus; // 经理有年终奖
+
+    @Override
+    public boolean equals(Object other){
+
+        // 首先调用父类的equals方法，如果相等再判断子类的数据域。
+        if( !super.equals( other)) return false;
+
+        // 父类已经检查过， 两个对象类信息相同， 即都是Manager
+        Manager otherManager = (Manager)other;
+
+        return bonus == otherManager.bonus;
+    }
+}
+</code></pre>
+
+<p>上述的代码中，我们比较两个对象的类型是否一致的时候使用了<code>getClass()</code>方法，另一种方法是使用<code>instanceof</code>来比较：</p>
+
+<pre><code class="language-java">if( !(other instanceof Employee)) return false
+</code></pre>
+
+<p>这两种方法都有自己的缺点：</p>
+
+<ol>
+<li><p>使用<code>instanceof</code>的方式会违反上面的对称性。
+当执行manager.equals(employee)的时候，由于Manger是Employee的子类，上述的代码不会返回false；
+但是反过来执行employee.equals(manager)的时候，上述代码一定返回false。</p></li>
+
+<li><p>而使用<code>getClass()</code>的方式在匿名内部类中会返回false。因为匿名内部类的每个自动生成的类名都不相同。比如下面一个例子，我们创建了a和b两个继承ArrayList的匿名内部类。</p>
+
+<pre><code class="language-java">public class Test20180601 {
+
+    public static void main(String[] args) {
+            
+        List&lt;String&gt; c = new ArrayList&lt;String&gt;();
+        c.add(&quot;A&quot;);
+        c.add(&quot;B&quot;);
+            
+        List&lt;String&gt; a = new ArrayList&lt;String&gt;(){
+
+            private static final long serialVersionUID = 1L;
+
+            {
+                add(&quot;A&quot;); 
+                add(&quot;B&quot;); 
+            }
+        };
+            
+        List&lt;String&gt; b = new ArrayList&lt;String&gt;(){
+
+            private static final long serialVersionUID = 1L;
+
+            {
+                add(&quot;A&quot;); 
+                add(&quot;B&quot;); 
+            }
+        };
+            
+        System.out.println(a.getClass().getName());
+        System.out.println(b.getClass().getName());
+        System.out.println(c.getClass().getName());
+        System.out.println(a.equals(b));
+        System.out.println(a.equals(c));
+        System.out.println(b.equals(c));
+    }
+}
+</code></pre>
+
+<p>上述代码会输出</p>
+
+<pre><code class="language-text">Test20180601$1
+Test20180601$2
+java.util.ArrayList
+true
+true
+true
+</code></pre>
+
+<p>可见a和b的类型不相同，它们与父类ArrayList也不是一个类型。因此采用<code>getClass</code>的equals计算在此场景下会返回false。</p>
+
+<p>但是我们看到a、b和c的互相equals结果都是true，这是因为我们没有重写a和b的equals方法，它们用了ArrayList的equals方法，而ArrayList同样没有重写，最终用的是AbstractList里面的equals方法，它的代码如下：</p>
+
+<pre><code class="language-java">public boolean equals( Object c ){
+
+    if( o == this) return true;
+    if( !( o instaceof List)) return false;
+
+    ListIterator&lt;E&gt; e1 = listIterator();
+    ListIterator&lt;E&gt; e2 = ((List&lt;?&gt;) o).listIterator();
+    while( e1.hasNext() &amp;&amp; e2.hasNext()){
+        E o1 = e1.next();
+        Object o2 = e2.next();
+        if( !( o1 == null ? o2 == null : o1.equals( o2))) return false;
+    }
+
+    return !( e1.hasNex() || e2.hasNext());
+}
+</code></pre>
+
+<p>所以只要a、b和c都是继承自List，并且内部元素一样，它们都是“相等的”。我们会在内部类章节中再详细讨论内部类的问题。</p></li>
+</ol>
+
+<p>那么应该用哪种方式来比较类型呢？如果对于Employee及其所有派生类的比较仅仅基于Employee类中的私有域，比如我们只通过id来比
+较，那么我们可以使用instanceof来实现，比如上面ArrayList的例子。同时，可以把Employee的equals申明为final，防止子类覆盖（ArrayList没有采取这种做法）。
+如果相反，我们比较两个对象时候需要考虑派生类的私有域，那么instanceof就是一种不合适的实现方式，而应该使用getClass()。</p>
+
+<p>通过上述例子，我们总结出equals的编写步骤：</p>
+
+<ol>
+<li>给参数取名为other的一个Object对象，之后需要转换为当前对象的类。</li>
+<li>比较两个变量this和other是否引用了同一个对象。</li>
+<li>检测other是否null，null 则返回false（使用instanceof可以不加此检查，因为<code>null instanceof Class</code>返回false）。</li>
+<li>比较this和other是否同属一个类。如果equals语义在每个子类中有所改变，就使用getClass()来判断，如果每个子类中都使用同一的语义，就是用instanceof来检测。</li>
+<li>将other转换为当前类类型变量。</li>
+<li>对所有需要比较的域进行比较。基本数据类型用==，使用Objects.equals比较对象域。</li>
+<li>如果子类中重新定义了equals，就要在其中包含调用了super.equals(other)。</li>
+</ol>
+
+<p>对于数组类型的域，可以使用<code>Arrays.equals(type[] a, type[] b)</code>方法来检测。该方法首先检测两个数组长
+度是否相同，再检测对应位置上的元素是否也相同。</p>
+
+<h1 id="hascode方法">hasCode方法</h1>
+
+<p>所有对象都继承了Object类的hashCode方法。每个对象都有一个默认的散列码，其值为对象的内存地址。</p>
+
+<p>为了使用Hash类容器，比如HashMap，必须重新定义自己创建的类的hashCode和equals方法。
+虽然hashCode的设计需要让对象产生的散列码尽可能均匀分布，尽可能执行速度快，但是不同的对象的hashCode有可能会返回同样的结果，
+但是equals方法总是能够严格地区分两个不同的对象。</p>
+
+<p>HashMap判断对象是否已经存在时，先是使用对象的hash值来找到对象的位置，然后对于同一个位置的所有元
+素，调用equals找出是否存在完全一致的对象。如果hashCode没有重写，两个逻辑上相同的对象可能就
+会因为内存地址不同而被放到不同的位置作为不同的对象来对待；如果equals没有被重写，两个逻辑上相同的对象可能会被
+当作两个不同对象处理。因此，equals和hashCode的定义必须一致，如果x.equals(y)返回true，那么
+x.hashCode()必须与y.hashCode()具有相同的值。</p>
+
+<p><code>Thinking in Java</code>中给出的一种hashCode重写的指导方案：</p>
+
+<ol>
+<li>给初始的int类型的结果变量result赋一个非零素数常量，比如17；</li>
+
+<li><p>对对象内每一个需要考虑的私有域（和equals一样）f，计算出一个int类型的散列值c，计算方法如下：</p>
+
+<pre><code class="language-text">boolean                 c = ( f ? 0 : 1)
+byte, char, short, int  c = ( int ) f
+long                    c = ( int )( f ^ (f &gt;&gt; 32))
+float                   c = Float.floatToIntBits( f )
+double                  long l = Double.doubleToLongBits( f ) 
+                        c = ( int )( l ^ ( l &gt;&gt; 32 ) )
+Object                  c = f.hashCode()
+数组                    Arrays.hashCode(type[] a)
+</code></pre></li>
+
+<li><p>合并计算得到的散列码 result = result * 37 + c;</p></li>
+
+<li><p>返回result。</p></li>
+</ol>
+
+<p>比如Employee类的hashCode可以写成</p>
+
+<pre><code class="language-java">@Override
+public int hashCode(){
+    int result = 11;
+    result = result * 17 + name.hashCode();
+    result = result * 17 + new Integer(id).hashCode();
+    result = result * 17 + new Double(salary).hashCode();
+    return result;
+}
+</code></pre>
+
+<p>在Java7中可以做如下改进：首先空对象的hashCode处理：</p>
+
+<pre><code class="language-java">@Override
+Public int hashCode(){
+    Int result = 11;
+    result = result * 17 + Objects.hashCode(name);
+    result = result * 17 + new Integer(id).hashCode();
+    result = result * 17 + new Double(salary).hashCode();
+    return result;
+}
+</code></pre>
+
+<p>其次可以简化：</p>
+
+<pre><code class="language-java">@Override
+Public int hashCode(){
+    Return Objects.hash(id, name , salary);
+}
+</code></pre>
+
+<p>这个方法等价于调用Arrays.hashCode()，把所有要处理的元素都放到一个数组里，计算hash 值。</p>
+
+<h1 id="tostring方法">toString方法</h1>
+
+<p>Object类的toString默认打印对象的类名和散列码。比如</p>
+
+<pre><code class="language-java">System.out.println( new Object() ); 
+</code></pre>
+
+<p>可能会给出java.lang.Object@c17164。</p>
+
+<p>当需要用到x对象的toString方法的时候，建议使用x + &ldquo;&ldquo;的方式，这样即使x为空或者x为基本类型都能处理。</p>
+
+<p>自定义的类为了能够正确的打印出对象的内容，而不是其内存地址，需要重写Object类的toString()方法的实现。比如下面是Employee的实现：</p>
+
+<pre><code class="language-java">public String toString(){
+    return getClass().getName() + “ [name= ” + name + “ ,salary= ” + salary + “ ,id= ” + id + “ ] ” ;
+}
+</code></pre>
+
+<p>如果父类包含了getClass().getName()，子类在重写的时候只需要调用父类的toString 并加上自己需要打印的域就可以了：</p>
+
+<pre><code class="language-java">public String toString(){
+    return super.toString() + “ [bonus= ” + bonus + “ ] ” ;
+}
+</code></pre>
+
+<p>数组也继承了toString 方法，调用一下数组的toString 方法，比如</p>
+
+<pre><code class="language-java">int[] nums = 1, 2, 3; 
+System.out.println( nums ); 
+</code></pre>
+
+<p>可能会打印出[I@1a46e30，这里[表示数组，I表示数组元素的类型是int。</p>
+
+<p>如果要打印数组里面的元素，可以使用Arrays.toString(type[]) 来打印：</p>
+
+<pre><code class="language-java">int[] nums = {1, 2, 3};
+System.out.println( Arrays.toString( nums));
+</code></pre>
+
+<p>上述代码会打印出[1, 2, 3]。</p>
+
+<p>如果是多维数组，可以调用Arrays.deepToString() 方法:</p>
+
+<pre><code class="language-java">int[][] nums = {
+    {1, 2, 3},
+    {4, 5, 6}, 
+    {7, 8, 9}
+};
+		
+System.out.println( Arrays.deepToString( nums));
+</code></pre>
+
+<p>输出[[1, 2, 3], [4, 5, 6], [7, 8, 9]]。</p>
+
+<h1 id="clone方法">clone方法</h1>
+
+<p>clone方法在Object类里被申明为了protected，即只有Object所在包中的类，或者Object的子类可
+以调用。但是注意，一个Object的子类不能调用别的Object子类的clone方法。换句话说，只有类自
+己的代码中才能够克隆自己。</p>
+
+<p>默认的clone方法是浅拷贝，即拷贝基本数据类型和引用，但是引用的对象仍旧只有一个。如果有私有
+域引用了一个对象A，那么新克隆的对象和原对象都会引用A。只有在这个共享的对象A是不可变的情
+况下，这么做才不会有问题，否则就应该使用深拷贝。</p>
+
+<p>对于每一个对象，我们都要考虑以下三种情况：</p>
+
+<ol>
+<li>是否不应该使用 clone。（默认选择）</li>
+<li>默认的 clone 方法能否满足要求。（浅拷贝）</li>
+<li>默认的 clone 方法能否通过调用可变子对象的 clone 得到修补。（深拷贝）</li>
+</ol>
+
+<p>对于后两者，我们都需要：</p>
+
+<ol>
+<li>实现Cloneable 接口。这是为了如果该类自身作为其它类的私有域参与到克隆中时，没有实现Cloneable
+接口的类会导致Clone抛出异常。</li>
+<li>重写Clone，修改Clone修饰符为public。</li>
+</ol>
+
+<p>这里 Clonebale 接口和 clone 方法并没有关系，接口并没有申明要实现该方法，这里接口只是一个标记，
+如果一个对象需要克隆但是没有实现 Cloneable 接口就会产生一个已检查异常。</p>
+
+<p>下面是 Employee 类的 clone 方法实现：</p>
+
+<pre><code class="language-java">// 提升可见性，其它类可以调用Employee的clone方法
+@Override
+public Employee clone() throws CloneNotSupportedException{
+	// 调用Object的clone方法进行浅拷贝
+	Employee cloned = (Employee)super.clone();
+	// 深拷贝对象
+	cloned.hireDat = (Date)hireDay.clone();
+}
+</code></pre>
+
+<p>对于final的类，我们可以使用try&hellip;catch来处理异常，非final类还是抛出异常比较好。</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Jiaqi Li</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2018-08-11</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/java/">Java</a>
+          
+          <a href="/tags/object/">Object</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/java-basics-2-modifiers/">
+            <span class="next-text nav-default">Java基础知识系列2：修饰符</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://www.facebook.com/ajl98" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="https://www.instagram.com/binaryexplorer/" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="https://www.linkedin.com/in/alexjiaqili/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="https://github.com/virtworld" class="iconfont icon-github" title="github"></a>
+  <a href="http://www.jiaqili.me/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2014 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jiaqi Li</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.1"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+
+
+
+</body>
+</html>

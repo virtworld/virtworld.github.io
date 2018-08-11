@@ -140,6 +140,127 @@
     
       <article class="post">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/java-basics-3-object/">Java基础知识系列3： Object类</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-08-11 </span>
+      <div class="post-category">
+          
+            <a href="/categories/java/"> Java </a>
+          
+        </div>
+      <span class="more-meta"> 4310 word </span>
+      <span class="more-meta"> 9 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>Java中每个类都是继承自Object，如果一个类没有显示地指明父类，Object就是它的父类。除了基本类型外，对象、对象数组、基本类型数组都是继承自Object类。本文主要介绍Object的方法。</p>
+
+<h1 id="equals方法">equals方法</h1>
+
+<p>Object的equals方法使用两个对象的地址是否相同来判断对象是否等价。如果子类没有覆盖equals
+方法，那么它也将如此判断，但很多时候我们希望通过对象的状态，即私有数据域中的数据，来判断两个对象是否相同。</p>
+
+<p>Java语言规范要求equals方法具有以下方面特性：</p>
+
+<ul>
+<li><strong>自反性</strong>。对于任何非空的x，x.equals(x)返回true;</li>
+<li><strong>对称性</strong>。对于任何引用x和y。当且仅当x.equals(y)返回true，y.equals(x)也应该返回true;</li>
+<li><strong>传递性</strong>。对于任何引用x、y 和z。如果x.equals(y)返回true，y.equals(z)返回true，那么x.equals(z)也应该返回true;</li>
+<li><strong>一致性</strong>。如果x和y引用的对象没有发生变化，反复调用x.equals(y)应该返回一样的结果;</li>
+<li>对于任何非空引用x。x.equals(null) 应该返回false。</li>
+</ul>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/java-basics-3-object/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/java-basics-2-modifiers/">Java基础知识系列2：修饰符</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-08-11 </span>
+      <div class="post-category">
+          
+            <a href="/categories/java/"> Java </a>
+          
+        </div>
+      <span class="more-meta"> 2574 word </span>
+      <span class="more-meta"> 6 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <h1 id="final数据-方法和类">final数据、方法和类</h1>
+
+<h2 id="final数据">final数据</h2>
+
+<p>对基本类型使用final修饰词时，该基本类型在初始化后不能被修改；对对象引用使用final修饰词时，该引用被初始化后不能指向其他对象，但是所指向的对象本身仍旧是可变的。比如final数组引用，这个引用只能指向同一个数组，但是数组本身的元素却是可变的。</p>
+
+<p>如果某个域被定义为final，则必须在定义处或者构造器中对其进行初始化。final只表示一旦被初始化，其值将不会改变，但不是说在编译期就能知道其值：我们可以使用随机函数初始化它。</p>
+
+<p>一个既是static又是final 的变量只占据一段不能改变的内存：static表示只有一份，final表示常量。final数据一般出现在不可变的基本类型域或者不可变类的域，对于可变的类，使用final修饰某实例域容易造成混乱。</p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/java-basics-2-modifiers/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/java-basics-1-basics/">Java基础知识系列1：常见问题</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-08-11 </span>
+      <div class="post-category">
+          
+            <a href="/categories/java/"> Java </a>
+          
+        </div>
+      <span class="more-meta"> 3671 word </span>
+      <span class="more-meta"> 8 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>本章不是对Java语言语法的总结，而是摘录了一些容易容易出错、遗忘或混淆的基础知识点。</p>
+
+<h1 id="操作符">操作符</h1>
+
+<ol>
+<li>前缀递增++a，为先计算后生成值；后缀递增a++，为生成值后递增；</li>
+<li>对于对象，==操作符比较的是引用；对于基本类型，==比较的是值。要比较对象的实际内容应该使用equals，详见<code>Java基础知识系列3： Object类</code>。</li>
+<li>布尔值不能被赋值给int类型；在应该是用String的地方使用了布尔值，它们会被转换为恰当的文本形式，比如false；</li>
+<li>直接常量后面加上后缀表示其类型，比如L表示long，D表示double，F表示float；</li>
+<li>八进制用0开头，后面跟0-7的数字；十六进制用0x开头，后面跟0-F；</li>
+<li>布尔类型可以进行的运算很有限，不能进行加减，但是可以进行位运算，可以执行按位与(&amp;)、或(|)、异或(^)，但是不能执行按位非(~);</li>
+<li>移位操作符只能用来处理整数类型，&lt;&lt;左移操作符按操作符右边的位数将操作符左边的操作数向左移动，低位补0；&gt;&gt;有符号右移操作符，符合为正则高位插0，符号为负则高位插1；&gt;&gt;&gt;无符号右移操作符，无论符号如何，高位补0。如果对char, byte, short 等类型进行移位操作，它们会先被转换为int；</li>
+<li>Java允许我们把任何基本类型转换为任何基本类型，但是布尔类型除外，它不能进行任何类型转换；</li>
+<li>float和double转换为整型时，小数部分被舍弃，如果需要四舍五入，则需要用Math.round方法；</li>
+</ol>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/java-basics-1-basics/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/se-oodesign/">面向对象的设计原则和设计模式</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2018-07-19 </span>
@@ -217,7 +338,7 @@
             <a href="/categories/search/"> Search </a>
           
         </div>
-      <span class="more-meta"> 9275 word </span>
+      <span class="more-meta"> 9283 word </span>
       <span class="more-meta"> 19 min read </span>
     </div>
   </header>
@@ -509,134 +630,6 @@
     </div>
     <div class="read-more">
       <a href="/post/jvm-class-loading/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/java-concurrency-2/">结构化并发应用程序</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2015-12-28 </span>
-      <div class="post-category">
-          
-            <a href="/categories/java/"> Java </a>
-          
-        </div>
-      <span class="more-meta"> 2964 word </span>
-      <span class="more-meta"> 6 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <blockquote>
-<p>这篇是《Java并发实践》的第二篇总结</p>
-</blockquote>
-
-<h1 id="1-executor框架">1 Executor框架</h1>
-
-<p>任务是一个逻辑执行单元，而线程是使任务异步执行的机制。串行执行会降低响应性和吞吐量；每个任务都分配一个线程会造成很大开销也不利于资源管理。</p>
-
-<p>该框架包括一个灵活的线程池，提供了不同类型的任务的执行策略，并将任务提交过程和执行过程解耦，用Runnable来表示一个任务。此外Executor框架还提供了对生命周期的支持，以及统计信息的收集、应用程序管理机制和性能监视等机制。</p>
-
-<p>执行策略定义了任务执行的&rdquo;what, where, when, how&rdquo;等方面。比如在什么线程中执行任务，按什么顺序执行，多少个任务可以并发执行，队列了可以有多少个任务在等待，在任务执行之前和之后应该进行哪些操作，如果要拒绝一个任务，应该选择哪一个？等等</p>
-
-<p>当需要灵活的执行策略时，用Executor框架来代替手动编写Thread。</p>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/java-concurrency-2/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/java-concurrency-1/">线程安全基础知识</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2015-12-28 </span>
-      <div class="post-category">
-          
-            <a href="/categories/java/"> Java </a>
-          
-        </div>
-      <span class="more-meta"> 9951 word </span>
-      <span class="more-meta"> 20 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <blockquote>
-<p>这篇是《Java并发实践》的第一篇笔记，针对第2-3,5,13,15章的总结。书中所介绍的非阻塞的并发算法和数据结构比较粗略，仅限于特性和应用介绍，很少有具体实现，这里也做简单记录。更多的内容可以参考《多处理器编程的艺术》第一修订版以及<a href="https://www.cs.ox.ac.uk/teaching/materials15-16/cads。以后单独总结。">https://www.cs.ox.ac.uk/teaching/materials15-16/cads。以后单独总结。</a></p>
-</blockquote>
-
-<p>编写线程安全代码的核心在于对共享的可变的状态的访问操作进行管理。状态指储存在实例或静态域中的数据；共享表示变量可被多个线程同时访问；可变意味着变量值在其生命周期内可以发生变化。</p>
-
-<p>当多个线程访问某个可变的状态变量，并且至少有一个写线程时，需要采用同步机制。Java的同步机制，主要是Synchronized关键词，volatile变量，显示锁(Explicit Lock)，以及原子变量(Atomic Variables)。否则，要么该变量不在多线程中共享，要么将其设置为不可变。</p>
-
-<h1 id="1-线程安全性">1 线程安全性</h1>
-
-<p>线程安全的程序并不一定完全由线程安全类构成，完全由线程安全类构成的程序也未必是线程安全的。线程安全性只与状态相关，只能用于封装其状态的整个代码，比如线程安全类，或者线程安全程序。</p>
-
-<p>定义：当多个线程访问某个类时，不管运行时环境采取何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步或协同，这个类都能表现出正确的行为，那么这个类时线程安全的。</p>
-
-<p>线程安全类中封装了必要的同步机制，因此客户端无需进一步采取同步措施。一个无状态的类肯定是线程安全的。</p>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/java-concurrency-1/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/jvm-gc/">Java垃圾收集技术</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2015-11-26 </span>
-      <div class="post-category">
-          
-            <a href="/categories/jvm/"> JVM </a>
-          
-        </div>
-      <span class="more-meta"> 2980 word </span>
-      <span class="more-meta"> 6 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <blockquote>
-<p>这篇是对《深入理解Java虚拟机》的第三章的总结笔记，G1部分还没有细看</p>
-</blockquote>
-
-<h2 id="1-判断对象存活与否">1 判断对象存活与否</h2>
-
-<h3 id="1-1-引用计数器-没有gc使用">1.1 引用计数器(没有GC使用)</h3>
-
-<ul>
-<li>每当有一个地方引用对象时，数值就+1，引用失效时，数值就-1。</li>
-
-<li><p>问题是无法解决对象之间的循环引用问题，比如对象A的一个字段引用B，对象B的一个字段引用A，然后对象A和B被设置为null，这时无法回收A和B。</p>
-
-<h3 id="1-2-可达性分析">1.2 可达性分析</h3></li>
-
-<li><p>从一系列GC Roots开始搜索，如果GC Roots到这个对象不可达时，则该对象是不可用的。</p></li>
-
-<li><p>GC Roots包括虚拟机栈中引用的对象，本地方法栈中引用的对象，方法区中类静态属性引用的对象，方法区中常量引用的对象。</p></li>
-</ul>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/jvm-gc/" class="read-more-link">Read more..</a>
     </div>
   </div>
 </article>

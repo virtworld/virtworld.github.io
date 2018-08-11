@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Modifiers on Virtual World</title>
+    <link>http://www.jiaqili.me/tags/modifiers/</link>
+    <description>Recent content in Modifiers on Virtual World</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 11 Aug 2018 12:59:00 +0800</lastBuildDate>
+    
+	<atom:link href="http://www.jiaqili.me/tags/modifiers/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Java基础知识系列2：修饰符</title>
+      <link>http://www.jiaqili.me/post/java-basics-2-modifiers/</link>
+      <pubDate>Sat, 11 Aug 2018 12:59:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-basics-2-modifiers/</guid>
+      <description>&lt;h1 id=&#34;final数据-方法和类&#34;&gt;final数据、方法和类&lt;/h1&gt;
+
+&lt;h2 id=&#34;final数据&#34;&gt;final数据&lt;/h2&gt;
+
+&lt;p&gt;对基本类型使用final修饰词时，该基本类型在初始化后不能被修改；对对象引用使用final修饰词时，该引用被初始化后不能指向其他对象，但是所指向的对象本身仍旧是可变的。比如final数组引用，这个引用只能指向同一个数组，但是数组本身的元素却是可变的。&lt;/p&gt;
+
+&lt;p&gt;如果某个域被定义为final，则必须在定义处或者构造器中对其进行初始化。final只表示一旦被初始化，其值将不会改变，但不是说在编译期就能知道其值：我们可以使用随机函数初始化它。&lt;/p&gt;
+
+&lt;p&gt;一个既是static又是final 的变量只占据一段不能改变的内存：static表示只有一份，final表示常量。final数据一般出现在不可变的基本类型域或者不可变类的域，对于可变的类，使用final修饰某实例域容易造成混乱。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
