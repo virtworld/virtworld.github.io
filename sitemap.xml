@@ -10,6 +10,34 @@
   </url>
   
   <url>
+    <loc>http://www.jiaqili.me/post/java-console-printing/</loc>
+    <lastmod>2018-08-18T10:10:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-basics-6-enum/</loc>
+    <lastmod>2018-08-18T10:08:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-basics-5-innner-class/</loc>
+    <lastmod>2018-08-18T10:07:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-basics-4-interface/</loc>
+    <lastmod>2018-08-18T10:06:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>http://www.jiaqili.me/post/java-basics-3-object/</loc>
     <lastmod>2018-08-11T13:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -115,6 +143,13 @@
   </url>
   
   <url>
+    <loc>http://www.jiaqili.me/tags/abstract-class/</loc>
+    <lastmod>2018-08-18T10:06:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://www.jiaqili.me/tags/algorithm/</loc>
     <lastmod>2018-02-25T14:41:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -185,6 +220,13 @@
   </url>
   
   <url>
+    <loc>http://www.jiaqili.me/tags/enumeration/</loc>
+    <lastmod>2018-08-18T10:08:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://www.jiaqili.me/tags/gc/</loc>
     <lastmod>2015-11-26T16:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -192,15 +234,29 @@
   </url>
   
   <url>
+    <loc>http://www.jiaqili.me/tags/inner-class/</loc>
+    <lastmod>2018-08-18T10:07:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/interface/</loc>
+    <lastmod>2018-08-18T10:06:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://www.jiaqili.me/tags/java/</loc>
-    <lastmod>2018-08-11T13:00:00+08:00</lastmod>
+    <lastmod>2018-08-18T10:10:59+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://www.jiaqili.me/categories/java/</loc>
-    <lastmod>2018-08-11T13:00:00+08:00</lastmod>
+    <lastmod>2018-08-18T10:10:59+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -277,7 +333,7 @@
   
   <url>
     <loc>http://www.jiaqili.me/post/</loc>
-    <lastmod>2018-08-11T13:00:00+08:00</lastmod>
+    <lastmod>2018-08-18T10:10:59+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -312,7 +368,7 @@
   
   <url>
     <loc>http://www.jiaqili.me/tags/</loc>
-    <lastmod>2018-02-25T14:41:00+08:00</lastmod>
+    <lastmod>2018-08-18T10:06:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

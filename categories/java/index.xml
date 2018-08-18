@@ -6,10 +6,90 @@
     <description>Recent content in Java on Virtual World</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 11 Aug 2018 13:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 18 Aug 2018 10:10:59 +0800</lastBuildDate>
     
 	<atom:link href="http://www.jiaqili.me/categories/java/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>奇怪的printStackTrace引起进程卡住的问题</title>
+      <link>http://www.jiaqili.me/post/java-console-printing/</link>
+      <pubDate>Sat, 18 Aug 2018 10:10:59 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-console-printing/</guid>
+      <description>背景 昨天碰到一个很奇怪的轮询任务卡住的问题。轮询调度框架会按照数据库里配置，周期性地定时启动一些任务。每个定时任务都是一个普通的Java程序</description>
+    </item>
+    
+    <item>
+      <title>Java基础知识系列6：枚举类型</title>
+      <link>http://www.jiaqili.me/post/java-basics-6-enum/</link>
+      <pubDate>Sat, 18 Aug 2018 10:08:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-basics-6-enum/</guid>
+      <description>&lt;p&gt;这是一个简单的枚举类型的定义。枚举类型是一个类，除了不能被继承以外，它的行为和一个类相近，关键字enum只是为了告诉编译器在生成相应的类的时候采用的一些编译行为。比如&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public enum Size {SMALL , MEDIUM , LARGE}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;上面的枚举类有三个实例，而枚举类的实例是常量，因此都大写。使用枚举常量时要创建它的一个实例：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;Size size = Size.SMALL;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;enum 经常与switch 配合使用:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;Size size;
+// do something to get size;
+switch(size){
+    case SMALL:
+    // do something;
+    case MEDIUM:
+    // do something;
+    case LARGE:
+    // do something;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java基础知识系列5：内部类</title>
+      <link>http://www.jiaqili.me/post/java-basics-5-innner-class/</link>
+      <pubDate>Sat, 18 Aug 2018 10:07:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-basics-5-innner-class/</guid>
+      <description>&lt;p&gt;内部类就是定义在另一个类中的类。使用内部类有以下几个好处：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;内部类的方法可以访问其类定义所在作用于的数据，包括私有数据；&lt;/li&gt;
+&lt;li&gt;内部类可以对同一个包中的其他类隐藏；&lt;/li&gt;
+&lt;li&gt;如果需要定义一个回调函数但不想编写大量代码时，使用匿名内部类比较方便。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java基础知识系列4：抽象类和接口</title>
+      <link>http://www.jiaqili.me/post/java-basics-4-interface/</link>
+      <pubDate>Sat, 18 Aug 2018 10:06:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-basics-4-interface/</guid>
+      <description>&lt;h1 id=&#34;抽象类和抽象方法&#34;&gt;抽象类和抽象方法&lt;/h1&gt;
+
+&lt;p&gt;包含抽象方法的类被称做抽象类。如果一个类包含一个或多个抽象方法，它必需被定义为抽象类。&lt;/p&gt;
+
+&lt;p&gt;抽象类可以包含具体的数据和具体的方法。抽象类不能实例化，不过可以有一个抽象类的对象变量，但是它只能引用非抽象子类对象。如果从一个抽象类继承，要么实现它所有的抽象方法，要么继承的类也是个抽象类。&lt;/p&gt;
+
+&lt;p&gt;我们也可以创建一个没有任何抽象方法的抽象类，比如用于阻止该类的实例化。&lt;/p&gt;
+
+&lt;p&gt;抽象类的优点是我们可以明确告诉用户哪些方法需要由子类实现，并且可以很容易地将公共方法沿着层次向上移动；抽象类也有限制，Java不允许多重继承，也就是一个类只能扩展于一个类，而每个类可以扩展自多个接口。&lt;/p&gt;
+
+&lt;p&gt;Java不提供多重继承而使用接口来实现类似多重继承的好处在于，避免多重继承的复杂性和低效性。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Java基础知识系列3： Object类</title>

@@ -528,7 +528,7 @@ System.out.println( Arrays.toString( nums));
     {4, 5, 6}, 
     {7, 8, 9}
 };
-		
+        
 System.out.println( Arrays.deepToString( nums));
 </code></pre>
 
@@ -568,10 +568,10 @@ System.out.println( Arrays.deepToString( nums));
 <pre><code class="language-java">// 提升可见性，其它类可以调用Employee的clone方法
 @Override
 public Employee clone() throws CloneNotSupportedException{
-	// 调用Object的clone方法进行浅拷贝
-	Employee cloned = (Employee)super.clone();
-	// 深拷贝对象
-	cloned.hireDat = (Date)hireDay.clone();
+    // 调用Object的clone方法进行浅拷贝
+    Employee cloned = (Employee)super.clone();
+    // 深拷贝对象
+    cloned.hireDat = (Date)hireDay.clone();
 }
 </code></pre>
 
@@ -611,6 +611,11 @@ public Employee clone() throws CloneNotSupportedException{
       
       <nav class="post-nav">
         
+          <a class="prev" href="/post/java-basics-4-interface/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Java基础知识系列4：抽象类和接口</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
         
           <a class="next" href="/post/java-basics-2-modifiers/">
             <span class="next-text nav-default">Java基础知识系列2：修饰符</span>

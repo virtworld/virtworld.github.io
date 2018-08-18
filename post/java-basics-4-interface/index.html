@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Java基础知识系列4：抽象类和接口 - Virtual World</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Jiaqi Li" />
+  <meta name="description" content="抽象类和抽象方法 包含抽象方法的类被称做抽象类。如果一个类包含一个或多个抽象方法，它必需被定义为抽象类。
+抽象类可以包含具体的数据和具体的方法。抽象类不能实例化，不过可以有一个抽象类的对象变量，但是它只能引用非抽象子类对象。如果从一个抽象类继承，要么实现它所有的抽象方法，要么继承的类也是个抽象类。
+我们也可以创建一个没有任何抽象方法的抽象类，比如用于阻止该类的实例化。
+抽象类的优点是我们可以明确告诉用户哪些方法需要由子类实现，并且可以很容易地将公共方法沿着层次向上移动；抽象类也有限制，Java不允许多重继承，也就是一个类只能扩展于一个类，而每个类可以扩展自多个接口。
+Java不提供多重继承而使用接口来实现类似多重继承的好处在于，避免多重继承的复杂性和低效性。
+
+" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.41" />
+
+
+<link rel="canonical" href="http://www.jiaqili.me/post/java-basics-4-interface/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=2.7.1" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="Java基础知识系列4：抽象类和接口" />
+<meta property="og:description" content="抽象类和抽象方法
+
+包含抽象方法的类被称做抽象类。如果一个类包含一个或多个抽象方法，它必需被定义为抽象类。
+
+抽象类可以包含具体的数据和具体的方法。抽象类不能实例化，不过可以有一个抽象类的对象变量，但是它只能引用非抽象子类对象。如果从一个抽象类继承，要么实现它所有的抽象方法，要么继承的类也是个抽象类。
+
+我们也可以创建一个没有任何抽象方法的抽象类，比如用于阻止该类的实例化。
+
+抽象类的优点是我们可以明确告诉用户哪些方法需要由子类实现，并且可以很容易地将公共方法沿着层次向上移动；抽象类也有限制，Java不允许多重继承，也就是一个类只能扩展于一个类，而每个类可以扩展自多个接口。
+
+Java不提供多重继承而使用接口来实现类似多重继承的好处在于，避免多重继承的复杂性和低效性。
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.jiaqili.me/post/java-basics-4-interface/" />
+
+
+
+<meta property="article:published_time" content="2018-08-18T10:06:00&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-08-18T10:06:00&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Java基础知识系列4：抽象类和接口">
+<meta itemprop="description" content="抽象类和抽象方法
+
+包含抽象方法的类被称做抽象类。如果一个类包含一个或多个抽象方法，它必需被定义为抽象类。
+
+抽象类可以包含具体的数据和具体的方法。抽象类不能实例化，不过可以有一个抽象类的对象变量，但是它只能引用非抽象子类对象。如果从一个抽象类继承，要么实现它所有的抽象方法，要么继承的类也是个抽象类。
+
+我们也可以创建一个没有任何抽象方法的抽象类，比如用于阻止该类的实例化。
+
+抽象类的优点是我们可以明确告诉用户哪些方法需要由子类实现，并且可以很容易地将公共方法沿着层次向上移动；抽象类也有限制，Java不允许多重继承，也就是一个类只能扩展于一个类，而每个类可以扩展自多个接口。
+
+Java不提供多重继承而使用接口来实现类似多重继承的好处在于，避免多重继承的复杂性和低效性。
+
+">
+
+
+<meta itemprop="datePublished" content="2018-08-18T10:06:00&#43;08:00" />
+<meta itemprop="dateModified" content="2018-08-18T10:06:00&#43;08:00" />
+<meta itemprop="wordCount" content="1895">
+
+
+
+<meta itemprop="keywords" content="Java,Abstract class,Interface," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java基础知识系列4：抽象类和接口"/>
+<meta name="twitter:description" content="抽象类和抽象方法
+
+包含抽象方法的类被称做抽象类。如果一个类包含一个或多个抽象方法，它必需被定义为抽象类。
+
+抽象类可以包含具体的数据和具体的方法。抽象类不能实例化，不过可以有一个抽象类的对象变量，但是它只能引用非抽象子类对象。如果从一个抽象类继承，要么实现它所有的抽象方法，要么继承的类也是个抽象类。
+
+我们也可以创建一个没有任何抽象方法的抽象类，比如用于阻止该类的实例化。
+
+抽象类的优点是我们可以明确告诉用户哪些方法需要由子类实现，并且可以很容易地将公共方法沿着层次向上移动；抽象类也有限制，Java不允许多重继承，也就是一个类只能扩展于一个类，而每个类可以扩展自多个接口。
+
+Java不提供多重继承而使用接口来实现类似多重继承的好处在于，避免多重继承的复杂性和低效性。
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Virtual World</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Virtual World</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Java基础知识系列4：抽象类和接口</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-08-18 </span>
+        <div class="post-category">
+            
+              <a href="/categories/java/"> Java </a>
+            
+          </div>
+        <span class="more-meta"> 1895 word </span>
+        <span class="more-meta"> 4 min read </span>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#抽象类和抽象方法">抽象类和抽象方法</a></li>
+<li><a href="#接口">接口</a></li>
+<li><a href="#嵌套接口">嵌套接口</a></li>
+<li><a href="#接口与回调">接口与回调</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h1 id="抽象类和抽象方法">抽象类和抽象方法</h1>
+
+<p>包含抽象方法的类被称做抽象类。如果一个类包含一个或多个抽象方法，它必需被定义为抽象类。</p>
+
+<p>抽象类可以包含具体的数据和具体的方法。抽象类不能实例化，不过可以有一个抽象类的对象变量，但是它只能引用非抽象子类对象。如果从一个抽象类继承，要么实现它所有的抽象方法，要么继承的类也是个抽象类。</p>
+
+<p>我们也可以创建一个没有任何抽象方法的抽象类，比如用于阻止该类的实例化。</p>
+
+<p>抽象类的优点是我们可以明确告诉用户哪些方法需要由子类实现，并且可以很容易地将公共方法沿着层次向上移动；抽象类也有限制，Java不允许多重继承，也就是一个类只能扩展于一个类，而每个类可以扩展自多个接口。</p>
+
+<p>Java不提供多重继承而使用接口来实现类似多重继承的好处在于，避免多重继承的复杂性和低效性。</p>
+
+<p></p>
+
+<h1 id="接口">接口</h1>
+
+<p>接口是一个完全抽象的类，它根本没有提供任何实现。它的所有方法只确定了方法名，参数列表和返回类型，没有任何方法体。接口用来实现类与类之间的协议：所有实现了特定接口的类都存在该接口所声明的方法可以被调用。</p>
+
+<p>因为一个类可以实现多个接口，因此一个类可以被向上转型为多个接口类型，从某种意义上讲，这是多重继承的变种。接口可以是public或默认包访问权限的。</p>
+
+<p>接口中可以包含域，但是它的域默认是public static final, 因此必须被初始化，但是接口中的域可以被非常量表达式初始化，比如使用随机函数生成的值。方法默认是public abstract的。</p>
+
+<p>使用接口最终原因是为了能够向上转型为多个基类型，以及由此带来的灵活性。第二个原因和使用抽象类相同，就是防止客户端程序员实例化该对象。如果某事物应该成为一个基类，那么首选应该是接口，特别是不带任何具体方法实现的类，否则再考虑使用抽象类。</p>
+
+<p>Java8增加了新的特性，允许在接口中添加默认方法，默认方法有default修饰符，并包含完整的方法体。</p>
+
+<p>在继承接口中的默认方法时，我们可以</p>
+
+<ol>
+<li>不管哪个默认方法，这个方法和其他继承下来的方法一样可以被调用；</li>
+<li>重写默认方法。我们可以重写成抽象方法（没有方法体的方法）或者重写成非抽象方法。Java8还在接口中增加了静态方法，静态方法含有方法体。</li>
+</ol>
+
+<p>在同时存在继承类和接口的情况下，具体的类应该放在前面，然后是接口。如果接口和父类都含有签名相同的方法，那么父类中的方法可以作为接口中的方法的实现，因此不一定要在继承类中再覆盖。比如：</p>
+
+<pre><code class="language-java">class A{
+    public void method(){}
+}
+
+interface B {
+    void method();
+}
+
+class C extends A implements B{
+    // 不必定义method 方法
+}
+</code></pre>
+
+<p>在类的继承中，一个类只能继承extends自一个类，可以实现implements多个接口。接口本身也可以进行扩展，我们可以让一个接口extends多个接口，这种语言只适用于接口。比如：</p>
+
+<pre><code class="language-java">interface A{
+    int methodA();
+}
+interface B{
+    int methodsB();
+}
+
+interface C extends A, B{
+    int methodC();
+}
+
+class D implements C{
+    public int methodA(){return 0;}
+    public int methodB(){return 0;}
+    public int methodC(){return 0;}
+}
+</code></pre>
+
+<p>注意：在组合使用继承类和接口时，如果方法签名相同但是返回值不同会造成冲突报错, 比如：</p>
+
+<pre><code class="language-java">interface I1 { void f(); }
+interface I2 { int f(int i); }
+interface I3 { int f(); }
+
+class C1 { public int f() {return 1; } }
+
+// Error: method f differs only on return type.
+interface I4 extends I1, I3{}
+
+// Error: method f differs only on return type.
+class C2 extends C1 implements I1{}
+
+// OK: two method fs overloaded.
+class C3 implements I1, I2{
+    public int f( int i ) {return 0;}
+    public void f(){}
+}
+
+// OK: overloaded f
+class C4 extends C1 implements I2{
+    public int f(int i){ return 0; }
+}
+
+// OK: same method fs(sigantures and return type) in interface and inherited class are fine.
+class C5 extends C1 implements I3{
+    public int f(){ return 0; }
+}
+</code></pre>
+
+<h1 id="嵌套接口">嵌套接口</h1>
+
+<p>首先是接口中嵌套接口。接口中的接口默认就是public的，不能申明为private。如果接口A包含接口B，当我们实现接口A的时候，我们只需要实现A中的所有方法，不需要实现B中的方法。</p>
+
+<p>其次是在类中嵌套接口。类中的接口可以是public，包访问或者private可见性。这里我们要讨论一下定义在类内部的私有接口。私有接口不能在定义它的类的外部被实现。</p>
+
+<p>如果类A包含一个私有接口I和一个实现了I的内部类B，如果A有一个public方法x，x的返回类型是I的引用，x创建了一个B的实例并返回。那么在类A外部，虽然x是public的，但是我们没法使用它，因为我们没法在定义I的类外部使用I。唯一能够使用I的引用的是A的方法。所以实现私有接口的目的是强制定义该接口中指定的方法，同时不添加类型信息（即该实现不能向上转型为该私有接口）。类的外部不能认为该内部类实现了此接口。</p>
+
+<h1 id="接口与回调">接口与回调</h1>
+
+<p>在某个特定事件发生时采取某个动作（调用某个方法）称为回调。我们需要把这个待事件发生后调用的方法传递给调用者。因为Java是面向对象编程，我们不像C++那样传递函数指针，而是传递一个类的对象，并让这个类实现某个接口，确保它会实现回调方法。比如说计时器，每隔1秒钟调用一个方法。</p>
+
+<pre><code class="language-java">ActionListener listener = new TimePrinter();
+Timer t = new Timer(1000, listener);
+</code></pre>
+
+<p>这里的listener 就是一个实现了某回调方法的对象, 这个回调方法定义在ActionListener 接口中。</p>
+
+<pre><code class="language-java">class TimePrinter implements ActionListener{
+    public void actionPerformed(ActionEvent event){
+        System.out.println(&quot;1s!&quot;);
+    }
+}
+</code></pre>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Jiaqi Li</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2018-08-18</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/java/">Java</a>
+          
+          <a href="/tags/abstract-class/">Abstract class</a>
+          
+          <a href="/tags/interface/">Interface</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/java-basics-5-innner-class/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Java基础知识系列5：内部类</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+          <a class="next" href="/post/java-basics-3-object/">
+            <span class="next-text nav-default">Java基础知识系列3： Object类</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://www.facebook.com/ajl98" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="https://www.instagram.com/binaryexplorer/" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="https://www.linkedin.com/in/alexjiaqili/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="https://github.com/virtworld" class="iconfont icon-github" title="github"></a>
+  <a href="http://www.jiaqili.me/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2014 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jiaqi Li</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.1"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+
+
+
+</body>
+</html>
