@@ -88,7 +88,7 @@
 
 <meta itemprop="datePublished" content="2018-08-18T10:10:59&#43;08:00" />
 <meta itemprop="dateModified" content="2018-08-18T10:10:59&#43;08:00" />
-<meta itemprop="wordCount" content="2016">
+<meta itemprop="wordCount" content="2030">
 
 
 
@@ -177,7 +177,7 @@
               <a href="/categories/java/"> Java </a>
             
           </div>
-        <span class="more-meta"> 2016 word </span>
+        <span class="more-meta"> 2030 word </span>
         <span class="more-meta"> 5 min read </span>
         
       </div>
@@ -287,7 +287,7 @@ JVM Info...
 }
 </code></pre>
 
-<p>虽然在SomeObject的构造方法里面会抛出异常的设计让人感觉很不舒服，但我注意到这个代码还有一个不合理的地方：轮询任务里面打印日志有专门的类来处理，像下面这样，使用原生的日志打印很少见：</p>
+<p>虽然在SomeObject的构造方法里面会抛出异常的设计让人感觉很不舒服，但这并不会引起这个问题。我还注意到这个代码另外一个不合理的地方：轮询任务里面打印日志有专门的类来处理(像下面这样)，而使用原生的日志打印很少见：</p>
 
 <pre><code class="language-java">getLogger().error(&quot;对象new不出来了^-^&quot;);
 </code></pre>
@@ -384,6 +384,11 @@ try{
       
       <nav class="post-nav">
         
+          <a class="prev" href="/post/java-basics-7-init/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Java基础知识系列7：初始化</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
         
           <a class="next" href="/post/java-basics-6-enum/">
             <span class="next-text nav-default">Java基础知识系列6：枚举类型</span>

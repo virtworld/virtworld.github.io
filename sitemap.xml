@@ -10,6 +10,27 @@
   </url>
   
   <url>
+    <loc>http://www.jiaqili.me/post/java-basics-9-generic/</loc>
+    <lastmod>2018-08-25T00:17:11+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-basics-8-reflection/</loc>
+    <lastmod>2018-08-25T00:17:10+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-basics-7-init/</loc>
+    <lastmod>2018-08-25T00:17:09+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>http://www.jiaqili.me/post/java-console-printing/</loc>
     <lastmod>2018-08-18T10:10:59+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -234,6 +255,20 @@
   </url>
   
   <url>
+    <loc>http://www.jiaqili.me/tags/generics/</loc>
+    <lastmod>2018-08-25T00:17:11+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/initialization/</loc>
+    <lastmod>2018-08-25T00:17:09+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://www.jiaqili.me/tags/inner-class/</loc>
     <lastmod>2018-08-18T10:07:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -249,14 +284,14 @@
   
   <url>
     <loc>http://www.jiaqili.me/tags/java/</loc>
-    <lastmod>2018-08-18T10:10:59+08:00</lastmod>
+    <lastmod>2018-08-25T00:17:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://www.jiaqili.me/categories/java/</loc>
-    <lastmod>2018-08-18T10:10:59+08:00</lastmod>
+    <lastmod>2018-08-25T00:17:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -333,7 +368,14 @@
   
   <url>
     <loc>http://www.jiaqili.me/post/</loc>
-    <lastmod>2018-08-18T10:10:59+08:00</lastmod>
+    <lastmod>2018-08-25T00:17:11+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/reflection/</loc>
+    <lastmod>2018-08-25T00:17:10+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

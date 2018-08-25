@@ -102,6 +102,24 @@
     </item>
     
     <item>
+      <title>Generics</title>
+      <link>http://www.jiaqili.me/tags/generics/</link>
+      <pubDate>Sat, 25 Aug 2018 00:17:11 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/tags/generics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Initialization</title>
+      <link>http://www.jiaqili.me/tags/initialization/</link>
+      <pubDate>Sat, 25 Aug 2018 00:17:09 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/tags/initialization/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Inner Class</title>
       <link>http://www.jiaqili.me/tags/inner-class/</link>
       <pubDate>Sat, 18 Aug 2018 10:07:00 +0800</pubDate>
@@ -122,7 +140,7 @@
     <item>
       <title>Java</title>
       <link>http://www.jiaqili.me/tags/java/</link>
-      <pubDate>Sat, 18 Aug 2018 10:10:59 +0800</pubDate>
+      <pubDate>Sat, 25 Aug 2018 00:17:11 +0800</pubDate>
       
       <guid>http://www.jiaqili.me/tags/java/</guid>
       <description></description>
@@ -197,6 +215,15 @@
       <pubDate>Fri, 26 Jan 2018 11:33:00 +0800</pubDate>
       
       <guid>http://www.jiaqili.me/tags/performance-tuning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Reflection</title>
+      <link>http://www.jiaqili.me/tags/reflection/</link>
+      <pubDate>Sat, 25 Aug 2018 00:17:10 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/tags/reflection/</guid>
       <description></description>
     </item>
     

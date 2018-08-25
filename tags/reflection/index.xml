@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Reflection on Virtual World</title>
+    <link>http://www.jiaqili.me/tags/reflection/</link>
+    <description>Recent content in Reflection on Virtual World</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 25 Aug 2018 00:17:10 +0800</lastBuildDate>
+    
+	<atom:link href="http://www.jiaqili.me/tags/reflection/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Java基础知识系列8：反射</title>
+      <link>http://www.jiaqili.me/post/java-basics-8-reflection/</link>
+      <pubDate>Sat, 25 Aug 2018 00:17:10 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-basics-8-reflection/</guid>
+      <description>&lt;h1 id=&#34;反射概述&#34;&gt;反射概述&lt;/h1&gt;
+
+&lt;p&gt;反射表示程序能够在运行时检查和修改自身结构和行为的能力。Java运行时为所有的对象维护一个运行时类型标志，这些被保存在Class对象中。Java的反射机制，可以让我们获取这些信息，分析类的能力，查看对象，调用任意方法等。&lt;/p&gt;
+
+&lt;h1 id=&#34;class-类&#34;&gt;Class 类&lt;/h1&gt;
+
+&lt;p&gt;一个Class对象表示的是一个特定类型，注意这里不一定是指类的类型。我们可以使用多种方法来获取Class对象。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Object类中的&lt;code&gt;getClass()&lt;/code&gt;方法动态获取类型。因为所有的对象都继承自Object类，因此所有的对象上都可以调用getClass() 来获得其类型信息；&lt;/li&gt;
+&lt;li&gt;静态的&lt;code&gt;Class.forName(String)&lt;/code&gt;方法。适用于将类名保存在字符串中，并可以在运行中改变的情况。因为参数必需是有效的类名，所以必需搭配一个已检查异常处理器使用；&lt;/li&gt;
+&lt;li&gt;T.class来静态的获取类型。比如&lt;code&gt;Date.class&lt;/code&gt;，&lt;code&gt;Double[].class&lt;/code&gt;，&lt;code&gt;int.class&lt;/code&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;我们可以使用==来判断两个对象的类型是否一致：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;if( e.getClass() == Employee.class)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;我们可以使用Class对象上的newInstance()方法来快速创建一个类的实例。newInstance()方法调用类的默认构造器，如果没有默认构造器则会抛出异常。比如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;e.getClass().newInstance();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

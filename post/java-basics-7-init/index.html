@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Java基础知识系列7：初始化 - Virtual World</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Jiaqi Li" />
+  <meta name="description" content="变量的初始化 方法内的局部变量，必需显示初始化后才能使用，使用未初始化变量会导致编译器报错；类成员变量或静态域未初始化就会被赋初始值，比如对象会是null，boolean是false，int是0等。
+给类成员变量赋值可以在该变量定义的地方进行。不初始化类变量不是一种好的习惯。
+初始化顺序 当首次调用类的静态方法（包括main方法）或静态域时，或者首次创建对象（其实创建对象所调用的构造器也是静态方法）的时候，JVM会查找类的路径，并加载类对应的.class文件，然后创建一个Class对象。
+如果在加载该Class文件的时候发现这个类有父类，那么加载器也会去加载它父类的Class，直到所有Class文件都被加载完。
+在加载每个Class对象的时候，会对每个类进行静态初始化，这个静态初始化只执行一次，也就是在类第一次被引用的时候执行。
+
+" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.41" />
+
+
+<link rel="canonical" href="http://www.jiaqili.me/post/java-basics-7-init/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=2.7.1" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="Java基础知识系列7：初始化" />
+<meta property="og:description" content="变量的初始化
+
+方法内的局部变量，必需显示初始化后才能使用，使用未初始化变量会导致编译器报错；类成员变量或静态域未初始化就会被赋初始值，比如对象会是null，boolean是false，int是0等。
+
+给类成员变量赋值可以在该变量定义的地方进行。不初始化类变量不是一种好的习惯。
+
+初始化顺序
+
+当首次调用类的静态方法（包括main方法）或静态域时，或者首次创建对象（其实创建对象所调用的构造器也是静态方法）的时候，JVM会查找类的路径，并加载类对应的.class文件，然后创建一个Class对象。
+
+如果在加载该Class文件的时候发现这个类有父类，那么加载器也会去加载它父类的Class，直到所有Class文件都被加载完。
+
+在加载每个Class对象的时候，会对每个类进行静态初始化，这个静态初始化只执行一次，也就是在类第一次被引用的时候执行。
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.jiaqili.me/post/java-basics-7-init/" />
+
+
+
+<meta property="article:published_time" content="2018-08-25T00:17:09&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-08-25T00:17:09&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Java基础知识系列7：初始化">
+<meta itemprop="description" content="变量的初始化
+
+方法内的局部变量，必需显示初始化后才能使用，使用未初始化变量会导致编译器报错；类成员变量或静态域未初始化就会被赋初始值，比如对象会是null，boolean是false，int是0等。
+
+给类成员变量赋值可以在该变量定义的地方进行。不初始化类变量不是一种好的习惯。
+
+初始化顺序
+
+当首次调用类的静态方法（包括main方法）或静态域时，或者首次创建对象（其实创建对象所调用的构造器也是静态方法）的时候，JVM会查找类的路径，并加载类对应的.class文件，然后创建一个Class对象。
+
+如果在加载该Class文件的时候发现这个类有父类，那么加载器也会去加载它父类的Class，直到所有Class文件都被加载完。
+
+在加载每个Class对象的时候，会对每个类进行静态初始化，这个静态初始化只执行一次，也就是在类第一次被引用的时候执行。
+
+">
+
+
+<meta itemprop="datePublished" content="2018-08-25T00:17:09&#43;08:00" />
+<meta itemprop="dateModified" content="2018-08-25T00:17:09&#43;08:00" />
+<meta itemprop="wordCount" content="2885">
+
+
+
+<meta itemprop="keywords" content="Java,Initialization," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java基础知识系列7：初始化"/>
+<meta name="twitter:description" content="变量的初始化
+
+方法内的局部变量，必需显示初始化后才能使用，使用未初始化变量会导致编译器报错；类成员变量或静态域未初始化就会被赋初始值，比如对象会是null，boolean是false，int是0等。
+
+给类成员变量赋值可以在该变量定义的地方进行。不初始化类变量不是一种好的习惯。
+
+初始化顺序
+
+当首次调用类的静态方法（包括main方法）或静态域时，或者首次创建对象（其实创建对象所调用的构造器也是静态方法）的时候，JVM会查找类的路径，并加载类对应的.class文件，然后创建一个Class对象。
+
+如果在加载该Class文件的时候发现这个类有父类，那么加载器也会去加载它父类的Class，直到所有Class文件都被加载完。
+
+在加载每个Class对象的时候，会对每个类进行静态初始化，这个静态初始化只执行一次，也就是在类第一次被引用的时候执行。
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Virtual World</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Virtual World</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Java基础知识系列7：初始化</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-08-25 </span>
+        <div class="post-category">
+            
+              <a href="/categories/java/"> Java </a>
+            
+          </div>
+        <span class="more-meta"> 2885 word </span>
+        <span class="more-meta"> 6 min read </span>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#变量的初始化">变量的初始化</a></li>
+<li><a href="#初始化顺序">初始化顺序</a></li>
+<li><a href="#数组初始化">数组初始化</a></li>
+<li><a href="#重载-this关键字和可变参数列表">重载，this关键字和可变参数列表</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h1 id="变量的初始化">变量的初始化</h1>
+
+<p>方法内的局部变量，必需显示初始化后才能使用，使用未初始化变量会导致编译器报错；类成员变量或静态域未初始化就会被赋初始值，比如对象会是null，boolean是false，int是0等。</p>
+
+<p>给类成员变量赋值可以在该变量定义的地方进行。不初始化类变量不是一种好的习惯。</p>
+
+<h1 id="初始化顺序">初始化顺序</h1>
+
+<p>当首次调用类的静态方法（包括main方法）或静态域时，或者首次创建对象（其实创建对象所调用的构造器也是静态方法）的时候，JVM会查找类的路径，并加载类对应的.class文件，然后创建一个Class对象。</p>
+
+<p>如果在加载该Class文件的时候发现这个类有父类，那么加载器也会去加载它父类的Class，直到所有Class文件都被加载完。</p>
+
+<p>在加载每个Class对象的时候，会对每个类进行静态初始化，这个静态初始化只执行一次，也就是在类第一次被引用的时候执行。</p>
+
+<p></p>
+
+<p>静态初始化包括类中定义的static域，static代码块。这个初始化和类的加载顺序一样，从根类开始，然后到它的继承类，因为有些类的静态初始化可能依赖其父类的静态初始化。</p>
+
+<p>无论这些static域或代码块定义在类的什么位置，它们都会被按顺序执行。这个顺序时按照代码在类中的先后顺序执行。比如下面的代码按照t1, t2, t3 的顺序执行：</p>
+
+<pre><code class="language-java">class A{
+    static T t1 = new T();
+    static {
+        T t2 = new T();
+    }
+    static T t3 = new T();
+}
+</code></pre>
+
+<p>如果没有创建新的对象，那么初始化到这里就结束了，否则需要继续进行。如果创建了新的对象，那么首先从根类开始到最外层的导出类，在堆上分配内存。这块内存储存空间会被清零，这里就会自动地把类对象中的所有数据类型设置成了默认值：基本类型为0，boolean为false，对象为null。</p>
+
+<p>当所有的内存分配和清零工作完成后，才开始执行对象成员变量初始化和对象初始化代码块。比如下面代码所示：</p>
+
+<pre><code class="language-java">class A{
+    private int id;
+    private String name;
+    private Date dob = new Date();
+    
+    {
+        id = 0;
+        name = &quot;Alex&quot;;
+    }
+}
+</code></pre>
+
+<p>首先执行的是根类的对象成员初始化。对象的成员的初始化顺序和静态初始化一样，按照代码定义在类中的先后顺序，因此不要在前面申明的变量中读取后面申明的域，这会造成循环引用。如果在成员对象初始化中引用了一个另一个未加载的类的静态域或静态方法，那么那个类及其父类会被类加载器按照我们之前说的方法进行加载。当根类的成员初始化结束后，就会执行根类的构造器中的代码。</p>
+
+<p>如果在父类的构造器中调用了一个动态绑定的方法，而这个方法将会在子类中被覆盖，并且这个方法使用了子类的某个成员变量，那么这个时候子类的成员变量可能还没有被正确的初始化，也就是说都是0值。这种构造器内的多态行为要特别小心，最好在构造器中避免调用其它方法。在构造器中唯一能被安全调用的方法是父类本身的final或者private方法，因为这些方法不能被覆盖。</p>
+
+<p>当根类的构造器中的代码执行完后，JVM就会开始初始化其导出类的成员、调用导出类的构造器，直到最外层的导出类被初始化。</p>
+
+<p>这里构造器的调用可以在导出类中用super语句来指定，或者自动调用父类的默认构造器。如果使用super语句，那么它必需是构造器的第一条语句。如果即没有使用super语句，父类又没有默认构造器那么就会报错。这里的super和this一样，都有两个用途: 第一是调用隐式参数，第二是调用该类或其父类的其它构造器。super并不是一个对象引用，不能将super赋值给另一个变量。</p>
+
+<p>以下测试可以反映出一部分初始化顺序：</p>
+
+<pre><code class="language-java">class SubC1{
+    static{
+        System.out.println(&quot;Static␣SubC1&quot;);
+    }
+    public SubC1(){
+        System.out.println(&quot;SubC1&quot;);
+    }
+}
+
+class SubC2{
+    static{
+        System.out.println(&quot;Static␣SubC2&quot;);
+    }
+    public SubC2(){
+        System.out.println(&quot;SubC2&quot;);
+    }
+}
+
+class SubD1{
+    static{
+        System.out.println(&quot;Static␣SubD1&quot;);
+    }
+    public SubD1(){
+        System.out.println(&quot;SubD1&quot;);
+    }
+}
+
+class SubD2{
+    static{
+        System.out.println(&quot;Static␣SubD2&quot;);
+    }
+    public SubD2(){
+        System.out.println(&quot;SubD2&quot;);
+    }
+}
+
+class SubA{
+    static{
+        System.out.println(&quot;Static␣SubA&quot;);
+    }
+    public SubA(){
+        System.out.println(&quot;SubA&quot;);
+    }
+}
+
+class C{
+    static{
+        System.out.println(&quot;Static␣C&quot;);
+    }
+    
+    private SubC2 c2 = new SubC2();
+    private SubC1 c1 = new SubC1();
+    
+    public C(){
+        System.out.println(&quot;C&quot;);
+    }
+}
+
+class D extends C{
+    static{
+        System.out.println(&quot;Static␣D&quot;);
+    }
+
+    private SubD2 d2 = new SubD2();
+    private SubD1 d1 = new SubD1();
+    
+    public D(){
+        System.out.println(&quot;D&quot;);
+    }
+}
+
+public class A extends D{
+
+    static{
+        System.out.println(&quot;Static␣A1&quot;);
+    }
+
+    private SubA a = new SubA();
+
+    public A(){
+        System.out.println(&quot;A&quot;);
+    }
+    
+    public static void main(String[] args){
+        new A();
+    }
+    
+    static{
+        System.out.println(&quot;Static␣A2&quot;);
+    }
+}
+</code></pre>
+
+<p>该测试的输出是：</p>
+
+<pre><code class="language-text">Static C
+Static D
+Static A1
+Static A2
+Static SubC2
+SubC2
+Static SubC1
+SubC1
+C
+Static SubD2
+SubD2
+Static SubD1
+SubD1
+D
+Static SubA
+SubA
+A
+</code></pre>
+
+<p>一般来讲，JVM 垃圾回收器会处理清理工作，但当需要手动释放资源等情况时需要编写代码进行清理。</p>
+
+<p>资源的释放顺序一般和创建的顺序相反，先创建的最后释放。比如创建数据库资源时，一般是先创建Connection，然后是PreparedStatement，最后获取查询结果ResultSet。那么释放顺序就是反过来的ResultSet，PreparedStatement，最后是Connection。如果有父类需要清理，那么先执行自身（子类）的清理工作，然后调用父类的清理方法。</p>
+
+<h1 id="数组初始化">数组初始化</h1>
+
+<p>数组的定义方式可以是int[] a 或int a[]，建议使用前者。</p>
+
+<p>每个数组都有一个固定的成员变量length，保存了数组的长度。</p>
+
+<p>数组变量被赋值给另一个数组变量时，只是复制了这个数组的一个引用。</p>
+
+<p>有三种数组的初始化方式：</p>
+
+<ol>
+<li>在数组定义的地方初始化。int[] a = {1,2,3};</li>
+<li>使用new，并指定数组大小，但不赋值。Integer[] a = new Integer[4]; 这创建的是一个长度为4的引用数组（因为Integer是对象而不是基本类型）。但是所有的元素没有被初始化，数组元素中的基本数据类型会被初始化为默认值，对象引用会被初始化为null。</li>
+<li>使用new，不指定大小，但是赋初始值。Integer a = new Integer[]{new Integer(1), new Integer(2),3}。</li>
+</ol>
+
+<h1 id="重载-this关键字和可变参数列表">重载，this关键字和可变参数列表</h1>
+
+<p>重载：方法名相同，但是形参不同的方法被称为方法重载。方法名和参数类型被称为签名。返回类型不是签名的一部分，同一个类中不能存在两个名字和参数类型相同，返回类型却不同的方法。</p>
+
+<p>this有两种用法。其一、this 关键字只能在非静态的方法内部使用，表示的是对<code>调用方法的那个对象</code>引用，所以通过this可以调用<code>调用方法的对象</code>的域和方法。其二、this 带有参数列表表示的构造方
+法。只有在构造方法中才能用this调用其它构造方法，而且这个调用必需放在构造方法的第一行，而且只能调用一次。</p>
+
+<p>可变参数列表，比如：</p>
+
+<pre><code class="language-java">void method(Integer... args){}
+void method(Double... args){}
+</code></pre>
+
+<p>可变参数列表可以接受一个对应数据类型的数组作为参数，比如method(new Integer(){1, 2})，也可以接受多个对应数据类型的参数，比如method(new Integer(1), new Integer(2))，也可以接受空参数，比如method()。然而在这个例子中，空参数会造成歧义，两个method 到底调用哪一个是不定的，因此会报错。</p>
+
+<p>更多关于初始化顺序以及清理机制，详见JVM相关笔记。</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Jiaqi Li</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2018-08-25</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/java/">Java</a>
+          
+          <a href="/tags/initialization/">Initialization</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/java-basics-8-reflection/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Java基础知识系列8：反射</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+          <a class="next" href="/post/java-console-printing/">
+            <span class="next-text nav-default">奇怪的printStackTrace引起进程卡住的问题</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://www.facebook.com/ajl98" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="https://www.instagram.com/binaryexplorer/" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="https://www.linkedin.com/in/alexjiaqili/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="https://github.com/virtworld" class="iconfont icon-github" title="github"></a>
+  <a href="http://www.jiaqili.me/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2014 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jiaqi Li</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.1"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+
+
+
+</body>
+</html>

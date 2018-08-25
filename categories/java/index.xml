@@ -6,10 +6,107 @@
     <description>Recent content in Java on Virtual World</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 18 Aug 2018 10:10:59 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 25 Aug 2018 00:17:11 +0800</lastBuildDate>
     
 	<atom:link href="http://www.jiaqili.me/categories/java/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Java基础知识系列9：泛型</title>
+      <link>http://www.jiaqili.me/post/java-basics-9-generic/</link>
+      <pubDate>Sat, 25 Aug 2018 00:17:11 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-basics-9-generic/</guid>
+      <description>&lt;h1 id=&#34;泛型概述&#34;&gt;泛型概述&lt;/h1&gt;
+
+&lt;p&gt;泛型的代码意味着它可以被很多不同类型的对象所重用，比如ArrayList&lt;T&gt;可以用来保存任意特定类型。&lt;/p&gt;
+
+&lt;p&gt;我们知道原生类型，保存的是Object类型（在擦除小节会讲到），当用get方法获取元素时候，需要进行强制类型转换。&lt;/p&gt;
+
+&lt;p&gt;但是泛型提供了类型参数(即类型参数化的概念)，它希望通过解耦类或方法与所使用的类型之间的约束来使类或方法实现最广泛的表达能力。这里的T可以用来指示元素类型，比如&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;ArrayList &amp;lt;String &amp;gt; files = new ArrayList &amp;lt;&amp;gt;();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;当调用get的时候不再需要强制类型转换，因为编译器自动插入了合适的强制类型转换，它直接返回正确的类型，比如&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;String filename = files.get(0);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;泛型类&#34;&gt;泛型类&lt;/h1&gt;
+
+&lt;p&gt;一个泛型类是具有一个或多个类型变量的类。类型变量使用大写形式，通常比较短，一般用E表示集合的元素类型，用K和V表示关键字与值的类型，T、U 和S表示任意类型。以下是一个泛型类的示例：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public class Pair &amp;lt;T&amp;gt; {
+    private T first;
+    private T second;
+    public Pair() { first = null; second = null;}
+    public Pair(T first , T second) { this.first = first; this.second = second;}
+    public T getFirst() { return first;}
+    public T getSecond() { return second;}
+    public void setFirst(T newValue) { first = newValue;}
+    public void setSecond(T newValue) { second = newValue;}
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java基础知识系列8：反射</title>
+      <link>http://www.jiaqili.me/post/java-basics-8-reflection/</link>
+      <pubDate>Sat, 25 Aug 2018 00:17:10 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-basics-8-reflection/</guid>
+      <description>&lt;h1 id=&#34;反射概述&#34;&gt;反射概述&lt;/h1&gt;
+
+&lt;p&gt;反射表示程序能够在运行时检查和修改自身结构和行为的能力。Java运行时为所有的对象维护一个运行时类型标志，这些被保存在Class对象中。Java的反射机制，可以让我们获取这些信息，分析类的能力，查看对象，调用任意方法等。&lt;/p&gt;
+
+&lt;h1 id=&#34;class-类&#34;&gt;Class 类&lt;/h1&gt;
+
+&lt;p&gt;一个Class对象表示的是一个特定类型，注意这里不一定是指类的类型。我们可以使用多种方法来获取Class对象。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Object类中的&lt;code&gt;getClass()&lt;/code&gt;方法动态获取类型。因为所有的对象都继承自Object类，因此所有的对象上都可以调用getClass() 来获得其类型信息；&lt;/li&gt;
+&lt;li&gt;静态的&lt;code&gt;Class.forName(String)&lt;/code&gt;方法。适用于将类名保存在字符串中，并可以在运行中改变的情况。因为参数必需是有效的类名，所以必需搭配一个已检查异常处理器使用；&lt;/li&gt;
+&lt;li&gt;T.class来静态的获取类型。比如&lt;code&gt;Date.class&lt;/code&gt;，&lt;code&gt;Double[].class&lt;/code&gt;，&lt;code&gt;int.class&lt;/code&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;我们可以使用==来判断两个对象的类型是否一致：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;if( e.getClass() == Employee.class)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;我们可以使用Class对象上的newInstance()方法来快速创建一个类的实例。newInstance()方法调用类的默认构造器，如果没有默认构造器则会抛出异常。比如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;e.getClass().newInstance();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java基础知识系列7：初始化</title>
+      <link>http://www.jiaqili.me/post/java-basics-7-init/</link>
+      <pubDate>Sat, 25 Aug 2018 00:17:09 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-basics-7-init/</guid>
+      <description>&lt;h1 id=&#34;变量的初始化&#34;&gt;变量的初始化&lt;/h1&gt;
+
+&lt;p&gt;方法内的局部变量，必需显示初始化后才能使用，使用未初始化变量会导致编译器报错；类成员变量或静态域未初始化就会被赋初始值，比如对象会是null，boolean是false，int是0等。&lt;/p&gt;
+
+&lt;p&gt;给类成员变量赋值可以在该变量定义的地方进行。不初始化类变量不是一种好的习惯。&lt;/p&gt;
+
+&lt;h1 id=&#34;初始化顺序&#34;&gt;初始化顺序&lt;/h1&gt;
+
+&lt;p&gt;当首次调用类的静态方法（包括main方法）或静态域时，或者首次创建对象（其实创建对象所调用的构造器也是静态方法）的时候，JVM会查找类的路径，并加载类对应的.class文件，然后创建一个Class对象。&lt;/p&gt;
+
+&lt;p&gt;如果在加载该Class文件的时候发现这个类有父类，那么加载器也会去加载它父类的Class，直到所有Class文件都被加载完。&lt;/p&gt;
+
+&lt;p&gt;在加载每个Class对象的时候，会对每个类进行静态初始化，这个静态初始化只执行一次，也就是在类第一次被引用的时候执行。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>奇怪的printStackTrace引起进程卡住的问题</title>
