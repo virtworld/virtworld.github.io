@@ -140,6 +140,57 @@
     
       <article class="post">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/java-basics-10-container/">Java基础知识系列10：容器</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-08-29 </span>
+      <div class="post-category">
+          
+            <a href="/categories/java/"> Java </a>
+          
+        </div>
+      <span class="more-meta"> 8718 word </span>
+      <span class="more-meta"> 18 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <h1 id="容器的接口与实现分离">容器的接口与实现分离</h1>
+
+<p>Java的集合类库设计将接口与实现分离。以队列为例，我们可以有以下接口：</p>
+
+<pre><code class="language-java">interface Queue &lt;E&gt;{
+    void add(E element);
+    E remove();
+    int size();
+}
+</code></pre>
+
+<p>这个接口只是定义了一个队列的实现所必需包含的方法，但没有说明具体应该如何实现。队列的常见实现方式有</p>
+
+<ol>
+<li>循环数组比如ArrayDeque;</li>
+<li>链表，比如LinkedList。</li>
+</ol>
+
+<p>一旦我们构造了一个集合，我们就不需要知道它究竟用了哪一种实现，因为它们都遵守了接口的协议。通常我们将实例化的某集合保存到一个接口的引用中，如下所示：</p>
+
+<pre><code class="language-java">Queue &lt;Customer&gt; custQueue = new LinkedList &lt;Customer&gt;();
+</code></pre>
+
+<p>这样做的目的是，一旦我们想修改某数据结构的实现，我们只要在上述构造的地方（new 语句中）修改即可。另外，还有一组Abstract开头的类。和接口不同的是，集合中的抽象类一般是给类库实现者设计的，比如如果要实现自己的队列类，可以扩展AbstractQueue类，这要比实现Queue 接口中所有的方法轻松地多。</p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/java-basics-10-container/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/java-basics-9-generic/">Java基础知识系列9：泛型</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2018-08-25 </span>
@@ -514,48 +565,6 @@ switch(size){
     </div>
     <div class="read-more">
       <a href="/post/java-basics-2-modifiers/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/java-basics-1-basics/">Java基础知识系列1：常见问题</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-08-11 </span>
-      <div class="post-category">
-          
-            <a href="/categories/java/"> Java </a>
-          
-        </div>
-      <span class="more-meta"> 3671 word </span>
-      <span class="more-meta"> 8 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>本章不是对Java语言语法的总结，而是摘录了一些容易容易出错、遗忘或混淆的基础知识点。</p>
-
-<h1 id="操作符">操作符</h1>
-
-<ol>
-<li>前缀递增++a，为先计算后生成值；后缀递增a++，为生成值后递增；</li>
-<li>对于对象，==操作符比较的是引用；对于基本类型，==比较的是值。要比较对象的实际内容应该使用equals，详见<code>Java基础知识系列3： Object类</code>。</li>
-<li>布尔值不能被赋值给int类型；在应该是用String的地方使用了布尔值，它们会被转换为恰当的文本形式，比如false；</li>
-<li>直接常量后面加上后缀表示其类型，比如L表示long，D表示double，F表示float；</li>
-<li>八进制用0开头，后面跟0-7的数字；十六进制用0x开头，后面跟0-F；</li>
-<li>布尔类型可以进行的运算很有限，不能进行加减，但是可以进行位运算，可以执行按位与(&amp;)、或(|)、异或(^)，但是不能执行按位非(~);</li>
-<li>移位操作符只能用来处理整数类型，&lt;&lt;左移操作符按操作符右边的位数将操作符左边的操作数向左移动，低位补0；&gt;&gt;有符号右移操作符，符合为正则高位插0，符号为负则高位插1；&gt;&gt;&gt;无符号右移操作符，无论符号如何，高位补0。如果对char, byte, short 等类型进行移位操作，它们会先被转换为int；</li>
-<li>Java允许我们把任何基本类型转换为任何基本类型，但是布尔类型除外，它不能进行任何类型转换；</li>
-<li>float和double转换为整型时，小数部分被舍弃，如果需要四舍五入，则需要用Math.round方法；</li>
-</ol>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/java-basics-1-basics/" class="read-more-link">Read more..</a>
     </div>
   </div>
 </article>

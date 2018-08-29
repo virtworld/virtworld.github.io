@@ -53,7 +53,7 @@
 
 
 
-<meta property="og:updated_time" content="2018-07-19T20:31:00&#43;08:00"/>
+<meta property="og:updated_time" content="2018-08-11T12:58:00&#43;08:00"/>
 
 
 
@@ -137,6 +137,48 @@
   <section id="posts" class="posts">
     
     
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/java-basics-1-basics/">Java基础知识系列1：常见问题</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-08-11 </span>
+      <div class="post-category">
+          
+            <a href="/categories/java/"> Java </a>
+          
+        </div>
+      <span class="more-meta"> 3671 word </span>
+      <span class="more-meta"> 8 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>本章不是对Java语言语法的总结，而是摘录了一些容易容易出错、遗忘或混淆的基础知识点。</p>
+
+<h1 id="操作符">操作符</h1>
+
+<ol>
+<li>前缀递增++a，为先计算后生成值；后缀递增a++，为生成值后递增；</li>
+<li>对于对象，==操作符比较的是引用；对于基本类型，==比较的是值。要比较对象的实际内容应该使用equals，详见<code>Java基础知识系列3： Object类</code>。</li>
+<li>布尔值不能被赋值给int类型；在应该是用String的地方使用了布尔值，它们会被转换为恰当的文本形式，比如false；</li>
+<li>直接常量后面加上后缀表示其类型，比如L表示long，D表示double，F表示float；</li>
+<li>八进制用0开头，后面跟0-7的数字；十六进制用0x开头，后面跟0-F；</li>
+<li>布尔类型可以进行的运算很有限，不能进行加减，但是可以进行位运算，可以执行按位与(&amp;)、或(|)、异或(^)，但是不能执行按位非(~);</li>
+<li>移位操作符只能用来处理整数类型，&lt;&lt;左移操作符按操作符右边的位数将操作符左边的操作数向左移动，低位补0；&gt;&gt;有符号右移操作符，符合为正则高位插0，符号为负则高位插1；&gt;&gt;&gt;无符号右移操作符，无论符号如何，高位补0。如果对char, byte, short 等类型进行移位操作，它们会先被转换为int；</li>
+<li>Java允许我们把任何基本类型转换为任何基本类型，但是布尔类型除外，它不能进行任何类型转换；</li>
+<li>float和double转换为整型时，小数部分被舍弃，如果需要四舍五入，则需要用Math.round方法；</li>
+</ol>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/java-basics-1-basics/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
     
       <article class="post">
   <header class="post-header">
@@ -591,52 +633,6 @@
     </div>
     <div class="read-more">
       <a href="/post/java-concurrency-1/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/jvm-gc/">Java垃圾收集技术</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2015-11-26 </span>
-      <div class="post-category">
-          
-            <a href="/categories/jvm/"> JVM </a>
-          
-        </div>
-      <span class="more-meta"> 2980 word </span>
-      <span class="more-meta"> 6 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <blockquote>
-<p>这篇是对《深入理解Java虚拟机》的第三章的总结笔记，G1部分还没有细看</p>
-</blockquote>
-
-<h2 id="1-判断对象存活与否">1 判断对象存活与否</h2>
-
-<h3 id="1-1-引用计数器-没有gc使用">1.1 引用计数器(没有GC使用)</h3>
-
-<ul>
-<li>每当有一个地方引用对象时，数值就+1，引用失效时，数值就-1。</li>
-
-<li><p>问题是无法解决对象之间的循环引用问题，比如对象A的一个字段引用B，对象B的一个字段引用A，然后对象A和B被设置为null，这时无法回收A和B。</p>
-
-<h3 id="1-2-可达性分析">1.2 可达性分析</h3></li>
-
-<li><p>从一系列GC Roots开始搜索，如果GC Roots到这个对象不可达时，则该对象是不可用的。</p></li>
-
-<li><p>GC Roots包括虚拟机栈中引用的对象，本地方法栈中引用的对象，方法区中类静态属性引用的对象，方法区中常量引用的对象。</p></li>
-</ul>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/jvm-gc/" class="read-more-link">Read more..</a>
     </div>
   </div>
 </article>

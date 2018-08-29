@@ -6,10 +6,44 @@
     <description>Recent content in Java on Virtual World</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 25 Aug 2018 00:17:11 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 29 Aug 2018 16:39:00 +0800</lastBuildDate>
     
 	<atom:link href="http://www.jiaqili.me/categories/java/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Java基础知识系列10：容器</title>
+      <link>http://www.jiaqili.me/post/java-basics-10-container/</link>
+      <pubDate>Wed, 29 Aug 2018 16:39:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-basics-10-container/</guid>
+      <description>&lt;h1 id=&#34;容器的接口与实现分离&#34;&gt;容器的接口与实现分离&lt;/h1&gt;
+
+&lt;p&gt;Java的集合类库设计将接口与实现分离。以队列为例，我们可以有以下接口：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;interface Queue &amp;lt;E&amp;gt;{
+    void add(E element);
+    E remove();
+    int size();
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这个接口只是定义了一个队列的实现所必需包含的方法，但没有说明具体应该如何实现。队列的常见实现方式有&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;循环数组比如ArrayDeque;&lt;/li&gt;
+&lt;li&gt;链表，比如LinkedList。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;一旦我们构造了一个集合，我们就不需要知道它究竟用了哪一种实现，因为它们都遵守了接口的协议。通常我们将实例化的某集合保存到一个接口的引用中，如下所示：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;Queue &amp;lt;Customer&amp;gt; custQueue = new LinkedList &amp;lt;Customer&amp;gt;();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样做的目的是，一旦我们想修改某数据结构的实现，我们只要在上述构造的地方（new 语句中）修改即可。另外，还有一组Abstract开头的类。和接口不同的是，集合中的抽象类一般是给类库实现者设计的，比如如果要实现自己的队列类，可以扩展AbstractQueue类，这要比实现Queue 接口中所有的方法轻松地多。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Java基础知识系列9：泛型</title>
