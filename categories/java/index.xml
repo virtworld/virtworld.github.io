@@ -6,10 +6,112 @@
     <description>Recent content in Java on Virtual World</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 29 Aug 2018 16:39:00 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 02 Sep 2018 19:06:00 +0800</lastBuildDate>
     
 	<atom:link href="http://www.jiaqili.me/categories/java/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Java基础知识系列12：数据库编程</title>
+      <link>http://www.jiaqili.me/post/java-basics-12-database/</link>
+      <pubDate>Sun, 02 Sep 2018 19:06:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-basics-12-database/</guid>
+      <description>&lt;h1 id=&#34;jdbc-设计理念&#34;&gt;JDBC 设计理念&lt;/h1&gt;
+
+&lt;p&gt;JDBC提供了Java API和一个驱动管理器。第三方数据库驱动程序向驱动管理器注册，应用程序通过API与驱动管理器进行通讯，然后驱动管理器通过特定的驱动程序与数据库通讯。此结构图如下：&lt;/p&gt;
+
+
+&lt;figure class=&#34;center&#34;&gt;
+    
+        &lt;img src=&#34;http://www.jiaqili.me/images/java-12-database/jdbc-design.PNG&#34; alt=&#34;JDBC设计理念&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;JDBC设计理念&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+
+
+&lt;p&gt;JDBC 实现了以下两个目标：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;数据库供应商可以优化底层驱动而不影响实际的应用程序；&lt;/li&gt;
+&lt;li&gt;程序员可以在Java 程序里访问数据库。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;JDBC驱动程序类型：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;将JDBC翻译成ODBC，用ODBC与数据库通讯（较早版本的Java驱动程序：JDBC/ODBC桥）；&lt;/li&gt;
+&lt;li&gt;由Java程序和本地代码共同组成，与数据库客户端API 进行通讯（客户端需要安装Java 类库和平台相关代码）；&lt;/li&gt;
+&lt;li&gt;纯Java客户端类库，将数据库请求通过与具体数据库无关的协议发送给数据库服务器，服务器端再翻译成数据库相关的协议（平台相关代码只在服务器端）；&lt;/li&gt;
+&lt;li&gt;纯Java 类库，将JDBC 请求直接翻译成数据库相关的协议。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;JDBC典型用法：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;传统的C/S 模式：服务器端部署数据库，客户端部署应用程序，即&lt;/p&gt;
+
+
+&lt;figure class=&#34;center&#34;&gt;
+    
+        &lt;img src=&#34;http://www.jiaqili.me/images/java-12-database/jdbc-cs.PNG&#34; alt=&#34;C/S模式&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;C/S模式&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;三层应用模式：&lt;/p&gt;
+
+
+&lt;figure class=&#34;center&#34;&gt;
+    
+        &lt;img src=&#34;http://www.jiaqili.me/images/java-12-database/jdbc-layers.PNG&#34; alt=&#34;三层应用模式&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;三层应用模式&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java基础知识系列11：断言和异常</title>
+      <link>http://www.jiaqili.me/post/java-basics-11-exception/</link>
+      <pubDate>Sun, 02 Sep 2018 19:05:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-basics-11-exception/</guid>
+      <description>&lt;p&gt;Java 中有三种处理错误的机制：异常(Exception)、断言(Assertion) 和日志(Log)。这里介绍前两种。&lt;/p&gt;
+
+&lt;h1 id=&#34;断言&#34;&gt;断言&lt;/h1&gt;
+
+&lt;p&gt;断言的格式&lt;code&gt;assert &amp;lt;condition&amp;gt;&lt;/code&gt;或者&lt;code&gt;assert &amp;lt;condition&amp;gt; : &amp;lt;expression&amp;gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;上述两种形式的断言都会对条件进行检测，如果是false，则会抛出AssertionError异常。第二种带有表达式的断言仅仅是把表达式的内容传递给AssertionError以便之后处理，比如打印出来。比如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;int x = 0;
+assert x &amp;gt; 0 : &amp;quot;Now you see my assetion message.&amp;quot;;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;为了看到Assertion的报错，我们需要打开虚拟机的参数-ea，上述代码会输出：&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Java基础知识系列10：容器</title>

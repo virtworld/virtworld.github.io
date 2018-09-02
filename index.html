@@ -140,6 +140,142 @@
     
       <article class="post">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/java-basics-12-database/">Java基础知识系列12：数据库编程</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-09-02 </span>
+      <div class="post-category">
+          
+            <a href="/categories/java/"> Java </a>
+          
+        </div>
+      <span class="more-meta"> 5280 word </span>
+      <span class="more-meta"> 11 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <h1 id="jdbc-设计理念">JDBC 设计理念</h1>
+
+<p>JDBC提供了Java API和一个驱动管理器。第三方数据库驱动程序向驱动管理器注册，应用程序通过API与驱动管理器进行通讯，然后驱动管理器通过特定的驱动程序与数据库通讯。此结构图如下：</p>
+
+
+<figure class="center">
+    
+        <img src="/images/java-12-database/jdbc-design.PNG" alt="JDBC设计理念" />
+    
+    
+    <figcaption>
+        <h4>JDBC设计理念</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<p>JDBC 实现了以下两个目标：</p>
+
+<ol>
+<li>数据库供应商可以优化底层驱动而不影响实际的应用程序；</li>
+<li>程序员可以在Java 程序里访问数据库。</li>
+</ol>
+
+<p>JDBC驱动程序类型：</p>
+
+<ol>
+<li>将JDBC翻译成ODBC，用ODBC与数据库通讯（较早版本的Java驱动程序：JDBC/ODBC桥）；</li>
+<li>由Java程序和本地代码共同组成，与数据库客户端API 进行通讯（客户端需要安装Java 类库和平台相关代码）；</li>
+<li>纯Java客户端类库，将数据库请求通过与具体数据库无关的协议发送给数据库服务器，服务器端再翻译成数据库相关的协议（平台相关代码只在服务器端）；</li>
+<li>纯Java 类库，将JDBC 请求直接翻译成数据库相关的协议。</li>
+</ol>
+
+<p>JDBC典型用法：</p>
+
+<ol>
+<li><p>传统的C/S 模式：服务器端部署数据库，客户端部署应用程序，即</p>
+
+
+<figure class="center">
+    
+        <img src="/images/java-12-database/jdbc-cs.PNG" alt="C/S模式" />
+    
+    
+    <figcaption>
+        <h4>C/S模式</h4>
+        
+    </figcaption>
+    
+</figure>
+</li>
+
+<li><p>三层应用模式：</p>
+
+
+<figure class="center">
+    
+        <img src="/images/java-12-database/jdbc-layers.PNG" alt="三层应用模式" />
+    
+    
+    <figcaption>
+        <h4>三层应用模式</h4>
+        
+    </figcaption>
+    
+</figure>
+</li>
+</ol>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/java-basics-12-database/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/java-basics-11-exception/">Java基础知识系列11：断言和异常</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-09-02 </span>
+      <div class="post-category">
+          
+            <a href="/categories/java/"> Java </a>
+          
+        </div>
+      <span class="more-meta"> 4083 word </span>
+      <span class="more-meta"> 9 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>Java 中有三种处理错误的机制：异常(Exception)、断言(Assertion) 和日志(Log)。这里介绍前两种。</p>
+
+<h1 id="断言">断言</h1>
+
+<p>断言的格式<code>assert &lt;condition&gt;</code>或者<code>assert &lt;condition&gt; : &lt;expression&gt;</code></p>
+
+<p>上述两种形式的断言都会对条件进行检测，如果是false，则会抛出AssertionError异常。第二种带有表达式的断言仅仅是把表达式的内容传递给AssertionError以便之后处理，比如打印出来。比如：</p>
+
+<pre><code class="language-java">int x = 0;
+assert x &gt; 0 : &quot;Now you see my assetion message.&quot;;
+</code></pre>
+
+<p>为了看到Assertion的报错，我们需要打开虚拟机的参数-ea，上述代码会输出：</p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/java-basics-11-exception/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/java-basics-10-container/">Java基础知识系列10：容器</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2018-08-29 </span>
@@ -486,85 +622,6 @@ switch(size){
     </div>
     <div class="read-more">
       <a href="/post/java-basics-4-interface/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/java-basics-3-object/">Java基础知识系列3： Object类</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-08-11 </span>
-      <div class="post-category">
-          
-            <a href="/categories/java/"> Java </a>
-          
-        </div>
-      <span class="more-meta"> 4310 word </span>
-      <span class="more-meta"> 9 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>Java中每个类都是继承自Object，如果一个类没有显示地指明父类，Object就是它的父类。除了基本类型外，对象、对象数组、基本类型数组都是继承自Object类。本文主要介绍Object的方法。</p>
-
-<h1 id="equals方法">equals方法</h1>
-
-<p>Object的equals方法使用两个对象的地址是否相同来判断对象是否等价。如果子类没有覆盖equals
-方法，那么它也将如此判断，但很多时候我们希望通过对象的状态，即私有数据域中的数据，来判断两个对象是否相同。</p>
-
-<p>Java语言规范要求equals方法具有以下方面特性：</p>
-
-<ul>
-<li><strong>自反性</strong>。对于任何非空的x，x.equals(x)返回true;</li>
-<li><strong>对称性</strong>。对于任何引用x和y。当且仅当x.equals(y)返回true，y.equals(x)也应该返回true;</li>
-<li><strong>传递性</strong>。对于任何引用x、y 和z。如果x.equals(y)返回true，y.equals(z)返回true，那么x.equals(z)也应该返回true;</li>
-<li><strong>一致性</strong>。如果x和y引用的对象没有发生变化，反复调用x.equals(y)应该返回一样的结果;</li>
-<li>对于任何非空引用x。x.equals(null) 应该返回false。</li>
-</ul>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/java-basics-3-object/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/java-basics-2-modifiers/">Java基础知识系列2：修饰符</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-08-11 </span>
-      <div class="post-category">
-          
-            <a href="/categories/java/"> Java </a>
-          
-        </div>
-      <span class="more-meta"> 2574 word </span>
-      <span class="more-meta"> 6 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <h1 id="final数据-方法和类">final数据、方法和类</h1>
-
-<h2 id="final数据">final数据</h2>
-
-<p>对基本类型使用final修饰词时，该基本类型在初始化后不能被修改；对对象引用使用final修饰词时，该引用被初始化后不能指向其他对象，但是所指向的对象本身仍旧是可变的。比如final数组引用，这个引用只能指向同一个数组，但是数组本身的元素却是可变的。</p>
-
-<p>如果某个域被定义为final，则必须在定义处或者构造器中对其进行初始化。final只表示一旦被初始化，其值将不会改变，但不是说在编译期就能知道其值：我们可以使用随机函数初始化它。</p>
-
-<p>一个既是static又是final 的变量只占据一段不能改变的内存：static表示只有一份，final表示常量。final数据一般出现在不可变的基本类型域或者不可变类的域，对于可变的类，使用final修饰某实例域容易造成混乱。</p>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/java-basics-2-modifiers/" class="read-more-link">Read more..</a>
     </div>
   </div>
 </article>

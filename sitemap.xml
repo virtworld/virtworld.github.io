@@ -10,6 +10,20 @@
   </url>
   
   <url>
+    <loc>http://www.jiaqili.me/post/java-basics-12-database/</loc>
+    <lastmod>2018-09-02T19:06:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-basics-11-exception/</loc>
+    <lastmod>2018-09-02T19:05:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>http://www.jiaqili.me/post/java-basics-10-container/</loc>
     <lastmod>2018-08-29T16:39:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -255,8 +269,22 @@
   </url>
   
   <url>
+    <loc>http://www.jiaqili.me/tags/database/</loc>
+    <lastmod>2018-09-02T19:06:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://www.jiaqili.me/tags/enumeration/</loc>
     <lastmod>2018-08-18T10:08:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/error-handling/</loc>
+    <lastmod>2018-09-02T19:05:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -298,14 +326,14 @@
   
   <url>
     <loc>http://www.jiaqili.me/tags/java/</loc>
-    <lastmod>2018-08-29T16:39:00+08:00</lastmod>
+    <lastmod>2018-09-02T19:06:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://www.jiaqili.me/categories/java/</loc>
-    <lastmod>2018-08-29T16:39:00+08:00</lastmod>
+    <lastmod>2018-09-02T19:06:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -382,7 +410,7 @@
   
   <url>
     <loc>http://www.jiaqili.me/post/</loc>
-    <lastmod>2018-08-29T16:39:00+08:00</lastmod>
+    <lastmod>2018-09-02T19:06:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

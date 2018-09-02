@@ -93,11 +93,29 @@
     </item>
     
     <item>
+      <title>Database</title>
+      <link>http://www.jiaqili.me/tags/database/</link>
+      <pubDate>Sun, 02 Sep 2018 19:06:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/tags/database/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Enumeration</title>
       <link>http://www.jiaqili.me/tags/enumeration/</link>
       <pubDate>Sat, 18 Aug 2018 10:08:00 +0800</pubDate>
       
       <guid>http://www.jiaqili.me/tags/enumeration/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Error Handling</title>
+      <link>http://www.jiaqili.me/tags/error-handling/</link>
+      <pubDate>Sun, 02 Sep 2018 19:05:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/tags/error-handling/</guid>
       <description></description>
     </item>
     
@@ -149,7 +167,7 @@
     <item>
       <title>Java</title>
       <link>http://www.jiaqili.me/tags/java/</link>
-      <pubDate>Wed, 29 Aug 2018 16:39:00 +0800</pubDate>
+      <pubDate>Sun, 02 Sep 2018 19:06:00 +0800</pubDate>
       
       <guid>http://www.jiaqili.me/tags/java/</guid>
       <description></description>
