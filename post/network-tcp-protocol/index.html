@@ -298,7 +298,7 @@ TCP并不解析传输的内容。它并不关心传输的二进制数据还是AS
 <ul>
 <li><a href="#延迟确认"><strong>延迟确认</strong></a></li>
 <li><a href="#nagle算法"><strong>Nagle算法</strong></a></li>
-<li><a href="#silly-window症状">**<em>Silly Window症状</em></a></li>
+<li><a href="#silly-window症状"><strong>Silly Window症状</strong></a></li>
 <li><a href="#小结"><strong>小结</strong></a></li>
 </ul></li>
 <li><a href="#tcp批量数据流"><strong>TCP批量数据流</strong></a>
@@ -842,7 +842,7 @@ less than 0.5 seconds, and in a stream of full-sized segments there SHOULD be an
 
 <p>如果有未确认的数据，那么发送端会缓存所有的用户数据，直到所有数据都被确认或者TCP协议可以发送一个全尺寸的报文段。也就是说在一个通信较快的网络上，确认地越快那么发送端也发送地越快；但是在一个慢速网络上，Nagle算法会减少发送小报文的次数。</p>
 
-<h2 id="silly-window症状">**<em>Silly Window症状</em></h2>
+<h2 id="silly-window症状"><strong>Silly Window症状</strong></h2>
 
 <p>基于窗口的流控机制可能会发生所谓的Silly Window Syndrome(SWS)：连接上两端不使用全尺寸报文段，而是每次交互一个小报文段。这可能是因为：</p>
 

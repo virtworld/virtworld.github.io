@@ -227,14 +227,14 @@
   </url>
   
   <url>
-    <loc>http://www.jiaqili.me/tags/algorithm/</loc>
+    <loc>http://www.jiaqili.me/categories/algorithm/</loc>
     <lastmod>2018-02-25T14:41:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://www.jiaqili.me/categories/algorithm/</loc>
+    <loc>http://www.jiaqili.me/tags/algorithm/</loc>
     <lastmod>2018-02-25T14:41:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
@@ -276,14 +276,14 @@
   </url>
   
   <url>
-    <loc>http://www.jiaqili.me/tags/computer-science/</loc>
+    <loc>http://www.jiaqili.me/categories/computer-science/</loc>
     <lastmod>2014-06-01T20:54:42+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://www.jiaqili.me/categories/computer-science/</loc>
+    <loc>http://www.jiaqili.me/tags/computer-science/</loc>
     <lastmod>2014-06-01T20:54:42+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
@@ -367,13 +367,6 @@
   </url>
   
   <url>
-    <loc>http://www.jiaqili.me/tags/java/</loc>
-    <lastmod>2018-09-02T19:06:00+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>http://www.jiaqili.me/categories/java/</loc>
     <lastmod>2018-09-02T19:06:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -381,14 +374,21 @@
   </url>
   
   <url>
-    <loc>http://www.jiaqili.me/tags/jvm/</loc>
-    <lastmod>2015-12-28T10:57:42+00:00</lastmod>
+    <loc>http://www.jiaqili.me/tags/java/</loc>
+    <lastmod>2018-09-02T19:06:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://www.jiaqili.me/categories/jvm/</loc>
+    <lastmod>2015-12-28T10:57:42+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/jvm/</loc>
     <lastmod>2015-12-28T10:57:42+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
@@ -423,14 +423,14 @@
   </url>
   
   <url>
-    <loc>http://www.jiaqili.me/tags/network/</loc>
+    <loc>http://www.jiaqili.me/categories/network/</loc>
     <lastmod>2018-09-06T09:47:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://www.jiaqili.me/categories/network/</loc>
+    <loc>http://www.jiaqili.me/tags/network/</loc>
     <lastmod>2018-09-06T09:47:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
@@ -451,14 +451,14 @@
   </url>
   
   <url>
-    <loc>http://www.jiaqili.me/tags/oracle/</loc>
+    <loc>http://www.jiaqili.me/categories/oracle/</loc>
     <lastmod>2018-02-21T20:09:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://www.jiaqili.me/categories/oracle/</loc>
+    <loc>http://www.jiaqili.me/tags/oracle/</loc>
     <lastmod>2018-02-21T20:09:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
@@ -493,14 +493,14 @@
   </url>
   
   <url>
-    <loc>http://www.jiaqili.me/tags/software-engineering/</loc>
+    <loc>http://www.jiaqili.me/categories/software-engineering/</loc>
     <lastmod>2018-07-19T20:31:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://www.jiaqili.me/categories/software-engineering/</loc>
+    <loc>http://www.jiaqili.me/tags/software-engineering/</loc>
     <lastmod>2018-07-19T20:31:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
