@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>网络协议系列一：概览 - Virtual World</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Jiaqi Li" />
+  <meta name="description" content=" 本文是对计算机网络概述的总结笔记。主要参考数目为TCP/IP Illustrated: Volume I: The Protocols的第一章。
+ 网络(通信)协议是一些列交换信息的规则（比如格式、含义等）。它提供了高层的接口，将硬件细节对应用程序员隐藏，使得不同的应用可以在不同的硬件上运行并通信。协议栈(protocol suite)指的是在不同层级上不同协议的组合，比如TCP/IP协议栈。 层级(layering)是协议栈设计的一种常用方法，每一层协议处理不同层级的抽象，并且通过一个通用的接口与高层和底层的协议通信。分层的原则是运行在层级N上的程序必须能够准确地收到同样运行在层级N上的另一台主机上的程序发送的信息。
+TCP/IP协议栈一般被认为是一种四层协议系统，如下表所示。
+Applcation: Telnet, FTP, Email Transport: TCP, UDP Network: IP, ICMP, IGMP, Link: device driver and interface card  这里的Application层又对应ISO七层网络模型中的上三层的(由下至上)Session, Presentation, Application；Link对应ISO中最下层的(由下至上)Physical和Link层。这里简单记录各层的作用：
+ 链路层。处理硬件接口的细节。 网络层（或英特网层）。处理数据包在网络中移动的过程，比如路由。 运输层。为应用层提供端到端的通信。 应用层。负责处理特定应用的细节。  
+" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.41" />
+
+
+<link rel="canonical" href="http://www.jiaqili.me/post/network-overview/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=2.7.1" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="网络协议系列一：概览" />
+<meta property="og:description" content="
+本文是对计算机网络概述的总结笔记。主要参考数目为TCP/IP Illustrated: Volume I: The Protocols的第一章。
+
+
+网络(通信)协议是一些列交换信息的规则（比如格式、含义等）。它提供了高层的接口，将硬件细节对应用程序员隐藏，使得不同的应用可以在不同的硬件上运行并通信。协议栈(protocol suite)指的是在不同层级上不同协议的组合，比如TCP/IP协议栈。
+层级(layering)是协议栈设计的一种常用方法，每一层协议处理不同层级的抽象，并且通过一个通用的接口与高层和底层的协议通信。分层的原则是运行在层级N上的程序必须能够准确地收到同样运行在层级N上的另一台主机上的程序发送的信息。
+
+TCP/IP协议栈一般被认为是一种四层协议系统，如下表所示。
+
+Applcation: Telnet, FTP, Email
+Transport: TCP, UDP
+Network: IP, ICMP, IGMP,
+Link: device driver and interface card
+
+
+这里的Application层又对应ISO七层网络模型中的上三层的(由下至上)Session, Presentation, Application；Link对应ISO中最下层的(由下至上)Physical和Link层。这里简单记录各层的作用：
+
+
+链路层。处理硬件接口的细节。
+网络层（或英特网层）。处理数据包在网络中移动的过程，比如路由。
+运输层。为应用层提供端到端的通信。
+应用层。负责处理特定应用的细节。
+
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.jiaqili.me/post/network-overview/" />
+
+
+
+<meta property="article:published_time" content="2018-09-06T09:41:01&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-09-06T09:41:00&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="网络协议系列一：概览">
+<meta itemprop="description" content="
+本文是对计算机网络概述的总结笔记。主要参考数目为TCP/IP Illustrated: Volume I: The Protocols的第一章。
+
+
+网络(通信)协议是一些列交换信息的规则（比如格式、含义等）。它提供了高层的接口，将硬件细节对应用程序员隐藏，使得不同的应用可以在不同的硬件上运行并通信。协议栈(protocol suite)指的是在不同层级上不同协议的组合，比如TCP/IP协议栈。
+层级(layering)是协议栈设计的一种常用方法，每一层协议处理不同层级的抽象，并且通过一个通用的接口与高层和底层的协议通信。分层的原则是运行在层级N上的程序必须能够准确地收到同样运行在层级N上的另一台主机上的程序发送的信息。
+
+TCP/IP协议栈一般被认为是一种四层协议系统，如下表所示。
+
+Applcation: Telnet, FTP, Email
+Transport: TCP, UDP
+Network: IP, ICMP, IGMP,
+Link: device driver and interface card
+
+
+这里的Application层又对应ISO七层网络模型中的上三层的(由下至上)Session, Presentation, Application；Link对应ISO中最下层的(由下至上)Physical和Link层。这里简单记录各层的作用：
+
+
+链路层。处理硬件接口的细节。
+网络层（或英特网层）。处理数据包在网络中移动的过程，比如路由。
+运输层。为应用层提供端到端的通信。
+应用层。负责处理特定应用的细节。
+
+
+">
+
+
+<meta itemprop="datePublished" content="2018-09-06T09:41:01&#43;08:00" />
+<meta itemprop="dateModified" content="2018-09-06T09:41:01&#43;08:00" />
+<meta itemprop="wordCount" content="1578">
+
+
+
+<meta itemprop="keywords" content="Network," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="网络协议系列一：概览"/>
+<meta name="twitter:description" content="
+本文是对计算机网络概述的总结笔记。主要参考数目为TCP/IP Illustrated: Volume I: The Protocols的第一章。
+
+
+网络(通信)协议是一些列交换信息的规则（比如格式、含义等）。它提供了高层的接口，将硬件细节对应用程序员隐藏，使得不同的应用可以在不同的硬件上运行并通信。协议栈(protocol suite)指的是在不同层级上不同协议的组合，比如TCP/IP协议栈。
+层级(layering)是协议栈设计的一种常用方法，每一层协议处理不同层级的抽象，并且通过一个通用的接口与高层和底层的协议通信。分层的原则是运行在层级N上的程序必须能够准确地收到同样运行在层级N上的另一台主机上的程序发送的信息。
+
+TCP/IP协议栈一般被认为是一种四层协议系统，如下表所示。
+
+Applcation: Telnet, FTP, Email
+Transport: TCP, UDP
+Network: IP, ICMP, IGMP,
+Link: device driver and interface card
+
+
+这里的Application层又对应ISO七层网络模型中的上三层的(由下至上)Session, Presentation, Application；Link对应ISO中最下层的(由下至上)Physical和Link层。这里简单记录各层的作用：
+
+
+链路层。处理硬件接口的细节。
+网络层（或英特网层）。处理数据包在网络中移动的过程，比如路由。
+运输层。为应用层提供端到端的通信。
+应用层。负责处理特定应用的细节。
+
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Virtual World</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Virtual World</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">网络协议系列一：概览</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-09-06 </span>
+        <div class="post-category">
+            
+              <a href="/categories/network/"> Network </a>
+            
+          </div>
+        <span class="more-meta"> 1578 word </span>
+        <span class="more-meta"> 4 min read </span>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#封装"><strong>封装</strong></a></li>
+<li><a href="#解除多路复用-demultiplexing"><strong>解除多路复用 Demultiplexing</strong></a></li>
+<li><a href="#端口号"><strong>端口号</strong></a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <blockquote>
+<p>本文是对计算机网络概述的总结笔记。主要参考数目为<strong>TCP/IP Illustrated: Volume I: The Protocols</strong>的第一章。</p>
+</blockquote>
+
+<p>网络(通信)协议是一些列交换信息的规则（比如格式、含义等）。它提供了高层的接口，将硬件细节对应用程序员隐藏，使得不同的应用可以在不同的硬件上运行并通信。协议栈(protocol suite)指的是在不同层级上不同协议的组合，比如TCP/IP协议栈。
+层级(layering)是协议栈设计的一种常用方法，每一层协议处理不同层级的抽象，并且通过一个通用的接口与高层和底层的协议通信。分层的原则是运行在层级N上的程序必须能够准确地收到同样运行在层级N上的另一台主机上的程序发送的信息。</p>
+
+<p>TCP/IP协议栈一般被认为是一种四层协议系统，如下表所示。</p>
+
+<pre><code class="language-text">Applcation: Telnet, FTP, Email
+Transport: TCP, UDP
+Network: IP, ICMP, IGMP,
+Link: device driver and interface card
+</code></pre>
+
+<p>这里的Application层又对应ISO七层网络模型中的上三层的(由下至上)Session, Presentation, Application；Link对应ISO中最下层的(由下至上)Physical和Link层。这里简单记录各层的作用：</p>
+
+<ol>
+<li>链路层。处理硬件接口的细节。</li>
+<li>网络层（或英特网层）。处理数据包在网络中移动的过程，比如路由。</li>
+<li>运输层。为应用层提供端到端的通信。</li>
+<li>应用层。负责处理特定应用的细节。</li>
+</ol>
+
+<p></p>
+
+<p>在下图中我们可以看到两个在不同网络中的主机通过一个路由器相连。英特网的一个目标是将物理的网络结构对应用隐藏，正是这种对细节的隐藏使得英特网的概念如此强大，它可以让运行在不同网络上的无数主机通信。</p>
+
+
+<figure class="center">
+    
+        <img src="/images/network-protocol-overview/connection.gif" alt="通过路由连接在一起的两个网络" />
+    
+    
+    <figcaption>
+        <h4>通过路由连接在一起的两个网络</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<p>上图中我们可以区分出终端系统（位于两端的主机）和中介系统（路由器）。应用层和传输层使用的是端到端协议，这两层协议也只有在两端才会用到；而网络层使用的是逐级(hop-by-hop)的协议，它会在两端以及所有中介节点上使用。</p>
+
+<p>另一种链接两个网络的方式为桥接。桥接在链路层连接网络，而路由器在网络层连接网络。桥接使得多个LAN网络看上去象是一个LAN网络。TCP/IP网络一般倾向于使用路由器构建。</p>
+
+<p>下图展示了TCP/IP协议栈。</p>
+
+
+<figure class="center">
+    
+        <img src="/images/network-protocol-overview/tcpip-layering.gif" alt="TCP/IP协议栈" />
+    
+    
+    <figcaption>
+        <h4>TCP/IP协议栈</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<h1 id="封装"><strong>封装</strong></h1>
+
+<p>当应用程序通过TCP下而已发送数据的时候，数据通过TCP/IP协议栈逐级向下传递，每一层协议添加一个头部（也有尾部）信息，直到数据作为比特流发送到网络上。TCP协议发送给IP协议的信息单元为TCP报文段(segment)，IP协议发送给网络接口的信息单元为IP数据报(datagram)，通过Ethernet的比特流的信息单元为Ethernet帧(frame)。下图显示了这一逐级封装的过程。</p>
+
+
+<figure class="center">
+    
+        <img src="/images/network-protocol-overview/encapsulation.gif" alt="封装" />
+    
+    
+    <figcaption>
+        <h4>封装</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<h1 id="解除多路复用-demultiplexing"><strong>解除多路复用 Demultiplexing</strong></h1>
+
+<p>当一个以太网帧到达目标主机的时候，它从协议栈逐级向上传递，同时头部逐层被相应的协议移除。每个协议都从它的头部中确定到底应该由哪一种上层协议来处理这段数据。这个过程被称为解除多路复用。</p>
+
+
+<figure class="center">
+    
+        <img src="/images/network-protocol-overview/demultiplexing.gif" alt="解除多路复用" />
+    
+    
+    <figcaption>
+        <h4>解除多路复用</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<p><code>TCP/IP详解 卷一：协议</code>中的备注：ICMP和IGMP虽然封装在IP数据报中但是逻辑上和IP协议属于同一层；同样ARP和RARP有它们自己的Ethernet帧类型，但是它们逻辑上也属于Ethernet一层。</p>
+
+<h1 id="端口号"><strong>端口号</strong></h1>
+
+<p>服务器通常都有一些“知名端口号”(well-known port)，这些知名端口号由Internet Assigned Numbers Authority管理。任何TCP/IP协议的实现都提供的服务在1-1023端口号，比如FTP服务器在TCP的21端口，Telnet服务器在TCP的23端口TFTP协议在UDP的69端口。</p>
+
+<p>客户端通常不在乎用什么端口，这些被称为临时端口(ephemeral ports)，它们只在客户端运行时被使用。通常TCP/IP实现将临时端口分配在1024-5000，大于5000的端口号被其他“不知名”的服务使用。</p>
+
+<p>Unix系统有保留端口(reserved ports)的概念，只有有超级用户权限的进程才可以给它自己分配一个保留端口。保留端口为1-1023。</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Jiaqi Li</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2018-09-06</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/network/">Network</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/network-link-layer/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">网络协议系列二：链路层(Ethernet和MTU)</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+          <a class="next" href="/post/java-basics-12-database/">
+            <span class="next-text nav-default">Java基础知识系列12：数据库编程</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://www.facebook.com/ajl98" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="https://www.instagram.com/binaryexplorer/" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="https://www.linkedin.com/in/alexjiaqili/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="https://github.com/virtworld" class="iconfont icon-github" title="github"></a>
+  <a href="http://www.jiaqili.me/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2014 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jiaqi Li</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.1"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+
+
+
+</body>
+</html>

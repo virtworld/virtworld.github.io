@@ -750,36 +750,36 @@ create table cssename.cname (
 <p>新建一个Maven项目，然后导入下面的依赖：</p>
 
 <pre><code class="language-xml">    &lt;!-- https://mvnrepository.com/artifact/org.apache.solr/solr-core --&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.apache.solr&lt;/groupId&gt;
-        &lt;artifactId&gt;solr-core&lt;/artifactId&gt;
-        &lt;version&gt;7.3.1&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;!-- https://mvnrepository.com/artifact/org.ansj/ansj_seg --&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.ansj&lt;/groupId&gt;
-        &lt;artifactId&gt;ansj_seg&lt;/artifactId&gt;
-        &lt;version&gt;5.1.6&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;!-- https://mvnrepository.com/artifact/org.ansj/ansj_lucene7_plug --&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.ansj&lt;/groupId&gt;
-        &lt;artifactId&gt;ansj_lucene7_plug&lt;/artifactId&gt;
-        &lt;version&gt;5.1.5&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;!-- https://mvnrepository.com/artifact/org.nlpcn/nlp-lang --&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.nlpcn&lt;/groupId&gt;
-        &lt;artifactId&gt;nlp-lang&lt;/artifactId&gt;
-        &lt;version&gt;1.7.7&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;  
-        &lt;groupId&gt;jdk.tools&lt;/groupId&gt;  
-        &lt;artifactId&gt;jdk.tools&lt;/artifactId&gt;  
-        &lt;version&gt;1.8&lt;/version&gt;  
-        &lt;scope&gt;system&lt;/scope&gt;  
-        &lt;systemPath&gt;C:/Program Files/Java/jdk1.8.0_101/lib/tools.jar&lt;/systemPath&gt; 
-    &lt;/dependency&gt; 
+	&lt;dependency&gt;
+	    &lt;groupId&gt;org.apache.solr&lt;/groupId&gt;
+	    &lt;artifactId&gt;solr-core&lt;/artifactId&gt;
+	    &lt;version&gt;7.3.1&lt;/version&gt;
+	&lt;/dependency&gt;
+	&lt;!-- https://mvnrepository.com/artifact/org.ansj/ansj_seg --&gt;
+	&lt;dependency&gt;
+	    &lt;groupId&gt;org.ansj&lt;/groupId&gt;
+	    &lt;artifactId&gt;ansj_seg&lt;/artifactId&gt;
+	    &lt;version&gt;5.1.6&lt;/version&gt;
+	&lt;/dependency&gt;
+	&lt;!-- https://mvnrepository.com/artifact/org.ansj/ansj_lucene7_plug --&gt;
+	&lt;dependency&gt;
+	    &lt;groupId&gt;org.ansj&lt;/groupId&gt;
+	    &lt;artifactId&gt;ansj_lucene7_plug&lt;/artifactId&gt;
+	    &lt;version&gt;5.1.5&lt;/version&gt;
+	&lt;/dependency&gt;
+	&lt;!-- https://mvnrepository.com/artifact/org.nlpcn/nlp-lang --&gt;
+	&lt;dependency&gt;
+	    &lt;groupId&gt;org.nlpcn&lt;/groupId&gt;
+	    &lt;artifactId&gt;nlp-lang&lt;/artifactId&gt;
+	    &lt;version&gt;1.7.7&lt;/version&gt;
+	&lt;/dependency&gt;
+	&lt;dependency&gt;  
+	    &lt;groupId&gt;jdk.tools&lt;/groupId&gt;  
+	    &lt;artifactId&gt;jdk.tools&lt;/artifactId&gt;  
+	    &lt;version&gt;1.8&lt;/version&gt;  
+	    &lt;scope&gt;system&lt;/scope&gt;  
+	    &lt;systemPath&gt;C:/Program Files/Java/jdk1.8.0_101/lib/tools.jar&lt;/systemPath&gt; 
+	&lt;/dependency&gt; 
 </code></pre>
 
 <p>然后，定义一些常量：</p>
@@ -790,10 +790,10 @@ public class CommonResponseMessage {
 
     public static final String CODE_SUCCEEDED = &quot;200&quot;;
     public static final String MSG_SUCCEEDED = &quot;OK&quot;;
-    
+	
     public static final String CODE_BAD_REQUEST = &quot;400&quot;;
     public static final String MSG_BAD_REQUEST = &quot;BAD REQUEST&quot;;
-    
+	
     public static final String CODE_INTERNAL_SERVER_ERROR = &quot;500&quot;;
     public static final String MSG_INTERNAL_SERVER_ERROR = &quot;Internal Server Error&quot;;
 }
@@ -1094,37 +1094,37 @@ import org.apache.solr.search.SolrIndexSearcher;
 
 public class JdbcSynonymGraphFilterFactory extends SynonymGraphFilterFactory implements SearcherAware {
 
-    private static final Charset UTF8 = Charset.forName(&quot;UTF-8&quot;);
-    
-    private final JdbcReader reader;
-    
+	private static final Charset UTF8 = Charset.forName(&quot;UTF-8&quot;);
+	
+	private final JdbcReader reader;
+	
 
-    public JdbcSynonymGraphFilterFactory(Map&lt;String, String&gt; args) {
-        this(args, SolrJdbcReader.createFromSolrParams(args, &quot;synonyms&quot;));
-    }
+	public JdbcSynonymGraphFilterFactory(Map&lt;String, String&gt; args) {
+		this(args, SolrJdbcReader.createFromSolrParams(args, &quot;synonyms&quot;));
+	}
 
-    JdbcSynonymGraphFilterFactory(Map&lt;String, String&gt; args, JdbcReader reader) {
-          super(args);
+	JdbcSynonymGraphFilterFactory(Map&lt;String, String&gt; args, JdbcReader reader) {
+	      super(args);
 
-          this.reader = reader;
-       }
-    
-    @Override
-    public void inform(SolrIndexSearcher searcher) throws IOException {
+	      this.reader = reader;
+	   }
+	
+	@Override
+	public void inform(SolrIndexSearcher searcher) throws IOException {
 
-        try {
-            inform(searcher.getCore().getResourceLoader());
-        } catch (IOException e) {
-            throw new IllegalArgumentException(&quot;Failed to notify about new searcher.&quot;, e);
-        }
+		try {
+			inform(searcher.getCore().getResourceLoader());
+		} catch (IOException e) {
+			throw new IllegalArgumentException(&quot;Failed to notify about new searcher.&quot;, e);
+		}
 
-    }
+	}
 
-    @Override
-    public void inform(ResourceLoader loader) throws IOException {
+	@Override
+	public void inform(ResourceLoader loader) throws IOException {
 
-        super.inform(new JdbcResourceLoader(loader, reader, UTF8));
-    }
+		super.inform(new JdbcResourceLoader(loader, reader, UTF8));
+	}
 }
 </code></pre>
 
@@ -1178,79 +1178,79 @@ import com.google.common.base.Preconditions;
  */
 public class SolrJdbcReader implements JdbcReader {
 
-    /**
-     * JDBC connection string
-     */
-    private String jdbc;
+	/**
+	 * JDBC connection string
+	 */
+	private String jdbc;
 
-    /**
-     * database username
-     */
-    private String username;
+	/**
+	 * database username
+	 */
+	private String username;
 
-    /**
-     * database password
-     */
-    
-    private String password;
+	/**
+	 * database password
+	 */
+	
+	private String password;
 
-    /**
-     * sql for fetching synonyms
-     */
-    private String sql;
+	/**
+	 * sql for fetching synonyms
+	 */
+	private String sql;
 
-    /**
-     * Construct an reader instance
-     * 
-     * @param jdbc  JDBC connection string
-     * @param username database username
-     * @param password database password
-     * @param sql sql for fetching synonyms
-     */
-    public SolrJdbcReader(String jdbc, String username, String password, String sql) {
-        this.jdbc = checkNotNull(jdbc);
-        this.username = checkNotNull(username);
-        this.password = checkNotNull(password);
-        this.sql = checkNotNull(sql);
-    }
+	/**
+	 * Construct an reader instance
+	 * 
+	 * @param jdbc  JDBC connection string
+	 * @param username database username
+	 * @param password database password
+	 * @param sql sql for fetching synonyms
+	 */
+	public SolrJdbcReader(String jdbc, String username, String password, String sql) {
+		this.jdbc = checkNotNull(jdbc);
+		this.username = checkNotNull(username);
+		this.password = checkNotNull(password);
+		this.sql = checkNotNull(sql);
+	}
 
-    @Override
-    public Reader getReader() throws IOException{
+	@Override
+	public Reader getReader() throws IOException{
 
-        try (Connection conn = DriverManager.getConnection(jdbc, username, password);
-                PreparedStatement statement = conn.prepareCall(sql);
-                ResultSet rs = statement.executeQuery()) {
+		try (Connection conn = DriverManager.getConnection(jdbc, username, password);
+				PreparedStatement statement = conn.prepareCall(sql);
+				ResultSet rs = statement.executeQuery()) {
 
-            List&lt;String&gt; content = new ArrayList&lt;String&gt;();
-            while(rs.next()){
-                
-                content.add( rs.getString(1));
-            }
-            
-            return new StringReader( Joiner.on('\n').join(content));
-        } catch (SQLException e) {
-            throw new IOException(e);
-        }
-    }
+			List&lt;String&gt; content = new ArrayList&lt;String&gt;();
+			while(rs.next()){
+				
+				content.add( rs.getString(1));
+			}
+			
+			return new StringReader( Joiner.on('\n').join(content));
+		} catch (SQLException e) {
+			throw new IOException(e);
+		}
+	}
 
-    /**
-     * Create an instance from Solr's parameters
-     * @param args Solr's parameter configured in schema.xml
-     * @param originalParamName
-     * @return an instance of SolrJdbcReader
-     */
-    public static SolrJdbcReader createFromSolrParams(Map&lt;String, String&gt; args, String originalParamName) {
-        Preconditions.checkNotNull(args);
+	/**
+	 * Create an instance from Solr's parameters
+	 * @param args Solr's parameter configured in schema.xml
+	 * @param originalParamName
+	 * @return an instance of SolrJdbcReader
+	 */
+	public static SolrJdbcReader createFromSolrParams(Map&lt;String, String&gt; args, String originalParamName) {
+		Preconditions.checkNotNull(args);
 
-        args.put(originalParamName, JdbcResourceLoader.DATABASE);
+		args.put(originalParamName, JdbcResourceLoader.DATABASE);
 
-        String jdbc = args.remove(&quot;jdbc&quot;);
-        String username = args.remove(&quot;username&quot;);
-        String password = args.remove(&quot;password&quot;);
-        String sql = args.remove(&quot;sql&quot;);
+		String jdbc = args.remove(&quot;jdbc&quot;);
+		String username = args.remove(&quot;username&quot;);
+		String password = args.remove(&quot;password&quot;);
+		String sql = args.remove(&quot;sql&quot;);
 
-        return new SolrJdbcReader(jdbc, username, password, sql);
-    }
+		return new SolrJdbcReader(jdbc, username, password, sql);
+	}
 }
 </code></pre>
 

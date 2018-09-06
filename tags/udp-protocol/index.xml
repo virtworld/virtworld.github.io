@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Udp Protocol on Virtual World</title>
+    <link>http://www.jiaqili.me/tags/udp-protocol/</link>
+    <description>Recent content in Udp Protocol on Virtual World</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 06 Sep 2018 09:46:10 +0800</lastBuildDate>
+    
+	<atom:link href="http://www.jiaqili.me/tags/udp-protocol/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>网络协议系列四：UDP协议</title>
+      <link>http://www.jiaqili.me/post/network-udp-protocol/</link>
+      <pubDate>Thu, 06 Sep 2018 09:46:10 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/network-udp-protocol/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文是对UDP协议的总结笔记。除非另外注明，本文的主要参考为&lt;a href=&#34;http://www.pcvr.nl/tcpip/&#34;&gt;TCP/IP Illustrated: Volume I: The Protocols&lt;/a&gt;第11和12章。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;udp基本特征&#34;&gt;&lt;strong&gt;UDP基本特征&lt;/strong&gt;&lt;/h1&gt;
+
+&lt;p&gt;UDP是一个简单的面向数据报的传输层协议，它和TCP有以下显著区别：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;它是不可靠的。它发送用户数据，但是不保证它们抵达接收端。它不提供确认、序号、超时重传等机制。它也不能保证抵达接收端时数据报的顺序，是否重复等。&lt;/li&gt;
+&lt;li&gt;它是无连接的。TCP需要建立连接后才能发送数据，UDP不需要。&lt;/li&gt;
+&lt;li&gt;它的每个数据报和应用程序是紧密相关的。应用程序每次输出操作会产生唯一一个UDP数据报，并产生唯一一个IP数据报，但是TCP中应用程序写入的数据量和单个IP数据报中发送的内容没有关系。
+应用程序需要考虑链路层的MTU，如果超过了MTU，那么IP数据报会被分段，这适用于从源端到目标端所经过的所有网络。&lt;/li&gt;
+&lt;li&gt;UDP协议支持多播和广播。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

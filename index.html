@@ -140,6 +140,228 @@
     
       <article class="post">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/network-tcp-protocol/">网络协议系列五：TCP协议</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-09-06 </span>
+      <div class="post-category">
+          
+            <a href="/categories/network/"> Network </a>
+          
+        </div>
+      <span class="more-meta"> 17535 word </span>
+      <span class="more-meta"> 35 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <blockquote>
+<p>本文是对TCP协议的总结笔记。除非另外注明，本文的主要参考为<a href="http://www.pcvr.nl/tcpip/">TCP/IP Illustrated: Volume I: The Protocols</a>第17-23章。</p>
+</blockquote>
+
+<h1 id="tcp基本特征"><strong>TCP基本特征</strong></h1>
+
+<p>TCP协议提供一个面向连接的，端到端的，可靠的，全双工的，字节流服务。</p>
+
+<ol>
+<li>面向链接的表示两个使用TCP协议的应用（通常一个称做服务器，一个称做客户端）必需在交换数据之前建立一个TCP连接。在一个TCP连接上有且<strong>只有两个端点在通信</strong>，TCP协议不能广播或组播。</li>
+<li>TCP协议通过以下机制来实现可靠性：
+
+<ul>
+<li><strong>分段传输</strong>。TCP协议将应用的数据切割成合适的大小，然后传给IP协议，这个TCP传递给IP的数据单元称为TCP报文段(segment)。而UDP的传递给IP协议的数据单元并没有对应用的数据进行切分，被称做UDP数据报（详见后文）。</li>
+<li><strong>自适应的超时重传</strong>。TCP发送一个报文段后维护一个计时器，等待另一端确认（ACK），如果一定时间没有收到确认，该报文段会被重传（详见后文）。</li>
+<li><strong>延时确认</strong>。当TCP收到连接上另一端发来的数据时，它会发送确认信息。这个确认并不会立即发送，而是延迟一段时间发送（详见后文）。</li>
+<li><strong>校验和(Checksum)</strong>。TCP协议有端到端的校验和用来检测传输中数据是否被修改。如果收到的报文段的校验和无效，TCP会丢弃该报文段并且不会发送确认信息（它期望发送端超时并重传）。</li>
+<li><strong>重排序</strong>。因为TCP报文段通过IP数据报传输，而IP数据报可以以任意顺序抵达接收端。接收端的TCP协议负责对报文段重排序，并以正确的顺序传递给应用。</li>
+<li><strong>去重</strong>。因为IP数据报可能发生重复，TCP协议负责对此去重。</li>
+<li><strong>流控(flow control)</strong>。每一个TCP端有一个有限长度的缓冲区。接收端的TCP仅允许发送端发送缓冲区可以容纳的数据量。</li>
+</ul></li>
+<li>两个应用通过TCP连接交换8位字节的字节流。
+
+<ul>
+<li>TCP协议不会在多次写入之间插入任何的标记。也就是说一端写入80字节，另一端就会读取到80字节。一段如果分三次，按照50，20，10字节写入。另一端并不能区分这三次写入。</li>
+<li>TCP并不解析传输的内容。它并不关心传输的二进制数据还是ASCII字符。</li>
+</ul></li>
+</ol>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/network-tcp-protocol/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/network-udp-protocol/">网络协议系列四：UDP协议</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-09-06 </span>
+      <div class="post-category">
+          
+            <a href="/categories/network/"> Network </a>
+          
+        </div>
+      <span class="more-meta"> 644 word </span>
+      <span class="more-meta"> 2 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <blockquote>
+<p>本文是对UDP协议的总结笔记。除非另外注明，本文的主要参考为<a href="http://www.pcvr.nl/tcpip/">TCP/IP Illustrated: Volume I: The Protocols</a>第11和12章。</p>
+</blockquote>
+
+<h1 id="udp基本特征"><strong>UDP基本特征</strong></h1>
+
+<p>UDP是一个简单的面向数据报的传输层协议，它和TCP有以下显著区别：</p>
+
+<ol>
+<li>它是不可靠的。它发送用户数据，但是不保证它们抵达接收端。它不提供确认、序号、超时重传等机制。它也不能保证抵达接收端时数据报的顺序，是否重复等。</li>
+<li>它是无连接的。TCP需要建立连接后才能发送数据，UDP不需要。</li>
+<li>它的每个数据报和应用程序是紧密相关的。应用程序每次输出操作会产生唯一一个UDP数据报，并产生唯一一个IP数据报，但是TCP中应用程序写入的数据量和单个IP数据报中发送的内容没有关系。
+应用程序需要考虑链路层的MTU，如果超过了MTU，那么IP数据报会被分段，这适用于从源端到目标端所经过的所有网络。</li>
+<li>UDP协议支持多播和广播。</li>
+</ol>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/network-udp-protocol/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/network-ip-protocol/">网络协议系列三：IP协议</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-09-06 </span>
+      <div class="post-category">
+          
+            <a href="/categories/network/"> Network </a>
+          
+        </div>
+      <span class="more-meta"> 5103 word </span>
+      <span class="more-meta"> 11 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <blockquote>
+<p>本文是对IP协议的总结笔记。部分参考了<strong>TCP/IP Illustrated: Volume I: The Protocols</strong>的第1和第3章。</p>
+</blockquote>
+
+<h1 id="ip地址结构"><strong>IP地址结构</strong></h1>
+
+<p>每一个32位的IP地址都被分为两部分：</p>
+
+<ul>
+<li>前缀：表示主机所在的物理网络，每一个英特网中的物理网络都被分配一个唯一的网络编号；</li>
+<li>后缀：表示一个物理网络中主机自身，每一个主机都被分配了一个唯一的后缀。</li>
+</ul>
+
+<p>前缀是全局分配的，而后缀是本地分配的。</p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/network-ip-protocol/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/network-link-layer/">网络协议系列二：链路层(Ethernet和MTU)</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-09-06 </span>
+      <div class="post-category">
+          
+            <a href="/categories/network/"> Network </a>
+          
+        </div>
+      <span class="more-meta"> 669 word </span>
+      <span class="more-meta"> 2 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <blockquote>
+<p>本文是对链路层的总结笔记。主要参考数目为<strong>TCP/IP Illustrated: Volume I: The Protocols</strong>的第二章。</p>
+</blockquote>
+
+<h1 id="概述"><strong>概述</strong></h1>
+
+<p>Link Layer的目的是为上层的IP协议、ARP协议和RARP协议提供服务。TCP/IP支持很多不同的链路层，包括Ethernet、token ring等。本文主要讨论Ethernet帧格式以及Maximum Transmission Unit(MTU)。</p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/network-link-layer/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/network-overview/">网络协议系列一：概览</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-09-06 </span>
+      <div class="post-category">
+          
+            <a href="/categories/network/"> Network </a>
+          
+        </div>
+      <span class="more-meta"> 1578 word </span>
+      <span class="more-meta"> 4 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <blockquote>
+<p>本文是对计算机网络概述的总结笔记。主要参考数目为<strong>TCP/IP Illustrated: Volume I: The Protocols</strong>的第一章。</p>
+</blockquote>
+
+<p>网络(通信)协议是一些列交换信息的规则（比如格式、含义等）。它提供了高层的接口，将硬件细节对应用程序员隐藏，使得不同的应用可以在不同的硬件上运行并通信。协议栈(protocol suite)指的是在不同层级上不同协议的组合，比如TCP/IP协议栈。
+层级(layering)是协议栈设计的一种常用方法，每一层协议处理不同层级的抽象，并且通过一个通用的接口与高层和底层的协议通信。分层的原则是运行在层级N上的程序必须能够准确地收到同样运行在层级N上的另一台主机上的程序发送的信息。</p>
+
+<p>TCP/IP协议栈一般被认为是一种四层协议系统，如下表所示。</p>
+
+<pre><code class="language-text">Applcation: Telnet, FTP, Email
+Transport: TCP, UDP
+Network: IP, ICMP, IGMP,
+Link: device driver and interface card
+</code></pre>
+
+<p>这里的Application层又对应ISO七层网络模型中的上三层的(由下至上)Session, Presentation, Application；Link对应ISO中最下层的(由下至上)Physical和Link层。这里简单记录各层的作用：</p>
+
+<ol>
+<li>链路层。处理硬件接口的细节。</li>
+<li>网络层（或英特网层）。处理数据包在网络中移动的过程，比如路由。</li>
+<li>运输层。为应用层提供端到端的通信。</li>
+<li>应用层。负责处理特定应用的细节。</li>
+</ol>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/network-overview/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/java-basics-12-database/">Java基础知识系列12：数据库编程</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2018-09-02 </span>
@@ -428,200 +650,6 @@ assert x &gt; 0 : &quot;Now you see my assetion message.&quot;;
     </div>
     <div class="read-more">
       <a href="/post/java-basics-8-reflection/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/java-basics-7-init/">Java基础知识系列7：初始化</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-08-25 </span>
-      <div class="post-category">
-          
-            <a href="/categories/java/"> Java </a>
-          
-        </div>
-      <span class="more-meta"> 2885 word </span>
-      <span class="more-meta"> 6 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <h1 id="变量的初始化">变量的初始化</h1>
-
-<p>方法内的局部变量，必需显示初始化后才能使用，使用未初始化变量会导致编译器报错；类成员变量或静态域未初始化就会被赋初始值，比如对象会是null，boolean是false，int是0等。</p>
-
-<p>给类成员变量赋值可以在该变量定义的地方进行。不初始化类变量不是一种好的习惯。</p>
-
-<h1 id="初始化顺序">初始化顺序</h1>
-
-<p>当首次调用类的静态方法（包括main方法）或静态域时，或者首次创建对象（其实创建对象所调用的构造器也是静态方法）的时候，JVM会查找类的路径，并加载类对应的.class文件，然后创建一个Class对象。</p>
-
-<p>如果在加载该Class文件的时候发现这个类有父类，那么加载器也会去加载它父类的Class，直到所有Class文件都被加载完。</p>
-
-<p>在加载每个Class对象的时候，会对每个类进行静态初始化，这个静态初始化只执行一次，也就是在类第一次被引用的时候执行。</p>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/java-basics-7-init/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/java-console-printing/">奇怪的printStackTrace引起进程卡住的问题</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-08-18 </span>
-      <div class="post-category">
-          
-            <a href="/categories/java/"> Java </a>
-          
-        </div>
-      <span class="more-meta"> 2030 word </span>
-      <span class="more-meta"> 5 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <h1 id="背景">背景</h1>
-
-<p>昨天碰到一个很奇怪的轮询任务卡住的问题。轮询调度框架会按照数据库里配置，周期性地定时启动一些任务。每个定时任务都是一个普通的Java程序，它处理一个周期内累积的业务请求。虽然每次只处理数量非常有限的数百笔业务，但是每笔业务的逻辑都相对复杂，相当于一个时间很短（通常几分钟）的批处理程序。正常情况下，一个任务在运行的时候会将它执行的SQL、读取的文件以及访问的接口信息打印到日志里。</p>
-
-<p>问题是有一个任务在执行一段时间后突然不再处理业务，停止输出日志，但没有报错，进程也没有退出。</p>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/java-console-printing/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/java-basics-6-enum/">Java基础知识系列6：枚举类型</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-08-18 </span>
-      <div class="post-category">
-          
-            <a href="/categories/java/"> Java </a>
-          
-        </div>
-      <span class="more-meta"> 2121 word </span>
-      <span class="more-meta"> 5 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>这是一个简单的枚举类型的定义。枚举类型是一个类，除了不能被继承以外，它的行为和一个类相近，关键字enum只是为了告诉编译器在生成相应的类的时候采用的一些编译行为。比如</p>
-
-<pre><code class="language-java">public enum Size {SMALL , MEDIUM , LARGE}
-</code></pre>
-
-<p>上面的枚举类有三个实例，而枚举类的实例是常量，因此都大写。使用枚举常量时要创建它的一个实例：</p>
-
-<pre><code class="language-java">Size size = Size.SMALL;
-</code></pre>
-
-<p>enum 经常与switch 配合使用:</p>
-
-<pre><code class="language-java">Size size;
-// do something to get size;
-switch(size){
-    case SMALL:
-    // do something;
-    case MEDIUM:
-    // do something;
-    case LARGE:
-    // do something;
-}
-</code></pre>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/java-basics-6-enum/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/java-basics-5-innner-class/">Java基础知识系列5：内部类</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-08-18 </span>
-      <div class="post-category">
-          
-            <a href="/categories/java/"> Java </a>
-          
-        </div>
-      <span class="more-meta"> 2505 word </span>
-      <span class="more-meta"> 5 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>内部类就是定义在另一个类中的类。使用内部类有以下几个好处：</p>
-
-<ol>
-<li>内部类的方法可以访问其类定义所在作用于的数据，包括私有数据；</li>
-<li>内部类可以对同一个包中的其他类隐藏；</li>
-<li>如果需要定义一个回调函数但不想编写大量代码时，使用匿名内部类比较方便。</li>
-</ol>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/java-basics-5-innner-class/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/java-basics-4-interface/">Java基础知识系列4：抽象类和接口</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-08-18 </span>
-      <div class="post-category">
-          
-            <a href="/categories/java/"> Java </a>
-          
-        </div>
-      <span class="more-meta"> 1895 word </span>
-      <span class="more-meta"> 4 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <h1 id="抽象类和抽象方法">抽象类和抽象方法</h1>
-
-<p>包含抽象方法的类被称做抽象类。如果一个类包含一个或多个抽象方法，它必需被定义为抽象类。</p>
-
-<p>抽象类可以包含具体的数据和具体的方法。抽象类不能实例化，不过可以有一个抽象类的对象变量，但是它只能引用非抽象子类对象。如果从一个抽象类继承，要么实现它所有的抽象方法，要么继承的类也是个抽象类。</p>
-
-<p>我们也可以创建一个没有任何抽象方法的抽象类，比如用于阻止该类的实例化。</p>
-
-<p>抽象类的优点是我们可以明确告诉用户哪些方法需要由子类实现，并且可以很容易地将公共方法沿着层次向上移动；抽象类也有限制，Java不允许多重继承，也就是一个类只能扩展于一个类，而每个类可以扩展自多个接口。</p>
-
-<p>Java不提供多重继承而使用接口来实现类似多重继承的好处在于，避免多重继承的复杂性和低效性。</p>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/java-basics-4-interface/" class="read-more-link">Read more..</a>
     </div>
   </div>
 </article>

@@ -53,7 +53,7 @@
 
 
 
-<meta property="og:updated_time" content="2018-08-11T13:00:00&#43;08:00"/>
+<meta property="og:updated_time" content="2018-08-25T00:17:09&#43;08:00"/>
 
 
 
@@ -137,6 +137,200 @@
   <section id="posts" class="posts">
     
     
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/java-basics-7-init/">Java基础知识系列7：初始化</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-08-25 </span>
+      <div class="post-category">
+          
+            <a href="/categories/java/"> Java </a>
+          
+        </div>
+      <span class="more-meta"> 2885 word </span>
+      <span class="more-meta"> 6 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <h1 id="变量的初始化">变量的初始化</h1>
+
+<p>方法内的局部变量，必需显示初始化后才能使用，使用未初始化变量会导致编译器报错；类成员变量或静态域未初始化就会被赋初始值，比如对象会是null，boolean是false，int是0等。</p>
+
+<p>给类成员变量赋值可以在该变量定义的地方进行。不初始化类变量不是一种好的习惯。</p>
+
+<h1 id="初始化顺序">初始化顺序</h1>
+
+<p>当首次调用类的静态方法（包括main方法）或静态域时，或者首次创建对象（其实创建对象所调用的构造器也是静态方法）的时候，JVM会查找类的路径，并加载类对应的.class文件，然后创建一个Class对象。</p>
+
+<p>如果在加载该Class文件的时候发现这个类有父类，那么加载器也会去加载它父类的Class，直到所有Class文件都被加载完。</p>
+
+<p>在加载每个Class对象的时候，会对每个类进行静态初始化，这个静态初始化只执行一次，也就是在类第一次被引用的时候执行。</p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/java-basics-7-init/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/java-console-printing/">奇怪的printStackTrace引起进程卡住的问题</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-08-18 </span>
+      <div class="post-category">
+          
+            <a href="/categories/java/"> Java </a>
+          
+        </div>
+      <span class="more-meta"> 2030 word </span>
+      <span class="more-meta"> 5 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <h1 id="背景">背景</h1>
+
+<p>昨天碰到一个很奇怪的轮询任务卡住的问题。轮询调度框架会按照数据库里配置，周期性地定时启动一些任务。每个定时任务都是一个普通的Java程序，它处理一个周期内累积的业务请求。虽然每次只处理数量非常有限的数百笔业务，但是每笔业务的逻辑都相对复杂，相当于一个时间很短（通常几分钟）的批处理程序。正常情况下，一个任务在运行的时候会将它执行的SQL、读取的文件以及访问的接口信息打印到日志里。</p>
+
+<p>问题是有一个任务在执行一段时间后突然不再处理业务，停止输出日志，但没有报错，进程也没有退出。</p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/java-console-printing/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/java-basics-6-enum/">Java基础知识系列6：枚举类型</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-08-18 </span>
+      <div class="post-category">
+          
+            <a href="/categories/java/"> Java </a>
+          
+        </div>
+      <span class="more-meta"> 2121 word </span>
+      <span class="more-meta"> 5 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>这是一个简单的枚举类型的定义。枚举类型是一个类，除了不能被继承以外，它的行为和一个类相近，关键字enum只是为了告诉编译器在生成相应的类的时候采用的一些编译行为。比如</p>
+
+<pre><code class="language-java">public enum Size {SMALL , MEDIUM , LARGE}
+</code></pre>
+
+<p>上面的枚举类有三个实例，而枚举类的实例是常量，因此都大写。使用枚举常量时要创建它的一个实例：</p>
+
+<pre><code class="language-java">Size size = Size.SMALL;
+</code></pre>
+
+<p>enum 经常与switch 配合使用:</p>
+
+<pre><code class="language-java">Size size;
+// do something to get size;
+switch(size){
+    case SMALL:
+    // do something;
+    case MEDIUM:
+    // do something;
+    case LARGE:
+    // do something;
+}
+</code></pre>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/java-basics-6-enum/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/java-basics-5-innner-class/">Java基础知识系列5：内部类</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-08-18 </span>
+      <div class="post-category">
+          
+            <a href="/categories/java/"> Java </a>
+          
+        </div>
+      <span class="more-meta"> 2505 word </span>
+      <span class="more-meta"> 5 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>内部类就是定义在另一个类中的类。使用内部类有以下几个好处：</p>
+
+<ol>
+<li>内部类的方法可以访问其类定义所在作用于的数据，包括私有数据；</li>
+<li>内部类可以对同一个包中的其他类隐藏；</li>
+<li>如果需要定义一个回调函数但不想编写大量代码时，使用匿名内部类比较方便。</li>
+</ol>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/java-basics-5-innner-class/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/java-basics-4-interface/">Java基础知识系列4：抽象类和接口</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-08-18 </span>
+      <div class="post-category">
+          
+            <a href="/categories/java/"> Java </a>
+          
+        </div>
+      <span class="more-meta"> 1895 word </span>
+      <span class="more-meta"> 4 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <h1 id="抽象类和抽象方法">抽象类和抽象方法</h1>
+
+<p>包含抽象方法的类被称做抽象类。如果一个类包含一个或多个抽象方法，它必需被定义为抽象类。</p>
+
+<p>抽象类可以包含具体的数据和具体的方法。抽象类不能实例化，不过可以有一个抽象类的对象变量，但是它只能引用非抽象子类对象。如果从一个抽象类继承，要么实现它所有的抽象方法，要么继承的类也是个抽象类。</p>
+
+<p>我们也可以创建一个没有任何抽象方法的抽象类，比如用于阻止该类的实例化。</p>
+
+<p>抽象类的优点是我们可以明确告诉用户哪些方法需要由子类实现，并且可以很容易地将公共方法沿着层次向上移动；抽象类也有限制，Java不允许多重继承，也就是一个类只能扩展于一个类，而每个类可以扩展自多个接口。</p>
+
+<p>Java不提供多重继承而使用接口来实现类似多重继承的好处在于，避免多重继承的复杂性和低效性。</p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/java-basics-4-interface/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
     
       <article class="post">
   <header class="post-header">
@@ -359,277 +553,6 @@
     </div>
     <div class="read-more">
       <a href="/post/solr-ansj-config/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/algorithm-orgnization-name-classification-using-nbc/">使用朴素贝叶斯将不同的机构名称分为不同的行业</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-02-25 </span>
-      <div class="post-category">
-          
-            <a href="/categories/algorithm/"> Algorithm </a>
-          
-        </div>
-      <span class="more-meta"> 2402 word </span>
-      <span class="more-meta"> 5 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <blockquote>
-<p>本文介绍使用朴素贝叶斯分类器将机构按照其名称分类为不同的行业的方法。</p>
-</blockquote>
-
-<h2 id="为什么要对机构名称进行分类"><strong>为什么要对机构名称进行分类？</strong></h2>
-
-<p>机构名称是指单位名称或者组织机构的名称，比如<code>浙江大学</code>、<code>深圳市腾讯计算机系统有限公司</code>、<code>杭州市法院</code>等等；行业分类根据实际业务需求变化而变化，一个相对标准的行业分类是国家统计局公布的《国民经济行业分类》，但是本文使用了一套自己定义的行业分类。</p>
-
-<p>首先，为什么要进行行业分类？机构所属的行业其实是机构的一个属性，将机构信息标准化的过程中当然也需要将其行业信息标准化。通常的做法是让用户在填写的时候选择机构的行业类型，但是自动化的行业分类也有很多用处</p>
-
-<ol>
-<li>改善用户体验。因为行业可能有很多层级，比如《国民经济行业分类》就有四级行业分类，如果能在用户选择前提供一个系统推荐的分类，则可以减少用户的操作；</li>
-<li>填补行业分类缺失。可能因为多种原因，比如用户自己不清楚、用户不想填写或者前端未强制要求用户填写等，造成行业分类信息缺失，自动化分类可以作为一个补充。</li>
-</ol>
-
-<p>但是使用机构名称来做行业分类也有很多问题，比如从有些名称里面根本看不出行业信息。比如，如果没有名称以外的认知，光看<code>腾讯</code>两个字是看不出来这家机构是做什么的，而<code>深圳市腾讯计算机系统有限公司</code>则可以猜出个大概。那么为什么还要通过单位名称进行行业分类？</p>
-
-<ol>
-<li>首先是简单。分类函数仅需要一个机构名称的输入，就可以输出结果。</li>
-<li>其次是对于标准企业名称是有效的。标准的企业名称是由<code>行政区划 + 字号 + 行业 + 组织形式</code>，也就是说如果企业名称是标准的，那么行业信息是很容易识别的；不标准的企业名称，比如简称，则是机构信息标准化中的另一个问题。</li>
-</ol>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/algorithm-orgnization-name-classification-using-nbc/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/oracle-exchange-partition-chn/">使用Oracle交换分区实现快速数据换入/换出</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-02-21 </span>
-      <div class="post-category">
-          
-            <a href="/categories/oracle/"> Oracle </a>
-          
-        </div>
-      <span class="more-meta"> 650 word </span>
-      <span class="more-meta"> 2 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>对于一些系统的晚间批处理来讲，首先需要从上游系统获取数据，然后进行批处理运算，最后（可能）再准备数据给下游系统。而一个系统内部通常只保留一定时间段的数据，对于“过期的”数据要么放入仓库，要么归档备份。这个涉及到大量数据一进一出的过程，称为“滑动窗口”(sliding window)。</p>
-
-<p>对于这类需要按天或者按月批量进出数据的表，一般按照日期字段分区。Oracle里常用Range或者List分区表，然后建立本地索引(local index)。对于“过期的”数据只需要：</p>
-
-<pre><code class="language-sql">ALTER TABLE partitioned_table DROP PARTITION partition_name;
-</code></pre>
-
-<p>而对于换入数据的过程来讲，如果有很多索引的话，插入操作会很慢。有同事做过对比，禁用索引（或者删除索引）后插入数据再重建索引会比正常插入要快一点。首先，将表的所有索引置为不可用：</p>
-
-<pre><code class="language-sql">ALTER INDEX index_name UNUSABLE;
-</code></pre>
-
-<p>然后用SQLLDR加载数据到新的分区里，然后重建索引：</p>
-
-<pre><code class="language-sql">ALTER INDEX index_name REBUILD;
-</code></pre>
-
-<p>但是如果分区很多，索引重建过程会变成一个噩梦。而且没有索引期间数据是不可用的。</p>
-
-<p>这时候其实可以用到Oracle的交换分区的功能。</p>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/oracle-exchange-partition-chn/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/java-tuning-batch/">一次Java批处理程序的性能调优</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-01-26 </span>
-      <div class="post-category">
-          
-            <a href="/categories/java/"> Java </a>
-          
-        </div>
-      <span class="more-meta"> 11920 word </span>
-      <span class="more-meta"> 24 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <blockquote>
-<p>本文记录的是一次对某系统的批处理应用程序的调优过程。主要涉及统计信息收集、代码分析调优、JVM调优以及从单机批处理向多机的拆分过程。</p>
-</blockquote>
-
-<h2 id="批处理模式"><strong>批处理模式</strong></h2>
-
-<p>不论需要处理的业务逻辑如何，大部分批处理程序（也包括我们要讨论的）都遵照一种通用的编程模型。虽然不同的公司内部可能对批处理的各种术语有不同的表述，但为了描述清晰，
-下文将采用<a rel="JSR-352" href="https://www.jcp.org/en/jsr/detail?id=352"><code>JSR-352</code></a>标准定义的批处理领域语言(Domain Language)。下面我们会对一些基本概念做简略描述。</p>
-
-
-<figure class="center">
-    
-        <img src="/images/java-batch-performance-tuning-chn/batch_model.png" alt="批处理程序模型" />
-    
-    
-    <figcaption>
-        <h4>批处理程序模型</h4>
-        
-    </figcaption>
-    
-</figure>
-
-
-<p>如上图所示，我们的批处理程序包含多个作业(Job)，一个作业又包含多个步骤(Step)，一个步骤内部的执行逻辑遵循经典的读取、处理和写入模式。
-我们称一个正在运行的批处理程序为批处理实例(Batch Instance)， 同样的有作业实例(Job Instance)和步骤实例(Step Instance)。
-不同的批处理会定时运行，根据运行时间点和频率分为日终(End-of-Day)和月末(End-of-Month)批处理。
-我们称批处理时间和业务数据时间挂钩，而非日历时间。比如，一个在2018年1月15日03:00am开始运行的批处理，它处理的是2018年1月14日产生的数据，那么我们称它为2018/01/14日终批处理实例。
-批处理虽然是非实时数据处理，但是也有需要在XX时间段内完成的要求，这通常是因为要满足为下游系统提供数据的要求。</p>
-
-<p>作业以及其步骤的执行规则一般定义在XML或者数据库中。首先，我们来看一个作业的内部。
-一个作业的正常执行步骤通常有先后逻辑关系，所以一般是串行地按顺序执行(<code>Step1-&gt;Step2-&gt;Step3-&gt;END</code>)。
-但在一个步骤失败的情况下，可以采用不同的策略：</p>
-
-<ul>
-<li>尝试重复执行该步骤，并在重复指定次数仍失败后改用其他策略(<code>Step1-&gt;Step1'-&gt;Step1''...</code>);</li>
-<li>跳过该步骤，继续执行下一个步骤(<code>Step1-&gt;Step3-&gt;END</code>);</li>
-<li>终止作业(<code>Step1-&gt;END</code>);</li>
-<li>进入条件分支(<code>Step1-&gt;Step4-&gt;Step5-&gt;END</code>)， 如下图。</li>
-</ul>
-
-
-<figure class="center">
-    
-        <img src="/images/java-batch-performance-tuning-chn/batch_branch.png" alt="作业内步骤的条件分支" />
-    
-    
-    <figcaption>
-        <h4>作业内步骤的条件分支</h4>
-        
-    </figcaption>
-    
-</figure>
-
-
-<p>接着，我们再来看作业间的关系。作业可以作业一个步骤嵌套在另一个作业中，多个相互独立的作业也可以并行执行。如下图：</p>
-
-
-<figure class="center">
-    
-        <img src="/images/java-batch-performance-tuning-chn/batch_jobs.png" alt="作业嵌套和并行执行" />
-    
-    
-    <figcaption>
-        <h4>作业嵌套和并行执行</h4>
-        
-    </figcaption>
-    
-</figure>
-
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/java-tuning-batch/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/jvm-class-file/">Java Class 文件</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2015-12-28 </span>
-      <div class="post-category">
-          
-            <a href="/categories/jvm/"> JVM </a>
-          
-        </div>
-      <span class="more-meta"> 2932 word </span>
-      <span class="more-meta"> 6 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <h2 id="1-class概述">1 Class概述</h2>
-
-<ol>
-<li>Class文件是一个以8位字节为基础单位的二进制流，多字节储存按照Big-endian的方式（既高位字节在地址低位，低位字节在地址高位）；</li>
-<li>每个Class对应一个类或接口，而类或者接口不一定以文件的形式存在磁盘上；</li>
-<li>Class文件储存的数据只有两种类型：无符号数和表
-
-<ol>
-<li>无符号数：u1, u2, u4和 u8分别表示1个，2个，4个和8个字节;</li>
-<li>表(Table)：由多个无符号数或表组成的复合数据类型。</li>
-</ol></li>
-</ol>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/jvm-class-file/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/jvm-class-loading/">Java类加载机制</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2015-12-28 </span>
-      <div class="post-category">
-          
-            <a href="/categories/jvm/"> JVM </a>
-          
-        </div>
-      <span class="more-meta"> 2258 word </span>
-      <span class="more-meta"> 5 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <blockquote>
-<p>这篇是对《深入理解Java虚拟机》的第七章的总结笔记</p>
-</blockquote>
-
-<p>虚拟机把描述类的数据从Class文件加载到内存，对数据进行校验，转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型，就是虚拟机的类加载机制。</p>
-
-<h2 id="1-触发类加载的条件">1 触发类加载的条件：</h2>
-
-<ol>
-<li>碰到new， invokestatic， getstatic， putstatic四条指令时，如果类没有经过初始化，则要初始化类。通常在用new关键字实例化对象，设置静态变量（被final修饰的除外），调用静态方法时发生。</li>
-<li>进行反射调用，如果类没有经过初始化，则要触发初始化。反射：可以把类、类的方法、类的字段当做对象，在运行时动态操作他们。</li>
-<li>当初始化类时，其父类没有经过初始化，需要初始化其父类。</li>
-<li>main所在方法的主类，在虚拟机启动时要被初始化。</li>
-</ol>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/jvm-class-loading/" class="read-more-link">Read more..</a>
     </div>
   </div>
 </article>

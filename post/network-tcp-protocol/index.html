@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>网络协议系列五：TCP协议 - Virtual World</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Jiaqi Li" />
+  <meta name="description" content=" 本文是对TCP协议的总结笔记。除非另外注明，本文的主要参考为TCP/IP Illustrated: Volume I: The Protocols第17-23章。
+ TCP基本特征 TCP协议提供一个面向连接的，端到端的，可靠的，全双工的，字节流服务。
+ 面向链接的表示两个使用TCP协议的应用（通常一个称做服务器，一个称做客户端）必需在交换数据之前建立一个TCP连接。在一个TCP连接上有且只有两个端点在通信，TCP协议不能广播或组播。 TCP协议通过以下机制来实现可靠性：  分段传输。TCP协议将应用的数据切割成合适的大小，然后传给IP协议，这个TCP传递给IP的数据单元称为TCP报文段(segment)。而UDP的传递给IP协议的数据单元并没有对应用的数据进行切分，被称做UDP数据报（详见后文）。 自适应的超时重传。TCP发送一个报文段后维护一个计时器，等待另一端确认（ACK），如果一定时间没有收到确认，该报文段会被重传（详见后文）。 延时确认。当TCP收到连接上另一端发来的数据时，它会发送确认信息。这个确认并不会立即发送，而是延迟一段时间发送（详见后文）。 校验和(Checksum)。TCP协议有端到端的校验和用来检测传输中数据是否被修改。如果收到的报文段的校验和无效，TCP会丢弃该报文段并且不会发送确认信息（它期望发送端超时并重传）。 重排序。因为TCP报文段通过IP数据报传输，而IP数据报可以以任意顺序抵达接收端。接收端的TCP协议负责对报文段重排序，并以正确的顺序传递给应用。 去重。因为IP数据报可能发生重复，TCP协议负责对此去重。 流控(flow control)。每一个TCP端有一个有限长度的缓冲区。接收端的TCP仅允许发送端发送缓冲区可以容纳的数据量。  两个应用通过TCP连接交换8位字节的字节流。  TCP协议不会在多次写入之间插入任何的标记。也就是说一端写入80字节，另一端就会读取到80字节。一段如果分三次，按照50，20，10字节写入。另一端并不能区分这三次写入。 TCP并不解析传输的内容。它并不关心传输的二进制数据还是ASCII字符。   
+" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.41" />
+
+
+<link rel="canonical" href="http://www.jiaqili.me/post/network-tcp-protocol/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=2.7.1" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="网络协议系列五：TCP协议" />
+<meta property="og:description" content="
+本文是对TCP协议的总结笔记。除非另外注明，本文的主要参考为TCP/IP Illustrated: Volume I: The Protocols第17-23章。
+
+
+TCP基本特征
+
+TCP协议提供一个面向连接的，端到端的，可靠的，全双工的，字节流服务。
+
+
+面向链接的表示两个使用TCP协议的应用（通常一个称做服务器，一个称做客户端）必需在交换数据之前建立一个TCP连接。在一个TCP连接上有且只有两个端点在通信，TCP协议不能广播或组播。
+TCP协议通过以下机制来实现可靠性：
+
+
+分段传输。TCP协议将应用的数据切割成合适的大小，然后传给IP协议，这个TCP传递给IP的数据单元称为TCP报文段(segment)。而UDP的传递给IP协议的数据单元并没有对应用的数据进行切分，被称做UDP数据报（详见后文）。
+自适应的超时重传。TCP发送一个报文段后维护一个计时器，等待另一端确认（ACK），如果一定时间没有收到确认，该报文段会被重传（详见后文）。
+延时确认。当TCP收到连接上另一端发来的数据时，它会发送确认信息。这个确认并不会立即发送，而是延迟一段时间发送（详见后文）。
+校验和(Checksum)。TCP协议有端到端的校验和用来检测传输中数据是否被修改。如果收到的报文段的校验和无效，TCP会丢弃该报文段并且不会发送确认信息（它期望发送端超时并重传）。
+重排序。因为TCP报文段通过IP数据报传输，而IP数据报可以以任意顺序抵达接收端。接收端的TCP协议负责对报文段重排序，并以正确的顺序传递给应用。
+去重。因为IP数据报可能发生重复，TCP协议负责对此去重。
+流控(flow control)。每一个TCP端有一个有限长度的缓冲区。接收端的TCP仅允许发送端发送缓冲区可以容纳的数据量。
+
+两个应用通过TCP连接交换8位字节的字节流。
+
+
+TCP协议不会在多次写入之间插入任何的标记。也就是说一端写入80字节，另一端就会读取到80字节。一段如果分三次，按照50，20，10字节写入。另一端并不能区分这三次写入。
+TCP并不解析传输的内容。它并不关心传输的二进制数据还是ASCII字符。
+
+
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.jiaqili.me/post/network-tcp-protocol/" />
+
+
+
+<meta property="article:published_time" content="2018-09-06T09:47:00&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-09-06T09:47:00&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="网络协议系列五：TCP协议">
+<meta itemprop="description" content="
+本文是对TCP协议的总结笔记。除非另外注明，本文的主要参考为TCP/IP Illustrated: Volume I: The Protocols第17-23章。
+
+
+TCP基本特征
+
+TCP协议提供一个面向连接的，端到端的，可靠的，全双工的，字节流服务。
+
+
+面向链接的表示两个使用TCP协议的应用（通常一个称做服务器，一个称做客户端）必需在交换数据之前建立一个TCP连接。在一个TCP连接上有且只有两个端点在通信，TCP协议不能广播或组播。
+TCP协议通过以下机制来实现可靠性：
+
+
+分段传输。TCP协议将应用的数据切割成合适的大小，然后传给IP协议，这个TCP传递给IP的数据单元称为TCP报文段(segment)。而UDP的传递给IP协议的数据单元并没有对应用的数据进行切分，被称做UDP数据报（详见后文）。
+自适应的超时重传。TCP发送一个报文段后维护一个计时器，等待另一端确认（ACK），如果一定时间没有收到确认，该报文段会被重传（详见后文）。
+延时确认。当TCP收到连接上另一端发来的数据时，它会发送确认信息。这个确认并不会立即发送，而是延迟一段时间发送（详见后文）。
+校验和(Checksum)。TCP协议有端到端的校验和用来检测传输中数据是否被修改。如果收到的报文段的校验和无效，TCP会丢弃该报文段并且不会发送确认信息（它期望发送端超时并重传）。
+重排序。因为TCP报文段通过IP数据报传输，而IP数据报可以以任意顺序抵达接收端。接收端的TCP协议负责对报文段重排序，并以正确的顺序传递给应用。
+去重。因为IP数据报可能发生重复，TCP协议负责对此去重。
+流控(flow control)。每一个TCP端有一个有限长度的缓冲区。接收端的TCP仅允许发送端发送缓冲区可以容纳的数据量。
+
+两个应用通过TCP连接交换8位字节的字节流。
+
+
+TCP协议不会在多次写入之间插入任何的标记。也就是说一端写入80字节，另一端就会读取到80字节。一段如果分三次，按照50，20，10字节写入。另一端并不能区分这三次写入。
+TCP并不解析传输的内容。它并不关心传输的二进制数据还是ASCII字符。
+
+
+
+">
+
+
+<meta itemprop="datePublished" content="2018-09-06T09:47:00&#43;08:00" />
+<meta itemprop="dateModified" content="2018-09-06T09:47:00&#43;08:00" />
+<meta itemprop="wordCount" content="17535">
+
+
+
+<meta itemprop="keywords" content="TCP Protocol,Network," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="网络协议系列五：TCP协议"/>
+<meta name="twitter:description" content="
+本文是对TCP协议的总结笔记。除非另外注明，本文的主要参考为TCP/IP Illustrated: Volume I: The Protocols第17-23章。
+
+
+TCP基本特征
+
+TCP协议提供一个面向连接的，端到端的，可靠的，全双工的，字节流服务。
+
+
+面向链接的表示两个使用TCP协议的应用（通常一个称做服务器，一个称做客户端）必需在交换数据之前建立一个TCP连接。在一个TCP连接上有且只有两个端点在通信，TCP协议不能广播或组播。
+TCP协议通过以下机制来实现可靠性：
+
+
+分段传输。TCP协议将应用的数据切割成合适的大小，然后传给IP协议，这个TCP传递给IP的数据单元称为TCP报文段(segment)。而UDP的传递给IP协议的数据单元并没有对应用的数据进行切分，被称做UDP数据报（详见后文）。
+自适应的超时重传。TCP发送一个报文段后维护一个计时器，等待另一端确认（ACK），如果一定时间没有收到确认，该报文段会被重传（详见后文）。
+延时确认。当TCP收到连接上另一端发来的数据时，它会发送确认信息。这个确认并不会立即发送，而是延迟一段时间发送（详见后文）。
+校验和(Checksum)。TCP协议有端到端的校验和用来检测传输中数据是否被修改。如果收到的报文段的校验和无效，TCP会丢弃该报文段并且不会发送确认信息（它期望发送端超时并重传）。
+重排序。因为TCP报文段通过IP数据报传输，而IP数据报可以以任意顺序抵达接收端。接收端的TCP协议负责对报文段重排序，并以正确的顺序传递给应用。
+去重。因为IP数据报可能发生重复，TCP协议负责对此去重。
+流控(flow control)。每一个TCP端有一个有限长度的缓冲区。接收端的TCP仅允许发送端发送缓冲区可以容纳的数据量。
+
+两个应用通过TCP连接交换8位字节的字节流。
+
+
+TCP协议不会在多次写入之间插入任何的标记。也就是说一端写入80字节，另一端就会读取到80字节。一段如果分三次，按照50，20，10字节写入。另一端并不能区分这三次写入。
+TCP并不解析传输的内容。它并不关心传输的二进制数据还是ASCII字符。
+
+
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Virtual World</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Virtual World</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">网络协议系列五：TCP协议</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-09-06 </span>
+        <div class="post-category">
+            
+              <a href="/categories/network/"> Network </a>
+            
+          </div>
+        <span class="more-meta"> 17535 word </span>
+        <span class="more-meta"> 35 min read </span>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#tcp基本特征"><strong>TCP基本特征</strong></a></li>
+<li><a href="#tcp头部"><strong>TCP头部</strong></a></li>
+<li><a href="#tcp连接的建立和终止"><strong>TCP连接的建立和终止</strong></a>
+<ul>
+<li><a href="#三次握手"><strong>三次握手</strong></a></li>
+<li><a href="#四次挥手"><strong>四次挥手</strong></a></li>
+<li><a href="#半开连接和syn攻击"><strong>半开连接和SYN攻击</strong></a>
+<ul>
+<li><a href="#服务器端应对syn洪水攻击"><strong>服务器端应对SYN洪水攻击</strong></a></li>
+<li><a href="#网络层面应对syn洪水攻击"><strong>网络层面应对SYN洪水攻击</strong></a></li>
+<li><a href="#实践中的应对方式"><strong>实践中的应对方式</strong></a></li>
+</ul></li>
+<li><a href="#半关闭连接"><strong>半关闭连接</strong></a>
+<ul>
+<li><a href="#半关闭连接例子-ssh命令"><strong>半关闭连接例子：ssh命令</strong></a></li>
+</ul></li>
+<li><a href="#最大段大小mss"><strong>最大段大小MSS</strong></a></li>
+<li><a href="#tcp状态转换图"><strong>TCP状态转换图</strong></a>
+<ul>
+<li><a href="#2msl等待状态"><strong>2MSL等待状态</strong></a></li>
+</ul></li>
+<li><a href="#reset报文段"><strong>Reset报文段</strong></a>
+<ul>
+<li><a href="#请求建立连接的端口不存在"><strong>请求建立连接的端口不存在</strong></a></li>
+<li><a href="#终止连接"><strong>终止连接</strong></a></li>
+<li><a href="#检测半开连接"><strong>检测半开连接</strong></a></li>
+</ul></li>
+</ul></li>
+<li><a href="#tcp-keepalive"><strong>TCP Keepalive</strong></a>
+<ul>
+<li><a href="#基本描述"><strong>基本描述</strong></a></li>
+<li><a href="#和http-keepalive的区别"><strong>和HTTP Keepalive的区别</strong></a></li>
+</ul></li>
+<li><a href="#tcp-persist-timer"><strong>TCP Persist Timer</strong></a></li>
+<li><a href="#tcp交互式数据流"><strong>TCP交互式数据流</strong></a>
+<ul>
+<li><a href="#延迟确认"><strong>延迟确认</strong></a></li>
+<li><a href="#nagle算法"><strong>Nagle算法</strong></a></li>
+<li><a href="#silly-window症状">**<em>Silly Window症状</em></a></li>
+<li><a href="#小结"><strong>小结</strong></a></li>
+</ul></li>
+<li><a href="#tcp批量数据流"><strong>TCP批量数据流</strong></a>
+<ul>
+<li><a href="#tcp正常数据流示例"><strong>TCP正常数据流示例</strong></a></li>
+<li><a href="#滑动窗口"><strong>滑动窗口</strong></a></li>
+<li><a href="#慢启动"><strong>慢启动</strong></a></li>
+<li><a href="#超时重传"><strong>超时重传</strong></a></li>
+<li><a href="#快速重传"><strong>快速重传</strong></a></li>
+<li><a href="#拥堵"><strong>拥堵</strong></a></li>
+<li><a href="#拥堵避免"><strong>拥堵避免</strong></a></li>
+<li><a href="#快速恢复"><strong>快速恢复</strong></a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <blockquote>
+<p>本文是对TCP协议的总结笔记。除非另外注明，本文的主要参考为<a href="http://www.pcvr.nl/tcpip/">TCP/IP Illustrated: Volume I: The Protocols</a>第17-23章。</p>
+</blockquote>
+
+<h1 id="tcp基本特征"><strong>TCP基本特征</strong></h1>
+
+<p>TCP协议提供一个面向连接的，端到端的，可靠的，全双工的，字节流服务。</p>
+
+<ol>
+<li>面向链接的表示两个使用TCP协议的应用（通常一个称做服务器，一个称做客户端）必需在交换数据之前建立一个TCP连接。在一个TCP连接上有且<strong>只有两个端点在通信</strong>，TCP协议不能广播或组播。</li>
+<li>TCP协议通过以下机制来实现可靠性：
+
+<ul>
+<li><strong>分段传输</strong>。TCP协议将应用的数据切割成合适的大小，然后传给IP协议，这个TCP传递给IP的数据单元称为TCP报文段(segment)。而UDP的传递给IP协议的数据单元并没有对应用的数据进行切分，被称做UDP数据报（详见后文）。</li>
+<li><strong>自适应的超时重传</strong>。TCP发送一个报文段后维护一个计时器，等待另一端确认（ACK），如果一定时间没有收到确认，该报文段会被重传（详见后文）。</li>
+<li><strong>延时确认</strong>。当TCP收到连接上另一端发来的数据时，它会发送确认信息。这个确认并不会立即发送，而是延迟一段时间发送（详见后文）。</li>
+<li><strong>校验和(Checksum)</strong>。TCP协议有端到端的校验和用来检测传输中数据是否被修改。如果收到的报文段的校验和无效，TCP会丢弃该报文段并且不会发送确认信息（它期望发送端超时并重传）。</li>
+<li><strong>重排序</strong>。因为TCP报文段通过IP数据报传输，而IP数据报可以以任意顺序抵达接收端。接收端的TCP协议负责对报文段重排序，并以正确的顺序传递给应用。</li>
+<li><strong>去重</strong>。因为IP数据报可能发生重复，TCP协议负责对此去重。</li>
+<li><strong>流控(flow control)</strong>。每一个TCP端有一个有限长度的缓冲区。接收端的TCP仅允许发送端发送缓冲区可以容纳的数据量。</li>
+</ul></li>
+<li>两个应用通过TCP连接交换8位字节的字节流。
+
+<ul>
+<li>TCP协议不会在多次写入之间插入任何的标记。也就是说一端写入80字节，另一端就会读取到80字节。一段如果分三次，按照50，20，10字节写入。另一端并不能区分这三次写入。</li>
+<li>TCP并不解析传输的内容。它并不关心传输的二进制数据还是ASCII字符。</li>
+</ul></li>
+</ol>
+
+<p></p>
+
+<h1 id="tcp头部"><strong>TCP头部</strong></h1>
+
+
+<figure class="center">
+    
+        <img src="/images/tcp-protocol/tcp-in-ip.png" alt="TCP数据段放入IP数据报" />
+    
+    
+    <figcaption>
+        <h4>TCP数据段放入IP数据报</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+
+<figure class="center">
+    
+        <img src="/images/tcp-protocol/tcp-header.png" alt="TCP数据段头部" />
+    
+    
+    <figcaption>
+        <h4>TCP数据段头部</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<ol>
+<li><strong>发送方端口号(16位)和接收方端口号(16位)</strong>。TCP头部的两个端口号和IP头部的两个IP地址加在一起唯一地确定一条连接。一对IP地址+TCP端口号也被称为一个Socket(套接字)。</li>
+
+<li><p><strong>序号(32位)和确认号(32位)</strong>。TCP对数据部分的每一个字节进行计数，而序号标识的就是从TCP发送端到接收端的报文段的数据部分第一个字节。这是一个32位无符号数，当计数到达$2^32 - 1$时，会又从0开始。</p>
+
+<p>当建立一个新的连接时，SYN标志被打开，序号字段存储的是初始序号(Initial Sequence Number, ISN)。要发送的数据的第一个字节的序号为这个ISN+1，因为SYN标志消耗了一个序号。</p>
+
+<p>确认号包含确认端期望收到的下一个序号，即为上次已经成功收到的字节序号+1。只有当ACK标志位被打开时，这个字段才有效，而一旦连接建立。ACK标志位一直都是打开的，这个字段也一直都被设置。</p>
+
+<p>TCP是一个没有选择确认、没有否认的滑动窗口协议。没有选择确认是因为TCP头部的确认号只能表示确认端接收到了确认号之前（但不包括确认号）的数据。比如已经收到1-1024字节，收到2049-3072字节的时候，接收端不能确认这个报文段，它只能发送ACK 1025。它也无法否认一个报文段。比如接收到1025-2048的数据段，但是校验和出错时，接收端只能返回一个ACK 1025。</p>
+
+<p>TCP提供全双工服务，即数据能在两个方向上独立传输。因此连接的每一端必须保持每个方向上的传出数据序号。</p></li>
+
+<li><p><strong>头部长度(4位)</strong>。头部字段字段的长度是4位，表示的是头部中有多少个字(word)。那么4位的长度表示头部最多能有15个字。每个字即4字节。因此TCP协议头部最大长度60字节。默认情况下TCP头部为20字节，剩下的为可选部分。</p></li>
+
+<li><p><strong>保留部分(6位)</strong>。应该被置为0。在后续的RFC文件中，前4位仍旧为0；后2位已经改成了2个标志位，分别是：</p>
+
+<ul>
+<li>CWR和ECE标志。用于配合实现IP协议中Explicit Congestion Notification相关功能，详见<a href="https://tools.ietf.org/html/rfc3168">RFC3168</a>。</li>
+</ul></li>
+
+<li><p><strong>六个标志位(6位)</strong>。剩下六个标志位分别依次是：</p>
+
+<ul>
+<li>URG。紧急指针有效。</li>
+<li>ACK。确认号有效。</li>
+
+<li><p>PSH。接收方应尽快将此报文段交给应用。PUSH标记是作为客户端发给服务端的通知，通知服务器端将它收到的所有数据传递给它的应用。这里的数据是指TCP收到并且缓存的所有数据，以及所有当前报文段里的数据。</p>
+
+<p>原先的TCP协议这么设计是为了允许客户端应用通知TCP层不用等待更多数据，直接将所有发送端缓存数据发出；而服务端收到PUSH后也不需要等待更多的数据，而是将所有数据传递给它的引用。</p>
+
+<p>当前大部分API不提供设置PUSH标记。一个良好的TCP实现会自行决定何时打开PUSH标记。</p></li>
+
+<li><p>RST。重置连接。</p></li>
+
+<li><p>SYN。同步序号用来发起一个连接。</p></li>
+
+<li><p>FIN。发送方完成发送数据。</p></li>
+</ul></li>
+
+<li><p><strong>窗口大小(16位)</strong>。窗口大小用于流量控制。这个值表示的是由确认号所指示的数字开始，接收端愿意接收的字节数。最大大小为65535。</p></li>
+
+<li><p><strong>校验和(16位)</strong>。这是一个必须的字段。由发送方计算并写入，然后由接收方校验。</p>
+
+<p>IP协议、TCP协议和UDP协议计算校验和的算法是一样的。区别在于IP协议只计算IP头部的校验和，而TCP和UDP协议计算的是整个头部加上数据的校验和。UDP的校验和字段不是必须的。</p>
+
+<p>在计算TCP和UDP的校验和的时候，用于计算的数据为伪头部+TCP或UDP头部+数据。这里伪头部为12字节的数据，包含：</p>
+
+<ul>
+<li>发送端IP地址(32位)；</li>
+<li>接收端IP地址(32位)；</li>
+<li>保留位(8位);</li>
+<li>协议号(8位)，TCP协议这里的值为6。</li>
+<li>长度(16位)。长度是指TCP报文段或者UDP数据报的长度，即包括头部也包括数据部分。</li>
+</ul>
+
+<p>当伪头部+TCP或UDP头部+数据的长度为奇数个字节的时候，会在最后补充一个字节的0。</p>
+
+<p>首先，发送端先将头部的校验和字段置为0，然后使用上述数据计算校验和。计算校验和的算法大致如下：</p>
+
+<pre><code class="language-text">将数据按照每16位求和，放入到一个32位变量中；
+将进位部分，即32位结果的高16位，加到32位的低16位上。反复此操作，知道没有进位；
+将结果的低16位取反作为校验和计算结果。
+</code></pre>
+
+<p>接着，发送端会将校验和写入到头部相应字段，然后发送到网络；</p>
+
+<p>最后，接收端按照同样的方法计算校验和，然后将结果加上校验和字段。当数据正确时，结果为二进制反码-0(即所有位都是1)，取反后每一位都是0。</p></li>
+
+<li><p><strong>紧急指针(16位)</strong>。只有在紧急位打开时，紧急指针才有效。紧急指针是一个正的偏移量，在与报文段的序号相加后表示紧急数据的最后一个字节的序号。TCP紧急模式是向另一端发送紧急数据的一种方式。</p>
+
+<p>紧急模式包括一个紧急状态标志和一个紧急指针。紧急指针是一个正数偏移量，它加上TCP头部里的序号指向的是紧急数据的最后一个字节。没有办法知道紧急数据是从哪里开始的，只能知道紧急模式开始了(标志被设置)，以及紧急数据到哪里结束。</p>
+
+<p>当接收端应用当前读取的报文段包含紧急标记，并且直到紧急数据的最后一个字节读取完之前，应用都处于紧急模式；之后恢复正常模式。</p>
+
+<p>TCP必须通知应用当收到紧急指针的时候并且该紧急指针还没有在连接中等待处理，或者紧急指针向前移动时。</p></li>
+</ol>
+
+<h1 id="tcp连接的建立和终止"><strong>TCP连接的建立和终止</strong></h1>
+
+<h2 id="三次握手"><strong>三次握手</strong></h2>
+
+<p>三个TCP报文段完成连接的建立，它们被称为三次握手。</p>
+
+
+<figure class="center">
+    
+        <img src="/images/tcp-protocol/3wayhandshake.jpg" alt="TCP三次握手" />
+    
+    
+    <figcaption>
+        <h4>TCP三次握手</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<p>在连接尚未建立前，服务端处于LISTEN状态，客户端处于CLOSED状态。下面开始建立连接：</p>
+
+<ol>
+<li>客户端发送一个SYN报文段，并且指明需要连接的服务端端口号，给定初始序号为x。客户端进入SYN_SENT状态；</li>
+<li>服务端返回SYN + ACK，以及服务端的初始序号y，同时确认号为x + 1。即SYN标志消耗了一个序号，同时服务端期待下一个数据段为x + 1。服务端进入SYN_RCVD状态；</li>
+<li>客户端再发送ACK，以及确认号y + 1，客户端进入ESTABLISHED状态；当服务器端收到这个包的时候，也进入了ESTABLISHED状态。</li>
+</ol>
+
+<p>SYN和FIN数据段都会消耗一个序号，因为只有这样才能确认另一方接收到了报文段。客户端称为主动开放，服务端称为被动开放。</p>
+
+<h2 id="四次挥手"><strong>四次挥手</strong></h2>
+
+<p>因为TCP连接是全双工的，因此双向数据流需要分别被关闭，需要发送四个报文段。当其中任意一方完成数据发送时，既可以发送一个FIN包来结束连接。收到一个FIN报文段的一方需要通知应用，对方发送过来的数据流关闭了。收到FIN报文段意味着对方不再会发送数据过来，但是接收方仍旧可以向对方发送数据（大部分应用不会利用这种半关闭的连接，也有少数会使用）。首先发送FIN报文段的一段被称为主动关闭，另一方被称为被动关闭。</p>
+
+
+<figure class="center">
+    
+        <img src="/images/tcp-protocol/4wayhandshake.gif" alt="TCP四次挥手" />
+    
+    
+    <figcaption>
+        <h4>TCP四次挥手</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<p>在连接建立后，服务区端和客户端都处理ESTABLISHED的状态。下面开始终止连接：</p>
+
+<ol>
+<li>客户端发出一个FIN标志位打开的报文段，并且此报文段的序号为M，表示客户端数据发送完毕，但仍旧可以接收数据。发送后客户端进入FIN_WAIT_1状态；</li>
+<li>服务器端进行确认，发送一个ACK打开的报文段，确认号为M+1，表示服务端已经接收了客户端的关闭请求，但还没有关闭服务器端到客户端的连接。发送后服务器端进入CLOSE_WAIT状态。客户端接收到此确认报文段后进入FIN_WAIT2状态，等待服务器的关闭请求的报文段；</li>
+<li>服务器准备好关闭它到客户端的连接后，它向客户端发送一个FIN标志位打开的报文段，并且此报文段序号为N。然后服务器端进入LAST_ACK状态，等待客户端的最终确认报文；</li>
+<li>客户端收到来自服务器的关闭FIN报文后，发送一个确认报文段，确认号为N+1。发送后客户端进入到TIME_WAIT状态，等待可能需要的重传ACK包。服务器端在接收到这个确认报文段后，进入CLOSED状态。客户端在等待2MSL（2 Maximum Segment Lifetime）之后，没有收到服务器端的ACK请求就会关闭自己的连接，也进入CLOSED状态。</li>
+</ol>
+
+<h2 id="半开连接和syn攻击"><strong>半开连接和SYN攻击</strong></h2>
+
+<blockquote>
+<p>本段参考的是 <a href="https://www.cisco.com/c/en/us/about/press/internet-protocol-journal/back-issues/table-contents-34/syn-flooding-attacks.html">Defenses Against TCP SYN Flooding Attacks</a></p>
+</blockquote>
+
+<p>在TCP连接建立的三次握手过程中，当服务器返回SYN+ACK后进入SYN_RCVD状态，但是还没有收到客户端ACK时，此时的链接称为半开放(half-open)。</p>
+
+<p>SYN洪水攻击是一种拒绝服务攻击。SYN使用不同地址向服务器发送大量的SYN请求，但是在连接处于半开放的时候，不返回ACK给服务器，或者干脆使用假的源地址。
+服务器会等待客户端确认，使得服务器的TCP Backlog耗尽，最终导致服务器无法再接收更多的请求。如果服务器端出现大量半开放连接时可能表示存在SYN洪水攻击。</p>
+
+<p>有几种不同类型的SYN攻击，分别是：</p>
+
+<ol>
+<li><strong>直接攻击</strong>。攻击者用自己的IP地址不断发送SYN报文段。攻击者需要组织它的系统发出ACK响应，比如通过配置防火墙来过滤到入站的SYN+ACK。</li>
+<li><strong>伪造攻击</strong>。攻击者通过修改IP报文头和TCP报文头来伪造攻击者的源地址，伪造的IP地址上的主机必须不能响应SYN+ACK请求。攻击者往往伪造多个地址，使得防御变得困难。</li>
+<li><strong>分布式攻击</strong>。单个攻击者容易被反向追踪，并被识别到攻击的源头。如果攻击者有多辆的僵尸机，那么就能发动分布式洪水攻击。
+
+<figure class="center">
+    
+        <img src="/images/tcp-protocol/syn-attacks.jpg" alt="几种攻击模式" />
+    
+    
+    <figcaption>
+        <h4>几种攻击模式</h4>
+        
+    </figcaption>
+    
+</figure>
+</li>
+<li><strong>攻击参数</strong>。不管是用哪种攻击方式，SYN洪水攻击都可以进行一定的调优来减少发送包的数量，减少被发现的可能。这些调优需要了解目标服务器，比如它的backlog大小，SYN_RCVD超时重传时间。
+如果了解了这些参数，那么攻击者可以发送一段SYN报文刚好填满backlog，然后根据超时时间，间断性地发送，使得目标服务器永远无法接收新的请求。</li>
+</ol>
+
+<h3 id="服务器端应对syn洪水攻击"><strong>服务器端应对SYN洪水攻击</strong></h3>
+
+<ol>
+<li><p><strong>增加TCP Backlog</strong>。当服务器端收到第一个SYN到被阻塞的处理线程通过accept方法返回，这中间需要经过两个状态SYN_RCVD和ESTABLISHED。</p>
+
+<p>当服务器端返回SYN+ACK时，该连接的TCB(TCP 传输控制块)被放入到一个未完成的新连接队列里；当客户端再次ACK时，连接建立，TCB被放到已完成的新连接队列里，等待应用的accept方法来获取。</p>
+
+<blockquote>
+<p>The behavior of the backlog argument on TCP sockets changed with Linux 2.2. Now it specifies the queue length for completely established sockets waiting to be accepted, instead of the number of incomplete connection requests. The maximum length of the queue for incomplete sockets can be set using /proc/sys/net/ipv4/tcp_max_syn_backlog. When syncookies are enabled there is no logical maximum length and this setting is ignored.</p>
+</blockquote>
+
+<p>当客户端和服务器端通信花费时间很长时，第一个未完成队列出现堆积，服务器端无法继续接收新的连接。这个队列的长度可以在系统层面配置，即<code>/proc/sys/net/ipv4/tcp_max_syn_backlog</code>；</p>
+
+<p>当应用程序繁忙时，可能会无法即时处理新的连接请求，那么会出现完成的新连接队列堆积，这个队列长度由应用程序在调用系统函数listen时指定。</p>
+
+<p>增加Backlog本身不能阻止洪水攻击，因为攻击者很容易制造更大规模的攻击使得Backlog耗尽。</p></li>
+
+<li><p><strong>减少SYN_RCVD等到时间</strong>。攻击者可以利用网络拥塞而使得合法的TCB包因为需要重传也被移除出Backlog队列。</p></li>
+
+<li><p><strong>SYN Cache</strong>。SYN缓存通过减少收到SYN包以后的生成TCB状态所消耗的空间，并且推迟生成全部状态的时间来缓解攻击。</p>
+
+<p>SYN缓存构建了一个hash table，里面的每一个桶用来存放原本会生成的TCB的数据的一个子集，每一个桶的空间都是有限的。
+当服务器端收到一个SYN报文段后，会将这个半打开连接的信息放入到hash table中，并且在三次握手完成以后从hash table中删除，移入到一个完整的TCB中；
+如果某一个桶满了，最老的半开连接数据会被移除。</p>
+
+<p>这个SYN缓存数据结构中哈希的键使用的是发起者的IP地址、端口号以及一些秘密的数据位（即要使用SYN的消息又要不被攻击者猜到），使得哈希结果能被均匀地分布到桶中。
+这样的SYN缓存即使不在攻击的情况下，性能也有提供。攻击者则需要在短时间内填满所有的桶，这使得攻击难度增大。</p></li>
+
+<li><p><strong>SYN Cookie</strong>。SYN Cookie相比于SYN缓存来说，完全不占用额外的空间。那些原本需要存储的、和连接相关的数据被压缩成到SYN-ACK包的序号字段里。
+对于非恶意的客户端，它会发送ACK报文段来确认前面的SYN+ACK，而这个ACK报文段的确认号就是SYN-ACK的序号+1。
+因此对于非恶意的连接，服务器在收到SYN时不需要保存任何数据，直到当客户端ACK以后，根据确认号解压缩并生成一个完整的TCB就可以了。
+这个解压缩即使在攻击中性能也是可以的，因为它只涉及计算不涉及读写。</p>
+
+<p>SYN Cookie的缺点是并不是所有的TCB数据都能放到32位的序号字段中，有一些TCP可选参数可能被禁用。
+另一个缺点是不支持SYN-ACK重发，因为服务器端不保存半打开的连接。</p>
+
+<p>当然这种方案也有一定缺点，最明显的就是B不保存连接的半开状态，就丧失了重发SYN-ACK消息的能力，这一方面会降低正常用户的连接成功率，
+另一方面会导致某些情况下正常通信的双方会对连接是否成功打开产生误解，如A发给B的第三次握手消息(ACK)半路遗失，A认为连接成功了，B认为没收到ACK，连接没成功，这种情况就需要上层应用采取策略特别处理了。</p></li>
+
+<li><p><strong>混合模式</strong>。比如有些服务器同时部署了一个很大的Backlog和SYN Cookie两种防御策略，但是只有当Backlog占用率达到一定的阈值的时候才会启用SYN Cookie。
+这样可以保证大多数情况下系统正常运行不受SYN Cookie的影响，同时又在收到攻击时受到保护。</p></li>
+</ol>
+
+<h3 id="网络层面应对syn洪水攻击"><strong>网络层面应对SYN洪水攻击</strong></h3>
+
+<ol>
+<li><p><strong>过滤</strong>。使用入站过滤，ISP会拒绝路由那些源IP地址不属于其来源网段的包。过滤可以组织那些伪造IP的攻击，但是入栈过滤并没有大量部署而且无法应对分布式攻击。</p></li>
+
+<li><p><strong>防火墙和代理</strong>。有两种方式用来保护服务器，一种是向客户端伪造SYN+ACK，一种是像服务器端伪造确认ACK。</p>
+
+<p>下图展示了一种伪造SYN+ACK的防火墙保护机制。防火墙将端到端的连接分裂成两部分。如果客户端是非恶意的，防火墙会收到客户端的ACK确认报文段，然后防火墙会在自身与服务器之间建立连接。如果客户端是恶意的，服务器端不会看到攻击者发出的SYN。
+防火墙内部实现了一些基于TCP协议的防护机制，比如SYN Cookie或者SYN Cache，它可以保护所有在它后面的服务器免受SYN洪水攻击。</p>
+
+
+<figure class="center">
+    
+        <img src="/images/tcp-protocol/syn-ack-spoofing-firewall.jpg" alt="通过伪造SYN&#43;ACK来防止SYN洪水攻击的防火墙" />
+    
+    
+    <figcaption>
+        <h4>通过伪造SYN&#43;ACK来防止SYN洪水攻击的防火墙</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<p>下图展示了另一种伪造ACK的防火墙保护机制。防火墙代替客户端向服务器端发送ACK报文。这个伪造的ACK报文使得服务器的TCB不会一直停留在SYN_RCVD队列中，使得Backlog有空间继续接收请求。
+防火墙等待一段时间，如果客户端没有发送ACK报文，那么防火墙可以伪造TCP RST报文段来释放这个TCB。这个机制使得非恶意的报文在连接建立后能够正常通过防火墙，而不需要防火墙进行处理，相比第一种机制更加合适。</p>
+
+
+<figure class="center">
+    
+        <img src="/images/tcp-protocol/ack-spoofing-firewall.jpg" alt="通过伪造ACK来防止SYN洪水攻击的防火墙" />
+    
+    
+    <figcaption>
+        <h4>通过伪造ACK来防止SYN洪水攻击的防火墙</h4>
+        
+    </figcaption>
+    
+</figure>
+</li>
+
+<li><p><strong>活动监视器</strong>。</p>
+
+<p>活动监视器是一种能够监测，并能往流量中注入报文段的设备，但并不在路由路线上面。一个例子是活动监视器和上面的ACK伪造防火墙一样，当识别到攻击性的SYN时立即向服务器发送RST报文段。
+相比于防火墙或过滤方案，活动监视器成本更加低，有更加容易部署，同时也可以保护整个网络的服务器免受洪水攻击。</p></li>
+</ol>
+
+<h3 id="实践中的应对方式"><strong>实践中的应对方式</strong></h3>
+
+<p>网络层面的防御和服务器端的防御一般不会互相影响，并且经常同时被部署。因为SYN洪水攻击的目的是耗尽目标服务器的资源，而不是网络资源，因此一般在服务器端部署防御策略，而网络层面的防御作为二道防线。</p>
+
+<p>基于原始参考文献，服务器端的防御策略中SYN缓存可能是最佳的，因为它可以承受严重的攻击，同时也没有SYN Cookie的副作用。
+但也可以使用SYN Cookie + backlog阈值的做法，而减少SYN_RCVD超时时间和单独增加backlog大小被认为是不安全的。</p>
+
+<p>网络层面的防御策略中，入站和出站过来经常被部署，但是它无法应对分布式攻击，因此不能单独依赖这一个策略；
+基于SYN-ACK伪造的防火墙或者代理因为会将一个TCP连接拆分成两个，而带来一些负面影响，因此相比于基于ACK伪造的防火墙，它没有特别的优势；
+如果希望减低成本以及对现有网络部署的影响，则应该考虑活动监视器。</p>
+
+<h2 id="半关闭连接"><strong>半关闭连接</strong></h2>
+
+<p>TCP允许一端终止连接，同时仍旧接收另一端的数据，这就是半关闭。</p>
+
+
+<figure class="center">
+    
+        <img src="/images/tcp-protocol/tcp-half-close.gif" alt="TCP半关闭" />
+    
+    
+    <figcaption>
+        <h4>TCP半关闭</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<p>首先，通信的一端（通常是客户端）发出FIN报文，表示它已经完成了数据发送，另一端（服务端）确认此报文。这两部和<code>四次挥手</code>的前两个报文段一致。之后服务端并没有直接发出FIN报文，而是继续发送数据，客户端也不断地确认，直到服务端数据发送完后才执行后最后两步的FIN和ACK操作。</p>
+
+<h3 id="半关闭连接例子-ssh命令"><strong>半关闭连接例子：ssh命令</strong></h3>
+
+<pre><code class="language-shell">ssh hostname command &lt; inputfile
+</code></pre>
+
+<p>ssh命令远程登录到一台机器上然后在它上面执行命令，比如<code>TCP/IP详解 卷一：协议</code>中的例子：</p>
+
+<pre><code class="language-shell">ssh bsdi sort &lt; datafile
+</code></pre>
+
+<p>首先在本地与远程服务器之间建立一个TCP连接。本地端的ssh命令将datafile文件拷贝到输入流里面，然后把输出流里的数据拷贝到标准输出（终端）上；</p>
+
+<p>在远程端，标准输入和输出都是TCP连接。连接建立以后，客户端发送、服务器端接收datafile，当客户端完成发送以后，客户端发出执行半关闭TCP连接，服务器端确认，执行sort命令，然后把结果写入到TCP连接中，客户端在执行半关闭后仍旧等待服务器端发出来的报文，直到服务器端结束。</p>
+
+<h2 id="最大段大小mss"><strong>最大段大小MSS</strong></h2>
+
+<p>在建立TCP连接的时候，每一端都可以在SYN报文段中使用MSS选项来指定它期望接收的报文段大小。如果没有指定这个值，默认大小为536字节，
+因为默认的IP数据报的大小为576字节，去掉20字节的IP头部和20字节的TCP头部。</p>
+
+<p>Maximum Segment Size 理论上最大值可以达到链路层MTU的限制减去TCP和IP协议固定头部的大小，对于Ethernet协议来说，这会是1460字节。</p>
+
+<h2 id="tcp状态转换图"><strong>TCP状态转换图</strong></h2>
+
+
+<figure class="center">
+    
+        <img src="/images/tcp-protocol/tcp-state-transition.gif" alt="TCP状态转换图" width="700px" />
+    
+    
+    <figcaption>
+        <h4>TCP状态转换图</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<p>常见的客户端状态转换路径使用了深色的实线箭头表示；而常见的服务器端状态转换路径使用了深色的虚线箭头表示。</p>
+
+<p>ESTABLISHED状态表示的是两端数据可以交互的状态，而指向该状态的两个箭头表示连接的建立，离开此状态的两个箭头表示连接的终止。</p>
+
+<p>CLOSED状态是一个抽象的状态，并不是实际存在，只是作为状态转换图的开始和终止状态。图中的11个状态与netstat命令的输出是一致的，netstat里的名字和RFC793也基本一致。</p>
+
+<h3 id="2msl等待状态"><strong>2MSL等待状态</strong></h3>
+
+<p>TIME_WAIT又被称为2MSL (Maximum Segment Lifetime) Wait State。这是一个报文段在网络中被丢弃前可以存在的最长时间，这个时间依赖于IP数据报，而IP数据报的生存时间由TTL定义。
+在实践中，TTL使用的是跃点数而不是计时器。RFC793定义的MSL为2分钟，常用的实现有半分钟、一分钟和两分钟。</p>
+
+<p>在四次挥手中，客户端发送完最终的ACK后进入了TIME_WAIT状态，并且必须等待2MSL时间。这允许客户端在ACK丢失的时候（服务器端超时并再次发送FIN报文段），重新发送ACK。</p>
+
+<p>另外，当TCP连接处于TIME_WAIT状态的时候，这个连接（套接字对）不能被重用。这用于保护在新建的同一个连接上（同一个IP、端口），收到前一个连接的延时抵达的报文段。
+但是因为2MSL长达1-4分钟，所以如果在处于TIME_WAIT状态的时候服务器宕机并重启了，就可能会收到上一个连接发出的报文段。
+为了避免这种错误，RFC793中规定在重启后的一个MSL时间内，TCP不能建立任何连接。这被称为静默时间(quite time)。</p>
+
+<h2 id="reset报文段"><strong>Reset报文段</strong></h2>
+
+<p>一般来说，当收到一个不属于当前连接的报文段时，TCP会发出RESET报文段。不属于当前连接意味着源端IP、端口或目标端IP、端口不正确。</p>
+
+<h3 id="请求建立连接的端口不存在"><strong>请求建立连接的端口不存在</strong></h3>
+
+<p>如果SYN请求收到后发现端口不可用，没有应用在监听那个端口，TCP协议会返回reset。比如</p>
+
+<pre><code class="language-text">&gt; SYN 1000:1000(0)
+&lt; RESET 0:0(0) ACK 1001 
+</code></pre>
+
+<p>发送方序号1000，数据长度为0，请求建立连接。接收方返回RESET，序号设为0，确认号为发送方序号+数据长度+1。</p>
+
+<h3 id="终止连接"><strong>终止连接</strong></h3>
+
+<p>通过四次挥手的FIN请求正常终止连接的被称为orderly release，而通过RST请求终止连接的被称为abortive release。</p>
+
+<p>RST报文不会收到对方的答复，对方不会进行确认。收到RST报文的一端会终止连接并且通知应用连接被重置。</p>
+
+<h3 id="检测半开连接"><strong>检测半开连接</strong></h3>
+
+<p>当通信的一方关闭或终止，但是没有通知另一方时会出现半开连接。比如当服务器端宕机重启后，客户端尝试用相同的连接发送报文段给服务器时，因为服务器没有该连接的相关信息，则会返回RST。</p>
+
+<h1 id="tcp-keepalive"><strong>TCP Keepalive</strong></h1>
+
+<h2 id="基本描述"><strong>基本描述</strong></h2>
+
+<p>在一个空闲TCP连接上是没有任何数据交互的，只要通信的两端服务器不重启，无论中间路由器等中间介质是否崩溃重启，连接都保持保持ESTABLISHED的状态。</p>
+
+<p>许多TCP实现都提供了keepalive timer来检测是否存在半开连接，也就是来检测另一方是否宕机等。因为TCP的keepalive存在以下几个问题，所以TCP协议本身并没有要求实现它：</p>
+
+<ol>
+<li>keepalive机制可能会把瞬时的通信中断当成另一方掉线；</li>
+<li>keepalive消耗不必要的贷款；</li>
+<li>keepalive在按量计费的网络上增加成本。</li>
+</ol>
+
+<p>下面是<code>RFC1122: Requirements for Internet Hosts</code>关于TCP keepalive的描述：</p>
+
+<blockquote>
+<ol>
+<li>Implementors MAY include &ldquo;keep-alives&rdquo; in their TCP implementations, although this practice is not universally
+  accepted.  If keep-alives are included, the application MUST be able to turn them on or off for each TCP connection, and they MUST default to off.</li>
+<li>Keep-alive packets MUST only be sent when no data or acknowledgement packets have been received for the connection within an interval.  This interval MUST be
+configurable and MUST default to no less than two hours.</li>
+<li>It is extremely important to remember that ACK segments that contain no data are not reliably transmitted by TCP.
+Consequently, if a keep-alive mechanism is implemented it MUST NOT interpret failure to respond to any specific probe as a dead connection.</li>
+<li>An implementation SHOULD send a keep-alive segment with no data; however, it MAY be configurable to send a keep-alive
+segment containing one garbage octet, for compatibility with erroneous TCP implementations.</li>
+</ol>
+</blockquote>
+
+<p>这里强调了keepalive功能是非必须的，但是如果实现则必须允许应用选择开启或关闭，并且默认是关闭的。
+同时keepalive包必须在一段时间的空闲以后才能发送，这个时间段必须可以配置，并且必须默认不少于2小时。按照主文献的介绍，这个时间段的配置是全局的，会影响全部应用。
+同时这里也说来没有响应keepalive不能表示连接另一方下线。</p>
+
+<p>如果网络上超过一定的时间段没有活动时，默认2小时，配置了keepalive的一端会发送一个探测段。这时候另一端会处于以下四种状态中的一种：</p>
+
+<ol>
+<li>仍旧在在线并且两端通信畅通。接收到探测段的一方会正常响应。发送端会重置keepalive timer，如果在下一个时间段内发生了网络活动，则keepalive timer会再次被重置；</li>
+<li>接收端下线了，没有响应TCP请求。发送方等待75秒后超时，发送方会尝试10次，每次等待75秒。如果仍旧没有响应，则考虑接收端已经下线并终止连接；</li>
+<li>接收端下线并重启了，那么发送方会收到一个RST报文段，最终导致连接终止；</li>
+<li>接收端在线但是两端通信不可达。这和上面的第二点一样。</li>
+</ol>
+
+<p>在上述第一个场景中keepalive的报文交互对应用是透明的，只有碰到第二到第四场景时，错误会被返回给应用。通常第二个场景会显示<code>connection timed out.</code>，第三个场景是<code>connection reset by peer</code>，
+第四个场景取决于是否收到了ICMP相关的错误。</p>
+
+<h2 id="和http-keepalive的区别"><strong>和HTTP Keepalive的区别</strong></h2>
+
+<p>TCP keepalive如上所述是一种探测对方服务器是否下线的功能，并且回收那些中断的连接资源。而HTTP keepalive是尝试在多个HTTP请求中使用同一个TCP连接，复用TCP连接可以避免三次握手等造成的开销。</p>
+
+<h1 id="tcp-persist-timer"><strong>TCP Persist Timer</strong></h1>
+
+<p>0长度的TCP报文段（比如ACK报文段）传输是不可靠的，因为TCP协议不会确认ACK(长度为0的报文段)，只会确认包含有数据报文段。这会导致一个问题：接收方使用ACK来通知窗口大小更新，特别是当窗口一开始为0，而后接收方应用程序处理了缓冲区中的数据后，窗口增大，接收方发送ACK更新窗口大小，使得发送方可以继续发送数据。但是这个窗口更新报文可能会丢失，引起两端一直等待：接收方等待接收数据，发送方等待窗口更新。</p>
+
+<p>为了解决这个问题，发送方设置了一个Persist计时器，周期性地去试探窗口是否更新了。这个报文被称为窗口探针(window probe)。</p>
+
+<p>当收到窗口大小为0的ACK后，发送方就启动了Persist计时器，当超时的时候就发送一个窗口探针报文，这个报文包含一个字节的数据。注意，TCP允许在窗口关闭的时候发送额外的1字节数据。如果连接没有中断，接收方会返回一个ACK，包含新的窗口大小。如果窗口还是0，那表示接收方还没法接收数据，发送方会重置计时器，等待下一个超时再发送探针。</p>
+
+<p>这个超时时间采用指数退避的方式，第一次1.5秒，第二次3秒，6秒，12秒，24秒&hellip;但是Persist计时器的超时时间还限制在5-60秒之间，也就是说第一次超时是5秒，第二次也是5秒，之后是6秒，12秒，24秒，48秒，60秒，60秒&hellip;TCP连接不会放弃窗口试探，直到窗口打开或者连接中断。</p>
+
+<p>现实中的例子：打印机缺纸的时候，需要人重新装填打印纸然后继续，这个时候打印机可能就不再处理缓冲区的数据，那么发送到打印机的一方会一直等待。</p>
+
+<h1 id="tcp交互式数据流"><strong>TCP交互式数据流</strong></h1>
+
+<h2 id="延迟确认"><strong>延迟确认</strong></h2>
+
+<p><code>RFC1122: Requirements for Internet Hosts</code>关于TCP延迟确认的描述</p>
+
+<blockquote>
+<ol>
+<li>A host that is receiving a stream of TCP data segments can increase efficiency in both the Internet and the hosts by
+ sending fewer than one ACK (acknowledgment) segment per data segment received; this is known as a &ldquo;delayed ACK&rdquo; [TCP:5].</li>
+<li>A TCP SHOULD implement a delayed ACK, but an ACK should not be excessively delayed; in particular, the delay MUST be
+less than 0.5 seconds, and in a stream of full-sized segments there SHOULD be an ACK for at least every second segment.</li>
+</ol>
+</blockquote>
+
+<p>TCP连接数据流接收方可以通过减少ACK的频率来提升效率。TCP协议必须实现延迟ACK，但是延迟不能超过0.5秒，并且在一个全尺寸报文段的数据流中，至少每1秒需要发送一个ACK。</p>
+
+<p>延迟确认可以减少服务器端发送的报文段数量，比如一个交互式远程登录过程中，服务器端可以将确认客户端的报文、更新窗口以及回显字符合并到一个报文段中返回给客户端。</p>
+
+<h2 id="nagle算法"><strong>Nagle算法</strong></h2>
+
+<p>交互式数据流，比如终端输入一个字符就向服务器端发送一个报文段，可能会造成报文段非常地小（20字节IP头+20字节TCP头+1字节数据部分），降低效率同时引起网络拥堵。</p>
+
+<p><code>RFC1122: Requirements for Internet Hosts</code>关于Nagle算法的描述：</p>
+
+<blockquote>
+<p>If there is unacknowledged data (i.e., SND.NXT &gt; SND.UNA), then the sending TCP buffers all user
+  data (regardless of the PSH bit), until the outstanding data has been acknowledged or until
+  the TCP can send a full-sized segment (Eff.snd.MSS bytes; see Section 4.2.2.6).</p>
+</blockquote>
+
+<p>如果有未确认的数据，那么发送端会缓存所有的用户数据，直到所有数据都被确认或者TCP协议可以发送一个全尺寸的报文段。也就是说在一个通信较快的网络上，确认地越快那么发送端也发送地越快；但是在一个慢速网络上，Nagle算法会减少发送小报文的次数。</p>
+
+<h2 id="silly-window症状">**<em>Silly Window症状</em></h2>
+
+<p>基于窗口的流控机制可能会发生所谓的Silly Window Syndrome(SWS)：连接上两端不使用全尺寸报文段，而是每次交互一个小报文段。这可能是因为：</p>
+
+<ol>
+<li>接收方没有等待窗口变大（可用缓存增加）就通告(advertise)了一个小的窗口；</li>
+<li>发送方没有等待更多数据准备号，就发送了一个小的报文段。</li>
+</ol>
+
+<p>两端都需要采取一定的措施来放置SWS的发生：</p>
+
+<ol>
+<li>接收方必需不能通告一个小的窗口。通常情况下的算法是，接收方必需延迟通告一个更大的窗口尺寸，直到窗口可以增加一个全尺寸报文段大小或者增加接收方缓冲区大小的一半。</li>
+<li>发送不能传输数据，知道以下任意一个条件满足：
+
+<ul>
+<li>一个全尺寸报文段可以被发送；</li>
+<li>可以发送接收方所有通告过的窗口大小的最大值的一半的数据。这需要发送方跟踪所有收到的通告窗口的大小。目的在于猜测接收方缓冲区的大小。虽然接收方缓冲区可以在连接建立后减小，但这很罕见。这条规则用来处理那些不断发送小窗口的接收方。</li>
+<li>可以发送任意大小的数据，如果Nagle算法在当前连接上被禁用了或者我们没有在等待ACK。这用来避免发送方在还有没有被确认的数据存在的时候并且Nagle算法启用的时候发送小报文。</li>
+</ul></li>
+</ol>
+
+<h2 id="小结"><strong>小结</strong></h2>
+
+<p>对于交互式数据，报文段通常比MSS要小，有时候甚至一个报文段只包含一个字节。延迟确认是在接收端使用，尝试通过将确认和发送给另一端的消息合并在一起来减少需要发送的报文段数量。
+Nagle算法主要是用在慢速网络的发送端上，通过限制发送小的报文段来减少网络拥堵。</p>
+
+<h1 id="tcp批量数据流"><strong>TCP批量数据流</strong></h1>
+
+<p>本节主要介绍实现TCP可靠传输的流量控制机制。首先我们看一个TCP正常数据流的例子，之后介绍了TCP流量控制使用的滑动窗口机制，以及TCP的慢启动、超时重传、拥堵避免算法、快速重传和快速恢复算法。</p>
+
+<h2 id="tcp正常数据流示例"><strong>TCP正常数据流示例</strong></h2>
+
+<p>下面是一个TCP数据传输的例子，这里没有还没有引入慢启动。</p>
+
+
+<figure class="center">
+    
+        <img src="/images/tcp-protocol/tcp_bulk-data1.gif" alt="TCP正常数据流示例一" />
+    
+    
+    <figcaption>
+        <h4>TCP正常数据流示例一</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<p>发送方传输了三个报文段(4, 5, 和6)。这里假设TCP层先收到报文段4(数据1-1024)，因为延时确认机制，确认并没有马上发出，等到报文段5(数据1025-2048)抵达时，因为此时有两个未经确认的报文，所以接收方发出了确认报文，确认1-2048的数据，即报文段7。
+报文段8确认了报文段6的数据(2049-3072)，因为延迟超时，所以立即发出了确认报文。注意报文段8的Advertised Window尺寸为3072，而不是默认的4092，意味着接收到的引用还没有处理TCP接收缓冲区里面的1024字节的数据。</p>
+
+<p>之后报文段11-16的过程类似，只不过这里因为报文段15早于报文段16的延迟确认超时时间，因此整个11-16都是每隔两个报文确认一次。<strong>TCP的的滑动窗口机制并不要求确认每一个报文段，ACK可以累积，它确认的是从第一个字节到确认号减一的字节已经收到。</strong></p>
+
+<p>下面展示的是另一个TCP数据传输的例子，这个例子中发送方的速度快于接收方。</p>
+
+
+<figure class="center">
+    
+        <img src="/images/tcp-protocol/tcp_bulk-data2.gif" alt="TCP正常数据流示例二" />
+    
+    
+    <figcaption>
+        <h4>TCP正常数据流示例二</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<p>由于发送方速度很快，它一次性发送了4个报文段，完全使用了窗口大小(4096字节)。之后接收方确认了所有四个报文段，但是Advertised Window窗口大小为0，意味着接收到TCP缓冲区满了，应用还没有处理接收到的数据。
+17.4ms后接收方再次发送了ACK报文，这个被称为窗口更新的报文将窗口大小更新回了4096字节，表示发送方可以继续传送了。窗口更新报文并不确认任何新的数据，只是将窗口右边界向右移动。</p>
+
+<p>下图展示了随着时间的推移，数据包在网络上移动的过程，这里考虑了慢启动。</p>
+
+
+<figure class="center">
+    
+        <img src="/images/tcp-protocol/tcp_bulk-data-throughput1.gif" alt="批量数据吞吐" />
+    
+    
+    <figcaption>
+        <h4>批量数据吞吐</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<p>在时间点0-3中，慢启动的发送方发送第一个报文段，并抵达接收方。接收方在时间点4发送了确认报文，并在时间点7抵达发送方。那么这个round-trip time(RTT)是8个时间单位。
+这里作了一般性的假设：ACK的报文段要比数据报文要小（图中的方块要小），且发送和接收速度相同。</p>
+
+<p>当第一个ACK抵达发送端后，Congestion Window提高到2个报文段：在时间点8-11，发送方发送了两个报文段。在时间点12，接收方收到并产生第一个ACK。
+这里ACK之间的间距和数据报文的间距相同，这被称为TCP协议的self-clocking，因为接收方只有当数据抵达后才能发出ACK。</p>
+
+
+<figure class="center">
+    
+        <img src="/images/tcp-protocol/tcp_bulk-data-throughput2.gif" alt="批量数据吞吐" />
+    
+    
+    <figcaption>
+        <h4>批量数据吞吐</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<p>当2个报文段发送完后，Congestion Window提高到4，然后依次类推到8。此时整个网络都填满了数据包，无论Advertised Window或者Congestion Window的大小，网络上已经无法承载更多的数据。</p>
+
+<p>在上述例子中，为了达到最大的吞吐量，发送方需要在任何时候有8个已发送但未确认的数据包（即网络上一来一回共可以承载8个数据包）。下面定义了网络中的Bandwidth-Delay Product(capacity):</p>
+
+<p>$$capacity(bits) = bandwidth(bits/sec) * \text{round-trip time}(sec)$$</p>
+
+<p>这个值表示在一个网络上的最大数据量，也就是数据已经传送但是还没有被确认的最大数量。这个值大的网络被称为长胖网络。带宽和RTT都可以影响：</p>
+
+<ol>
+<li>当带宽增加的时候，相当于上图中数据包的长方形块的长度被压缩了，同样长度的网络上同一时刻可以放入更多的包；</li>
+<li>当RTT增加的时候，相当于上图中的网络加长了，但是数据包的长方形块不变，网络上也可以放入更多的包。</li>
+</ol>
+
+<h2 id="滑动窗口"><strong>滑动窗口</strong></h2>
+
+<p>TCP流量控制的方式为滑动窗口。它允许发送方一次性发送多个报文段，然后再等待确认。滑动窗口确定了发送方在等待确认前可以发送多少报文段（当然还受慢启动和拥堵避免算法的影响）。</p>
+
+<ol>
+<li>每一端分配一个缓冲区，并且通知另一端这个缓冲区的大小。</li>
+<li>接收方在每一个ACK报文中发送可用缓冲区大小（即窗口），这被称为Window Advertisement。</li>
+<li>接收方也会在应用消耗了一部分数据以后发送Window Advertisement。</li>
+</ol>
+
+
+<figure class="center">
+    
+        <img src="/images/tcp-protocol/tcp-sliding-window.gif" alt="TCP滑动窗口" />
+    
+    
+    <figcaption>
+        <h4>TCP滑动窗口</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<p>由接收方通告的窗口被称为offer window(图中的4-9字节)，意味着接收方已经确认4字节以前(不含)已经接收，并准备好接收4-9字节(窗口大小为6字节)了。发送方计算出usable window，即那些可以立即发送的数据。
+随着时间的推移窗口不断地向右移动，以下三个术语描述了窗口的三种移动方式：</p>
+
+<ol>
+<li>窗口关闭，表示窗口的左边界向右移动，这是在接收端确认数据时发生。</li>
+<li>窗口打开，表示窗口的右边界向右移动，这是在接收方端的应用已经处理了确认的数据，接收方可以接收更多的数据的时候发生。</li>
+<li>窗口缩小，表示窗口的右边界向左移动，<code>RFC1122</code>强烈反对这么做，但是TCP实现必须支持这种场景。</li>
+</ol>
+
+<p>当左边界和右边界重合时，发送方不能发送更多数据，这被称为零窗口zero window。下图展示了这三种窗口移动。</p>
+
+
+<figure class="center">
+    
+        <img src="/images/tcp-protocol/tcp-window-movement.gif" alt="TCP滑动窗口" />
+    
+    
+    <figcaption>
+        <h4>TCP滑动窗口</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<p>下面的图展示了上一节中第一个TCP数据流的例子。</p>
+
+
+<figure class="center">
+    
+        <img src="/images/tcp-protocol/tcp_bulk-data-window-movement.gif" alt="TCP数据流窗口移动例子" />
+    
+    
+    <figcaption>
+        <h4>TCP数据流窗口移动例子</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<p>从上面例子中，可以看出发送方并不一定要一次性发送全窗口尺寸的数据。当接收方确认后，窗口向右移动，因为窗口大小和接收的数据序号是相对的。窗口大小可以变小，但是窗口的又边界一般不会左移。接收方也不需要等待窗口填满以后才发送ACK。</p>
+
+<h2 id="慢启动"><strong>慢启动</strong></h2>
+
+<p>前面我们介绍了流量控制的滑动窗口机制，窗口的大小由接收方通过ACK报文来指明，这个被称为是Advertised Window。慢启动引入了另一个窗口大小，这个窗口大小由发送方控制，被称为Congestion Window。</p>
+
+<p>在TCP连接刚建立的时候，Congestion Window的大小被设置为一个报文段，也就是说只有当接收方确认了这一个报文后，发送方才会继续发送。当确认发确认了第一个报文后，Congestion会加倍，也就是变成两个报文段，这时发送方可以一次性发送两个报文段。
+然后不断以此增加Congestion Window的尺寸，直到达到网络的限制，中间的路由器开始丢包。这个不断增大Congestion Window的过程被称为是慢启动。</p>
+
+<p>Advertised Window是接收方采取的流量控制，通过报文通知给发送方，而Congestion Window是发送方采取的流量控制，他是TCP连接的一个状态。发送方能够发送的报文段数量为两者的最小值。</p>
+
+<h2 id="超时重传"><strong>超时重传</strong></h2>
+
+<p>TCP报文段使用底层的IP协议传输，而IP协议不保证数据送达不丢失。TCP对于报文段丢失的处理方式是设置一个超时计时器，当它发送数据并且数据没有在一定的时间内被确认的时候，它就重新传送数据。这里实现的关键是超时和重传的策略。</p>
+
+<p>一个TCP连接有四个计时器，我们已经讨论过其中三个：</p>
+
+<ol>
+<li>Keepalive计时器。用于检测另一端是否已经下线。</li>
+<li>2MSL计时器。用来计量连接在TIME_WAIT状态中的时间。</li>
+<li>Persist计时器。用来探测接收端窗口大小。</li>
+<li>Retransimission计时器。用来计算等待另一端发送确认报文的时间。</li>
+</ol>
+
+<p>TCP协议为确保可靠传输，设计了超时重传机制。这里的超时指的就是Retransmission Timeout(RTO)。TCP设置了一个Retransmission计时器，当发送了报文段以后超过RTO时间还没有收到ACK，则认为包丢失了，重置计时器，然后重传丢失的包。</p>
+
+<p>RTO是根据Round-Trip Time(RTT)计算的，RTT即一个报文段从发送，到对方处理，到对方答复ACK，到收到ACK的时间。因为不同的连接上的情况不同，即使在同一个连接上这个RTT值也是不断发生变化，因此需要一种自适应的方法来准确测量RTT值。</p>
+
+<p>RTO的值应该即能够反映连接上历史的情况，又能反映当前RTT的变化。下面是RTO计算过程，首先我们初始化两个变量：</p>
+
+<p>$$A \leftarrow M$$
+$$D \leftarrow M/2$$</p>
+
+<p>这里M代表的是当前测量到的RTT值，A代表使用历史测量值平滑过的RTT值，D代表使用历史测量值平滑过的RTT值的方差。下面是在每次计算得到一个RTT以后，更新RTO的算法：</p>
+
+<p>$$Err \leftarrow M - A$$
+$$A \leftarrow A + gErr$$
+$$D \leftarrow D + h(|Err| - D)$$
+$$RTO = A + 4D$$</p>
+
+<p>这里的Err表示的是平滑RTT值和当前RTT值的误差，我们用这个误差来更新最新的平滑RTT值和平滑RTT方差。
+g和h是一种平滑系数，分别设为0.125和0.25，用来减小单个误差对于平滑值的影响。</p>
+
+<p>当超时导致重传时，我们不确定对方返回的ACK是对第一次传送的确认还是对重传的确认，这会影响到RTT的计算。
+这里就用到了<code>Karn</code>算法：当超时重传发生的时候，对于这个重传包的ACK计算得来的RTT不能用于更新RTO。同时每发生一次超时重传，就将RTO值加倍，这个被称为exponential backoff（指数退避）。</p>
+
+<h2 id="快速重传"><strong>快速重传</strong></h2>
+
+<p>接收端在收到乱序报文段的时候可以立即发送一个ACK，这个ACK不应该被延迟发送。这个重复的ACK是为了让发送端知道接收端收到的报文乱序了，并告诉它期望的报文序号是多少。
+而发送端并不知道重复的ACK是因为乱序造成的还是丢包造成的。发送端假设如果是乱序造成的，那么只会收到一个或两个重复的ACK，然后正确的报文段会抵达接收端，进而一个新的ACK会被发送过来。
+如果收到了三个或更多的ACK，那么表示一个报文段丢失了。TCP并不等待RTO超时而直接执行重传那个丢失的报文段。</p>
+
+<h2 id="拥堵"><strong>拥堵</strong></h2>
+
+<p>当数据从较大的TCP通道抵达，但是要从较小的TCP通道中发出去时就会发生拥堵；或者有多个入站数据流，但是出站的容量小于入站数据之和。</p>
+
+
+<figure class="center">
+    
+        <img src="/images/tcp-protocol/tcp_bulk-congestion.gif" alt="拥堵" />
+    
+    
+    <figcaption>
+        <h4>拥堵</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<p>上图是一种常见的拥堵的情况：服务器在本地使用高速LAN连接，但是通过一个路由器接入到较慢的WAN网络。这里R1路由器是拥堵点，因为它从较快的网络（左边）收到的数据的速度大于它能够在较慢的网络（右边）发送的速度。
+R2的接收和发送处于相同的速率，尽管R2右侧的LAN网络可以提供更高的传输速度。同样地，ACK返回到发送方的间隔和R2转发到LAN上的包的间隔是一样的。</p>
+
+<p>这里R1和R3通常是同一个路由器，R2和R4通常是一个路由器。另外，我们假设没有进行慢启动，并且R3有足够的发送缓冲区来容纳堆积的报文段。</p>
+
+<h2 id="拥堵避免"><strong>拥堵避免</strong></h2>
+
+<p>慢启动是一种在连接刚建立的时候初始化数据流的算法，但是到某一点的时候，传输速率达到瓶颈然后开始丢包。拥堵避免算法用来处理丢包的情况。这个算法假设因为包损坏导致丢包的概率很低（远小于1%），而导致丢包的主要原因是网络中某个节点的拥堵。
+有两个现象可以说明发生了丢包：1. 发生超时； 2. 收到重复的ACK。</p>
+
+<p>拥堵避免算法和慢启动算法虽然在目的上是独立的：慢启动是为了正确地初始化包传输的速率，避免因为直接传输过多的报文段导致中间路由器发生拥堵，进而导致缓冲区不足而发生丢包；
+拥堵算法则是在拥堵发生的时候，减少传输速率，即Congestion窗口大小，然后再次调用慢启动来恢复数据传输。因此，在实践中它们通常一起实现。</p>
+
+<p>拥堵避免算法和慢启动需要维护两个变量，一个是已经提到过的Congestion Window(cwnd)， 一个是慢启动阈值大小(ssthresh)。合并后的慢启动和拥堵避免算法如下：</p>
+
+<ol>
+<li>初始化连接，然后将cwnd设置为1一个报文段，ssthresh设置为65535字节；</li>
+<li>TCP发送方不会发送超过cwnd大小或advertised window(awnd)的大小。拥堵避免是发送方实时的流控，基于发送方观测到的网络拥堵状况；而Advertised window是接收方实施的流控，它和接收方可用的缓冲区大小有关。</li>
+<li>当拥堵发生时（即超时或重复ACK）ssthresh设置为当前窗口大小的一半（cwnd和awnd的最小值，但是至少两个报文段大小）。同时，如果拥堵是超时触发的，cwnd被设置为一个报文段（即开始慢启动）；</li>
+<li>当新的报文被对方ACK以后，我们开始增大cwnd，但是增大的方法取决于我们是在进行慢启动还是拥堵避免：
+
+<ul>
+<li>如果cwnd小于等于ssthresh，那么我们采取慢启动；否则则是进行拥堵避免；</li>
+<li>慢启动算法不断地增大cwnd，直到到达ssthresh，之后采取拥堵避免算法；</li>
+<li>慢启动按照前面介绍的方式，以指数倍的速度增加cwnd；而拥堵避免则在每次接收到ACK以后讲cwnd递增1，是一种线性增长。</li>
+</ul></li>
+</ol>
+
+
+<figure class="center">
+    
+        <img src="/images/tcp-protocol/tcp-congestion-backoff.gif" alt="TCP慢启动和拥堵避免算法" />
+    
+    
+    <figcaption>
+        <h4>TCP慢启动和拥堵避免算法</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<p>在上面这个例子中，我们假设拥堵发生时cwnd为32报文段。那么ssthresh设置为16报文段，cwnd设置为1个报文段。在time 0的时候一个报文段被发送，并且在timie 1的时候收到ACK；然后cwnd增加为2。以此类推，每次加倍，直到cwnd达到ssthresh，之后cwnd开始线性增长。</p>
+
+<h2 id="快速恢复"><strong>快速恢复</strong></h2>
+
+<p>在拥堵避免中，我们讨论了当超时触发拥堵的时候，我们将cwnd置为1，然后先慢启动算法，再拥堵避免算法。但是当触发拥堵的是重复ACK的时候，我们不使用慢启动：</p>
+
+<ol>
+<li>当收到第三个重复的ACK的时候，将ssthresh设置为当前窗口大小的一半（cwnd和awnd的最小值，但是至少两个报文段大小）。将cwnd设置为ssthresh+3。</li>
+<li>重传未确认的报文段。</li>
+<li>使用拥堵避免算法，在没收到一个ACK的时候将cwnd递增1。</li>
+</ol>
+
+<p>在最初的拥堵避免算法按设计中，不管是超时还是重复ACK都是使用慢启动+拥堵避免的方式，这个称为Tahoe；在后来的优化中，重复ACK不再使用慢启动，这个被称为Reno。下图展示了在重复ACK的场景下，cwnd的变化。</p>
+
+
+<figure class="center">
+    
+        <img src="/images/tcp-protocol/tcp-congestion-window.png" alt="Tahoe vs Reno" />
+    
+    
+    <figcaption>
+        <h4>Tahoe vs Reno</h4>
+        
+    </figcaption>
+    
+</figure>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Jiaqi Li</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2018-09-06</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/tcp-protocol/">TCP Protocol</a>
+          
+          <a href="/tags/network/">Network</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/network-udp-protocol/">
+            <span class="next-text nav-default">网络协议系列四：UDP协议</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://www.facebook.com/ajl98" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="https://www.instagram.com/binaryexplorer/" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="https://www.linkedin.com/in/alexjiaqili/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="https://github.com/virtworld" class="iconfont icon-github" title="github"></a>
+  <a href="http://www.jiaqili.me/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2014 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jiaqi Li</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.1"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+
+
+
+</body>
+</html>
