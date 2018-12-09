@@ -21,6 +21,160 @@
     </item>
     
     <item>
+      <title>故障分析报告 - Java应用PS未关闭导致的OOM错误</title>
+      <link>http://www.jiaqili.me/post/oom-profiling-report-20181121/</link>
+      <pubDate>Sun, 09 Dec 2018 18:36:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/oom-profiling-report-20181121/</guid>
+      <description>&lt;p&gt;这篇记录了2018年11月21日生产系统的一个联机交易服务应用OOM错误及排查过程。所有的包名、类名、方法名已作脱敏处理，涉及业务逻辑的代码均已删除但不影响问题分析，部分方法、调用栈栈做过简化，以方便阅读。&lt;/p&gt;
+
+&lt;p&gt;首先，介绍一下背景。出故障的Java应用部署在四台独立的物理机上，上面通过F5做负载均衡。应用本身比较老，Java版本是1.6，Jetty作为服务器。其中两台用的是IBM的虚拟机，另外两台用的是HotSpot 64-Bit Server（这就是另一个故事了^-^）。&lt;/p&gt;
+
+&lt;h1 id=&#34;生产分析-案发现场&#34;&gt;生产分析（案发现场）&lt;/h1&gt;
+
+&lt;p&gt;笔者到事故现场的时候，发生OOM的一台IBM的Java虚拟机已经宕掉了，另一台HotSpot堆开地比较大(Xmx4G)还活着。&lt;code&gt;jmap&lt;/code&gt;看了下使用中的堆有3G左右，远大于平常的几百兆。&lt;code&gt;jstat -gcutil pid 1000&lt;/code&gt;观察了一会儿，主要是想看一下Full GC。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>网络协议系列五：TCP协议</title>
+      <link>http://www.jiaqili.me/post/network-tcp-protocol/</link>
+      <pubDate>Thu, 06 Sep 2018 09:47:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/network-tcp-protocol/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文是对TCP协议的总结笔记。除非另外注明，本文的主要参考为&lt;a href=&#34;http://www.pcvr.nl/tcpip/&#34;&gt;TCP/IP Illustrated: Volume I: The Protocols&lt;/a&gt;第17-23章。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;tcp基本特征&#34;&gt;&lt;strong&gt;TCP基本特征&lt;/strong&gt;&lt;/h1&gt;
+
+&lt;p&gt;TCP协议提供一个面向连接的，端到端的，可靠的，全双工的，字节流服务。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;面向链接的表示两个使用TCP协议的应用（通常一个称做服务器，一个称做客户端）必需在交换数据之前建立一个TCP连接。在一个TCP连接上有且&lt;strong&gt;只有两个端点在通信&lt;/strong&gt;，TCP协议不能广播或组播。&lt;/li&gt;
+&lt;li&gt;TCP协议通过以下机制来实现可靠性：
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;分段传输&lt;/strong&gt;。TCP协议将应用的数据切割成合适的大小，然后传给IP协议，这个TCP传递给IP的数据单元称为TCP报文段(segment)。而UDP的传递给IP协议的数据单元并没有对应用的数据进行切分，被称做UDP数据报（详见后文）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;自适应的超时重传&lt;/strong&gt;。TCP发送一个报文段后维护一个计时器，等待另一端确认（ACK），如果一定时间没有收到确认，该报文段会被重传（详见后文）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;延时确认&lt;/strong&gt;。当TCP收到连接上另一端发来的数据时，它会发送确认信息。这个确认并不会立即发送，而是延迟一段时间发送（详见后文）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;校验和(Checksum)&lt;/strong&gt;。TCP协议有端到端的校验和用来检测传输中数据是否被修改。如果收到的报文段的校验和无效，TCP会丢弃该报文段并且不会发送确认信息（它期望发送端超时并重传）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;重排序&lt;/strong&gt;。因为TCP报文段通过IP数据报传输，而IP数据报可以以任意顺序抵达接收端。接收端的TCP协议负责对报文段重排序，并以正确的顺序传递给应用。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;去重&lt;/strong&gt;。因为IP数据报可能发生重复，TCP协议负责对此去重。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;流控(flow control)&lt;/strong&gt;。每一个TCP端有一个有限长度的缓冲区。接收端的TCP仅允许发送端发送缓冲区可以容纳的数据量。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;两个应用通过TCP连接交换8位字节的字节流。
+
+&lt;ul&gt;
+&lt;li&gt;TCP协议不会在多次写入之间插入任何的标记。也就是说一端写入80字节，另一端就会读取到80字节。一段如果分三次，按照50，20，10字节写入。另一端并不能区分这三次写入。&lt;/li&gt;
+&lt;li&gt;TCP并不解析传输的内容。它并不关心传输的二进制数据还是ASCII字符。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>网络协议系列四：UDP协议</title>
+      <link>http://www.jiaqili.me/post/network-udp-protocol/</link>
+      <pubDate>Thu, 06 Sep 2018 09:46:10 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/network-udp-protocol/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文是对UDP协议的总结笔记。除非另外注明，本文的主要参考为&lt;a href=&#34;http://www.pcvr.nl/tcpip/&#34;&gt;TCP/IP Illustrated: Volume I: The Protocols&lt;/a&gt;第11和12章。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;udp基本特征&#34;&gt;&lt;strong&gt;UDP基本特征&lt;/strong&gt;&lt;/h1&gt;
+
+&lt;p&gt;UDP是一个简单的面向数据报的传输层协议，它和TCP有以下显著区别：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;它是不可靠的。它发送用户数据，但是不保证它们抵达接收端。它不提供确认、序号、超时重传等机制。它也不能保证抵达接收端时数据报的顺序，是否重复等。&lt;/li&gt;
+&lt;li&gt;它是无连接的。TCP需要建立连接后才能发送数据，UDP不需要。&lt;/li&gt;
+&lt;li&gt;它的每个数据报和应用程序是紧密相关的。应用程序每次输出操作会产生唯一一个UDP数据报，并产生唯一一个IP数据报，但是TCP中应用程序写入的数据量和单个IP数据报中发送的内容没有关系。
+应用程序需要考虑链路层的MTU，如果超过了MTU，那么IP数据报会被分段，这适用于从源端到目标端所经过的所有网络。&lt;/li&gt;
+&lt;li&gt;UDP协议支持多播和广播。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>网络协议系列三：IP协议</title>
+      <link>http://www.jiaqili.me/post/network-ip-protocol/</link>
+      <pubDate>Thu, 06 Sep 2018 09:46:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/network-ip-protocol/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文是对IP协议的总结笔记。部分参考了&lt;strong&gt;TCP/IP Illustrated: Volume I: The Protocols&lt;/strong&gt;的第1和第3章。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;ip地址结构&#34;&gt;&lt;strong&gt;IP地址结构&lt;/strong&gt;&lt;/h1&gt;
+
+&lt;p&gt;每一个32位的IP地址都被分为两部分：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;前缀：表示主机所在的物理网络，每一个英特网中的物理网络都被分配一个唯一的网络编号；&lt;/li&gt;
+&lt;li&gt;后缀：表示一个物理网络中主机自身，每一个主机都被分配了一个唯一的后缀。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;前缀是全局分配的，而后缀是本地分配的。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>网络协议系列二：链路层(Ethernet和MTU)</title>
+      <link>http://www.jiaqili.me/post/network-link-layer/</link>
+      <pubDate>Thu, 06 Sep 2018 09:41:40 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/network-link-layer/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文是对链路层的总结笔记。主要参考数目为&lt;strong&gt;TCP/IP Illustrated: Volume I: The Protocols&lt;/strong&gt;的第二章。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;概述&#34;&gt;&lt;strong&gt;概述&lt;/strong&gt;&lt;/h1&gt;
+
+&lt;p&gt;Link Layer的目的是为上层的IP协议、ARP协议和RARP协议提供服务。TCP/IP支持很多不同的链路层，包括Ethernet、token ring等。本文主要讨论Ethernet帧格式以及Maximum Transmission Unit(MTU)。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>网络协议系列一：概览</title>
+      <link>http://www.jiaqili.me/post/network-overview/</link>
+      <pubDate>Thu, 06 Sep 2018 09:41:01 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/network-overview/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文是对计算机网络概述的总结笔记。主要参考数目为&lt;strong&gt;TCP/IP Illustrated: Volume I: The Protocols&lt;/strong&gt;的第一章。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;网络(通信)协议是一些列交换信息的规则（比如格式、含义等）。它提供了高层的接口，将硬件细节对应用程序员隐藏，使得不同的应用可以在不同的硬件上运行并通信。协议栈(protocol suite)指的是在不同层级上不同协议的组合，比如TCP/IP协议栈。
+层级(layering)是协议栈设计的一种常用方法，每一层协议处理不同层级的抽象，并且通过一个通用的接口与高层和底层的协议通信。分层的原则是运行在层级N上的程序必须能够准确地收到同样运行在层级N上的另一台主机上的程序发送的信息。&lt;/p&gt;
+
+&lt;p&gt;TCP/IP协议栈一般被认为是一种四层协议系统，如下表所示。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;Applcation: Telnet, FTP, Email
+Transport: TCP, UDP
+Network: IP, ICMP, IGMP,
+Link: device driver and interface card
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这里的Application层又对应ISO七层网络模型中的上三层的(由下至上)Session, Presentation, Application；Link对应ISO中最下层的(由下至上)Physical和Link层。这里简单记录各层的作用：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;链路层。处理硬件接口的细节。&lt;/li&gt;
+&lt;li&gt;网络层（或英特网层）。处理数据包在网络中移动的过程，比如路由。&lt;/li&gt;
+&lt;li&gt;运输层。为应用层提供端到端的通信。&lt;/li&gt;
+&lt;li&gt;应用层。负责处理特定应用的细节。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Java基础知识系列12：数据库编程</title>
       <link>http://www.jiaqili.me/post/java-basics-12-database/</link>
       <pubDate>Sun, 02 Sep 2018 19:06:00 +0800</pubDate>
@@ -803,6 +957,15 @@ switch(size){
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.jiaqili.me/post/jvm-gc-generations/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/jvm-gc-generations/</guid>
+      <description></description>
     </item>
     
   </channel>
