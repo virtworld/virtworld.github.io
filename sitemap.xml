@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml-stylesheet type="text/xsl" href="http://www.jiaqili.me/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://www.jiaqili.me/about/</loc>
+    <lastmod>2018-02-20T19:25:10+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/oom-profiling-report-20181121/</loc>
+    <lastmod>2018-12-09T18:36:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/network-tcp-protocol/</loc>
+    <lastmod>2018-09-06T09:47:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/network-udp-protocol/</loc>
+    <lastmod>2018-09-06T09:46:10+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/network-ip-protocol/</loc>
+    <lastmod>2018-09-06T09:46:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/network-link-layer/</loc>
+    <lastmod>2018-09-06T09:41:40+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/network-overview/</loc>
+    <lastmod>2018-09-06T09:41:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-basics-12-database/</loc>
+    <lastmod>2018-09-02T19:06:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-basics-11-exception/</loc>
+    <lastmod>2018-09-02T19:05:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-basics-10-container/</loc>
+    <lastmod>2018-08-29T16:39:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-basics-9-generic/</loc>
+    <lastmod>2018-08-25T00:17:11+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-basics-8-reflection/</loc>
+    <lastmod>2018-08-25T00:17:10+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-basics-7-init/</loc>
+    <lastmod>2018-08-25T00:17:09+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-console-printing/</loc>
+    <lastmod>2018-08-18T10:10:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-basics-6-enum/</loc>
+    <lastmod>2018-08-18T10:08:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-basics-5-innner-class/</loc>
+    <lastmod>2018-08-18T10:07:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-basics-4-interface/</loc>
+    <lastmod>2018-08-18T10:06:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-basics-3-object/</loc>
+    <lastmod>2018-08-11T13:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-basics-2-modifiers/</loc>
+    <lastmod>2018-08-11T12:59:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-basics-1-basics/</loc>
+    <lastmod>2018-08-11T12:58:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/se-oodesign/</loc>
+    <lastmod>2018-07-19T20:31:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/solr-ansj-config/</loc>
+    <lastmod>2018-06-20T16:09:12+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/algorithm-orgnization-name-classification-using-nbc/</loc>
+    <lastmod>2018-02-25T14:41:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/oracle-exchange-partition-chn/</loc>
+    <lastmod>2018-02-21T20:09:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-tuning-batch/</loc>
+    <lastmod>2018-01-26T11:33:56+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/jvm-class-file/</loc>
+    <lastmod>2015-12-28T10:57:42+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/jvm-class-loading/</loc>
+    <lastmod>2015-12-28T10:09:30+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-concurrency-2/</loc>
+    <lastmod>2015-12-28T08:10:20+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-concurrency-1/</loc>
+    <lastmod>2015-12-28T07:50:12+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/jvm-gc/</loc>
+    <lastmod>2015-11-26T16:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/jvm-dynamic-memory-allocation/</loc>
+    <lastmod>2015-11-26T15:40:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/computability-notes/</loc>
+    <lastmod>2014-06-01T20:54:42+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/jvm-gc-generations/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/abstract-class/</loc>
+    <lastmod>2018-08-18T10:06:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/algorithm/</loc>
+    <lastmod>2018-02-25T14:41:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/categories/algorithm/</loc>
+    <lastmod>2018-02-25T14:41:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/ansj/</loc>
+    <lastmod>2018-06-20T16:09:12+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/batch/</loc>
+    <lastmod>2018-02-21T20:09:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/categories/</loc>
+    <lastmod>2018-02-25T14:41:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/classloader/</loc>
+    <lastmod>2015-12-28T10:09:30+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/computability/</loc>
+    <lastmod>2014-06-01T20:54:42+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/computer-science/</loc>
+    <lastmod>2014-06-01T20:54:42+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/categories/computer-science/</loc>
+    <lastmod>2014-06-01T20:54:42+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/concurrency/</loc>
+    <lastmod>2015-12-28T08:10:20+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/container/</loc>
+    <lastmod>2018-08-29T16:39:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/database/</loc>
+    <lastmod>2018-09-02T19:06:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/enumeration/</loc>
+    <lastmod>2018-08-18T10:08:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/error-handling/</loc>
+    <lastmod>2018-09-02T19:05:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/gc/</loc>
+    <lastmod>2015-11-26T16:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/generics/</loc>
+    <lastmod>2018-08-25T00:17:11+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/initialization/</loc>
+    <lastmod>2018-08-25T00:17:09+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/inner-class/</loc>
+    <lastmod>2018-08-18T10:07:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/interface/</loc>
+    <lastmod>2018-08-18T10:06:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/ip-protocol/</loc>
+    <lastmod>2018-09-06T09:46:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/java/</loc>
+    <lastmod>2018-12-09T18:36:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/categories/java/</loc>
+    <lastmod>2018-12-09T18:36:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/jvm/</loc>
+    <lastmod>2018-12-09T18:36:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/categories/jvm/</loc>
+    <lastmod>2018-12-09T18:36:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/link-layer/</loc>
+    <lastmod>2018-09-06T09:41:40+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/memory-allocation/</loc>
+    <lastmod>2015-11-26T15:40:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/modifiers/</loc>
+    <lastmod>2018-08-11T12:59:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/naive-bayes-classification/</loc>
+    <lastmod>2018-02-25T14:41:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/network/</loc>
+    <lastmod>2018-09-06T09:47:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/categories/network/</loc>
+    <lastmod>2018-09-06T09:47:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/object/</loc>
+    <lastmod>2018-08-11T13:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/object-oriented-design/</loc>
+    <lastmod>2018-07-19T20:31:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/oom/</loc>
+    <lastmod>2018-12-09T18:36:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/oracle/</loc>
+    <lastmod>2018-02-21T20:09:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/categories/oracle/</loc>
+    <lastmod>2018-02-21T20:09:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/performance/</loc>
+    <lastmod>2018-12-09T18:36:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/performance-tuning/</loc>
+    <lastmod>2018-01-26T11:33:56+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/</loc>
+    <lastmod>2018-12-09T18:36:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/reflection/</loc>
+    <lastmod>2018-08-25T00:17:10+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/categories/search/</loc>
+    <lastmod>2018-06-20T16:09:12+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/software-engineering/</loc>
+    <lastmod>2018-07-19T20:31:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/categories/software-engineering/</loc>
+    <lastmod>2018-07-19T20:31:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/solr/</loc>
+    <lastmod>2018-06-20T16:09:12+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/</loc>
+    <lastmod>2018-08-18T10:06:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/tcp-protocol/</loc>
+    <lastmod>2018-09-06T09:47:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/tags/udp-protocol/</loc>
+    <lastmod>2018-09-06T09:46:10+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/</loc>
+    <lastmod>2018-02-20T19:25:10+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+</urlset>

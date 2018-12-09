@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tcp Protocol on Virtual World</title>
+    <link>http://www.jiaqili.me/tags/tcp-protocol/</link>
+    <description>Recent content in Tcp Protocol on Virtual World</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 06 Sep 2018 09:47:00 +0800</lastBuildDate>
+    
+	<atom:link href="http://www.jiaqili.me/tags/tcp-protocol/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>网络协议系列五：TCP协议</title>
+      <link>http://www.jiaqili.me/post/network-tcp-protocol/</link>
+      <pubDate>Thu, 06 Sep 2018 09:47:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/network-tcp-protocol/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文是对TCP协议的总结笔记。除非另外注明，本文的主要参考为&lt;a href=&#34;http://www.pcvr.nl/tcpip/&#34;&gt;TCP/IP Illustrated: Volume I: The Protocols&lt;/a&gt;第17-23章。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;tcp基本特征&#34;&gt;&lt;strong&gt;TCP基本特征&lt;/strong&gt;&lt;/h1&gt;
+
+&lt;p&gt;TCP协议提供一个面向连接的，端到端的，可靠的，全双工的，字节流服务。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;面向链接的表示两个使用TCP协议的应用（通常一个称做服务器，一个称做客户端）必需在交换数据之前建立一个TCP连接。在一个TCP连接上有且&lt;strong&gt;只有两个端点在通信&lt;/strong&gt;，TCP协议不能广播或组播。&lt;/li&gt;
+&lt;li&gt;TCP协议通过以下机制来实现可靠性：
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;分段传输&lt;/strong&gt;。TCP协议将应用的数据切割成合适的大小，然后传给IP协议，这个TCP传递给IP的数据单元称为TCP报文段(segment)。而UDP的传递给IP协议的数据单元并没有对应用的数据进行切分，被称做UDP数据报（详见后文）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;自适应的超时重传&lt;/strong&gt;。TCP发送一个报文段后维护一个计时器，等待另一端确认（ACK），如果一定时间没有收到确认，该报文段会被重传（详见后文）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;延时确认&lt;/strong&gt;。当TCP收到连接上另一端发来的数据时，它会发送确认信息。这个确认并不会立即发送，而是延迟一段时间发送（详见后文）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;校验和(Checksum)&lt;/strong&gt;。TCP协议有端到端的校验和用来检测传输中数据是否被修改。如果收到的报文段的校验和无效，TCP会丢弃该报文段并且不会发送确认信息（它期望发送端超时并重传）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;重排序&lt;/strong&gt;。因为TCP报文段通过IP数据报传输，而IP数据报可以以任意顺序抵达接收端。接收端的TCP协议负责对报文段重排序，并以正确的顺序传递给应用。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;去重&lt;/strong&gt;。因为IP数据报可能发生重复，TCP协议负责对此去重。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;流控(flow control)&lt;/strong&gt;。每一个TCP端有一个有限长度的缓冲区。接收端的TCP仅允许发送端发送缓冲区可以容纳的数据量。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;两个应用通过TCP连接交换8位字节的字节流。
+
+&lt;ul&gt;
+&lt;li&gt;TCP协议不会在多次写入之间插入任何的标记。也就是说一端写入80字节，另一端就会读取到80字节。一段如果分三次，按照50，20，10字节写入。另一端并不能区分这三次写入。&lt;/li&gt;
+&lt;li&gt;TCP并不解析传输的内容。它并不关心传输的二进制数据还是ASCII字符。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

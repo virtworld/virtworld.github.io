@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Object on Virtual World</title>
+    <link>http://www.jiaqili.me/tags/object/</link>
+    <description>Recent content in Object on Virtual World</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 11 Aug 2018 13:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="http://www.jiaqili.me/tags/object/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Java基础知识系列3： Object类</title>
+      <link>http://www.jiaqili.me/post/java-basics-3-object/</link>
+      <pubDate>Sat, 11 Aug 2018 13:00:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-basics-3-object/</guid>
+      <description>&lt;p&gt;Java中每个类都是继承自Object，如果一个类没有显示地指明父类，Object就是它的父类。除了基本类型外，对象、对象数组、基本类型数组都是继承自Object类。本文主要介绍Object的方法。&lt;/p&gt;
+
+&lt;h1 id=&#34;equals方法&#34;&gt;equals方法&lt;/h1&gt;
+
+&lt;p&gt;Object的equals方法使用两个对象的地址是否相同来判断对象是否等价。如果子类没有覆盖equals
+方法，那么它也将如此判断，但很多时候我们希望通过对象的状态，即私有数据域中的数据，来判断两个对象是否相同。&lt;/p&gt;
+
+&lt;p&gt;Java语言规范要求equals方法具有以下方面特性：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;自反性&lt;/strong&gt;。对于任何非空的x，x.equals(x)返回true;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;对称性&lt;/strong&gt;。对于任何引用x和y。当且仅当x.equals(y)返回true，y.equals(x)也应该返回true;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;传递性&lt;/strong&gt;。对于任何引用x、y 和z。如果x.equals(y)返回true，y.equals(z)返回true，那么x.equals(z)也应该返回true;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;一致性&lt;/strong&gt;。如果x和y引用的对象没有发生变化，反复调用x.equals(y)应该返回一样的结果;&lt;/li&gt;
+&lt;li&gt;对于任何非空引用x。x.equals(null) 应该返回false。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

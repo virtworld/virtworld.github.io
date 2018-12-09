@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Inner Class on Virtual World</title>
+    <link>http://www.jiaqili.me/tags/inner-class/</link>
+    <description>Recent content in Inner Class on Virtual World</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 18 Aug 2018 10:07:00 +0800</lastBuildDate>
+    
+	<atom:link href="http://www.jiaqili.me/tags/inner-class/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Java基础知识系列5：内部类</title>
+      <link>http://www.jiaqili.me/post/java-basics-5-innner-class/</link>
+      <pubDate>Sat, 18 Aug 2018 10:07:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-basics-5-innner-class/</guid>
+      <description>&lt;p&gt;内部类就是定义在另一个类中的类。使用内部类有以下几个好处：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;内部类的方法可以访问其类定义所在作用于的数据，包括私有数据；&lt;/li&gt;
+&lt;li&gt;内部类可以对同一个包中的其他类隐藏；&lt;/li&gt;
+&lt;li&gt;如果需要定义一个回调函数但不想编写大量代码时，使用匿名内部类比较方便。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

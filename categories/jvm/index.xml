@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jvm on Virtual World</title>
+    <link>http://www.jiaqili.me/categories/jvm/</link>
+    <description>Recent content in Jvm on Virtual World</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 09 Dec 2018 18:36:00 +0800</lastBuildDate>
+    
+	<atom:link href="http://www.jiaqili.me/categories/jvm/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>故障分析报告 - Java应用PS未关闭导致的OOM错误</title>
+      <link>http://www.jiaqili.me/post/oom-profiling-report-20181121/</link>
+      <pubDate>Sun, 09 Dec 2018 18:36:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/oom-profiling-report-20181121/</guid>
+      <description>&lt;p&gt;这篇记录了2018年11月21日生产系统的一个联机交易服务应用OOM错误及排查过程。所有的包名、类名、方法名已作脱敏处理，涉及业务逻辑的代码均已删除但不影响问题分析，部分方法、调用栈栈做过简化，以方便阅读。&lt;/p&gt;
+
+&lt;p&gt;首先，介绍一下背景。出故障的Java应用部署在四台独立的物理机上，上面通过F5做负载均衡。应用本身比较老，Java版本是1.6，Jetty作为服务器。其中两台用的是IBM的虚拟机，另外两台用的是HotSpot 64-Bit Server（这就是另一个故事了^-^）。&lt;/p&gt;
+
+&lt;h1 id=&#34;生产分析-案发现场&#34;&gt;生产分析（案发现场）&lt;/h1&gt;
+
+&lt;p&gt;笔者到事故现场的时候，发生OOM的一台IBM的Java虚拟机已经宕掉了，另一台HotSpot堆开地比较大(Xmx4G)还活着。&lt;code&gt;jmap&lt;/code&gt;看了下使用中的堆有3G左右，远大于平常的几百兆。&lt;code&gt;jstat -gcutil pid 1000&lt;/code&gt;观察了一会儿，主要是想看一下Full GC。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java Class 文件</title>
+      <link>http://www.jiaqili.me/post/jvm-class-file/</link>
+      <pubDate>Mon, 28 Dec 2015 10:57:42 +0000</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/jvm-class-file/</guid>
+      <description>&lt;h2 id=&#34;1-class概述&#34;&gt;1 Class概述&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Class文件是一个以8位字节为基础单位的二进制流，多字节储存按照Big-endian的方式（既高位字节在地址低位，低位字节在地址高位）；&lt;/li&gt;
+&lt;li&gt;每个Class对应一个类或接口，而类或者接口不一定以文件的形式存在磁盘上；&lt;/li&gt;
+&lt;li&gt;Class文件储存的数据只有两种类型：无符号数和表
+
+&lt;ol&gt;
+&lt;li&gt;无符号数：u1, u2, u4和 u8分别表示1个，2个，4个和8个字节;&lt;/li&gt;
+&lt;li&gt;表(Table)：由多个无符号数或表组成的复合数据类型。&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java类加载机制</title>
+      <link>http://www.jiaqili.me/post/jvm-class-loading/</link>
+      <pubDate>Mon, 28 Dec 2015 10:09:30 +0000</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/jvm-class-loading/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;这篇是对《深入理解Java虚拟机》的第七章的总结笔记&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;虚拟机把描述类的数据从Class文件加载到内存，对数据进行校验，转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型，就是虚拟机的类加载机制。&lt;/p&gt;
+
+&lt;h2 id=&#34;1-触发类加载的条件&#34;&gt;1 触发类加载的条件：&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;碰到new， invokestatic， getstatic， putstatic四条指令时，如果类没有经过初始化，则要初始化类。通常在用new关键字实例化对象，设置静态变量（被final修饰的除外），调用静态方法时发生。&lt;/li&gt;
+&lt;li&gt;进行反射调用，如果类没有经过初始化，则要触发初始化。反射：可以把类、类的方法、类的字段当做对象，在运行时动态操作他们。&lt;/li&gt;
+&lt;li&gt;当初始化类时，其父类没有经过初始化，需要初始化其父类。&lt;/li&gt;
+&lt;li&gt;main所在方法的主类，在虚拟机启动时要被初始化。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java垃圾收集技术</title>
+      <link>http://www.jiaqili.me/post/jvm-gc/</link>
+      <pubDate>Thu, 26 Nov 2015 16:00:00 +0000</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/jvm-gc/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;这篇是对《深入理解Java虚拟机》的第三章的总结笔记，G1部分还没有细看&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;1-判断对象存活与否&#34;&gt;1 判断对象存活与否&lt;/h2&gt;
+
+&lt;h3 id=&#34;1-1-引用计数器-没有gc使用&#34;&gt;1.1 引用计数器(没有GC使用)&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;每当有一个地方引用对象时，数值就+1，引用失效时，数值就-1。&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;问题是无法解决对象之间的循环引用问题，比如对象A的一个字段引用B，对象B的一个字段引用A，然后对象A和B被设置为null，这时无法回收A和B。&lt;/p&gt;
+
+&lt;h3 id=&#34;1-2-可达性分析&#34;&gt;1.2 可达性分析&lt;/h3&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;从一系列GC Roots开始搜索，如果GC Roots到这个对象不可达时，则该对象是不可用的。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;GC Roots包括虚拟机栈中引用的对象，本地方法栈中引用的对象，方法区中类静态属性引用的对象，方法区中常量引用的对象。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java动态内存分配机制</title>
+      <link>http://www.jiaqili.me/post/jvm-dynamic-memory-allocation/</link>
+      <pubDate>Thu, 26 Nov 2015 15:40:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/jvm-dynamic-memory-allocation/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;这篇是对《深入理解Java虚拟机》的第二章的总结笔记&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;1-运行时数据区-runtime-data-areas&#34;&gt;1 运行时数据区 (Runtime Data Areas)&lt;/h2&gt;
+
+&lt;h3 id=&#34;1-1-java堆-java-heap&#34;&gt;1.1 Java堆  (Java Heap)&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;虚拟机启动时创建，&lt;strong&gt;线程独立&lt;/strong&gt;：所有线程共享；&lt;/li&gt;
+&lt;li&gt;目的是存放对象实例和数组，几乎所有对象都在堆中分配内存；&lt;/li&gt;
+&lt;li&gt;垃圾收集器的管理的主要区域，又叫GC堆；&lt;/li&gt;
+&lt;li&gt;因为GC大多采用分代收集算法，堆又可以分成&lt;strong&gt;新生代&lt;/strong&gt;和&lt;strong&gt;老年代&lt;/strong&gt;，新生代又可分为&lt;strong&gt;伊甸园&lt;/strong&gt;，&lt;strong&gt;幸存者空间1&lt;/strong&gt;，&lt;strong&gt;幸存者空间2&lt;/strong&gt;；&lt;/li&gt;
+&lt;li&gt;堆在物理上可以是在不连续的空间，但是逻辑上是连续的；&lt;/li&gt;
+&lt;li&gt;主流虚拟机的堆是可扩展的（JVM标准规定可以实现成固定大小的），通过-Xmx/-Xms决定，如果堆中内存不足以分配实例，且不能扩展，就会抛出OutOfMemoryError异常。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ip Protocol on Virtual World</title>
+    <link>http://www.jiaqili.me/tags/ip-protocol/</link>
+    <description>Recent content in Ip Protocol on Virtual World</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 06 Sep 2018 09:46:00 +0800</lastBuildDate>
+    
+	<atom:link href="http://www.jiaqili.me/tags/ip-protocol/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>网络协议系列三：IP协议</title>
+      <link>http://www.jiaqili.me/post/network-ip-protocol/</link>
+      <pubDate>Thu, 06 Sep 2018 09:46:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/network-ip-protocol/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文是对IP协议的总结笔记。部分参考了&lt;strong&gt;TCP/IP Illustrated: Volume I: The Protocols&lt;/strong&gt;的第1和第3章。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;ip地址结构&#34;&gt;&lt;strong&gt;IP地址结构&lt;/strong&gt;&lt;/h1&gt;
+
+&lt;p&gt;每一个32位的IP地址都被分为两部分：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;前缀：表示主机所在的物理网络，每一个英特网中的物理网络都被分配一个唯一的网络编号；&lt;/li&gt;
+&lt;li&gt;后缀：表示一个物理网络中主机自身，每一个主机都被分配了一个唯一的后缀。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;前缀是全局分配的，而后缀是本地分配的。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

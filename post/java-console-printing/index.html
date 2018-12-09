@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>奇怪的printStackTrace引起进程卡住的问题 - Virtual World</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Jiaqi Li" />
+  <meta name="description" content="背景 昨天碰到一个很奇怪的轮询任务卡住的问题。轮询调度框架会按照数据库里配置，周期性地定时启动一些任务。每个定时任务都是一个普通的Java程序，它处理一个周期内累积的业务请求。虽然每次只处理数量非常有限的数百笔业务，但是每笔业务的逻辑都相对复杂，相当于一个时间很短（通常几分钟）的批处理程序。正常情况下，一个任务在运行的时候会将它执行的SQL、读取的文件以及访问的接口信息打印到日志里。
+问题是有一个任务在执行一段时间后突然不再处理业务，停止输出日志，但没有报错，进程也没有退出。
+
+" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.41" />
+
+
+<link rel="canonical" href="http://www.jiaqili.me/post/java-console-printing/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=2.7.1" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="奇怪的printStackTrace引起进程卡住的问题" />
+<meta property="og:description" content="背景
+
+昨天碰到一个很奇怪的轮询任务卡住的问题。轮询调度框架会按照数据库里配置，周期性地定时启动一些任务。每个定时任务都是一个普通的Java程序，它处理一个周期内累积的业务请求。虽然每次只处理数量非常有限的数百笔业务，但是每笔业务的逻辑都相对复杂，相当于一个时间很短（通常几分钟）的批处理程序。正常情况下，一个任务在运行的时候会将它执行的SQL、读取的文件以及访问的接口信息打印到日志里。
+
+问题是有一个任务在执行一段时间后突然不再处理业务，停止输出日志，但没有报错，进程也没有退出。
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.jiaqili.me/post/java-console-printing/" />
+
+
+
+<meta property="article:published_time" content="2018-08-18T10:10:59&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-08-18T10:10:59&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="奇怪的printStackTrace引起进程卡住的问题">
+<meta itemprop="description" content="背景
+
+昨天碰到一个很奇怪的轮询任务卡住的问题。轮询调度框架会按照数据库里配置，周期性地定时启动一些任务。每个定时任务都是一个普通的Java程序，它处理一个周期内累积的业务请求。虽然每次只处理数量非常有限的数百笔业务，但是每笔业务的逻辑都相对复杂，相当于一个时间很短（通常几分钟）的批处理程序。正常情况下，一个任务在运行的时候会将它执行的SQL、读取的文件以及访问的接口信息打印到日志里。
+
+问题是有一个任务在执行一段时间后突然不再处理业务，停止输出日志，但没有报错，进程也没有退出。
+
+">
+
+
+<meta itemprop="datePublished" content="2018-08-18T10:10:59&#43;08:00" />
+<meta itemprop="dateModified" content="2018-08-18T10:10:59&#43;08:00" />
+<meta itemprop="wordCount" content="2030">
+
+
+
+<meta itemprop="keywords" content="Java," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="奇怪的printStackTrace引起进程卡住的问题"/>
+<meta name="twitter:description" content="背景
+
+昨天碰到一个很奇怪的轮询任务卡住的问题。轮询调度框架会按照数据库里配置，周期性地定时启动一些任务。每个定时任务都是一个普通的Java程序，它处理一个周期内累积的业务请求。虽然每次只处理数量非常有限的数百笔业务，但是每笔业务的逻辑都相对复杂，相当于一个时间很短（通常几分钟）的批处理程序。正常情况下，一个任务在运行的时候会将它执行的SQL、读取的文件以及访问的接口信息打印到日志里。
+
+问题是有一个任务在执行一段时间后突然不再处理业务，停止输出日志，但没有报错，进程也没有退出。
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Virtual World</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Virtual World</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">奇怪的printStackTrace引起进程卡住的问题</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-08-18 </span>
+        <div class="post-category">
+            
+              <a href="/categories/java/"> Java </a>
+            
+          </div>
+        <span class="more-meta"> 2030 word </span>
+        <span class="more-meta"> 5 min read </span>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#背景">背景</a></li>
+<li><a href="#问题分析">问题分析</a></li>
+<li><a href="#总结">总结</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h1 id="背景">背景</h1>
+
+<p>昨天碰到一个很奇怪的轮询任务卡住的问题。轮询调度框架会按照数据库里配置，周期性地定时启动一些任务。每个定时任务都是一个普通的Java程序，它处理一个周期内累积的业务请求。虽然每次只处理数量非常有限的数百笔业务，但是每笔业务的逻辑都相对复杂，相当于一个时间很短（通常几分钟）的批处理程序。正常情况下，一个任务在运行的时候会将它执行的SQL、读取的文件以及访问的接口信息打印到日志里。</p>
+
+<p>问题是有一个任务在执行一段时间后突然不再处理业务，停止输出日志，但没有报错，进程也没有退出。</p>
+
+<p></p>
+
+<h1 id="问题分析">问题分析</h1>
+
+<p>接到问题的时候，先是想把堆栈信息打出来看看，但是因为生产上没有JDK，所以先查了日志和系统状态：日志上面没有异常，如果是接口调用，最终会超时，不可能一直卡住；而且系统资源很空闲，CPU基本是闲置的，内存、IO压力很低。因此，第一感觉是什么东西锁住了，但一问运维的同事又说是单线程应用，所以感觉很奇怪，奈何没有JDK，堆栈没法看。</p>
+
+<p>生产服务器上装东西（包括JDK）很麻烦，要走一堆流程，但是应急处理时修改启动脚本还是合规的。所以我想远程连上去看看，就给轮询任务的启动脚本的JVM参数里面配了JMX:</p>
+
+<pre><code class="language-property">-Dcom.sun.management.jmxremote.port=9000
+-Dcom.sun.management.jmxremote.ssl=false
+-Dcom.sun.management.jmxremote.authenticate=false
+</code></pre>
+
+<p>我特意找了一个没有在用的端口，但是一启动发现报端口已被使用的异常。再换了几个还是一样，想来应该是防火墙在搞鬼。修改网络规则又有很麻烦的一堆流程，所以想办法找了一个应用服务器常用但是没在用的端口，一试启动果然没报错。</p>
+
+<p>接着在本地开启jconsole和jvisualvm，连上生产服务器，过一会问题重现了。下面是堆使用情况记录：</p>
+
+
+<figure class="center">
+    
+        <img src="/images/java-console-printing/heap-usage.png" alt="堆使用情况记录" />
+    
+    
+    <figcaption>
+        <h4>堆使用情况记录</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<p>第一段比较密集的GC是在处理第一种场景的业务（这里没有问题），到16:12左右进入了第二段的另一种场景，但是没过几分钟卡住了，这时候堆上对象的创建明显变地很少，GC频率下降。</p>
+
+<p>下面是主线程调用栈（删改了部分内容），隔个几分钟重新dump还是一样。</p>
+
+<pre><code class="language-txt">2018-08-15 17:44:02
+JVM Info...
+
+&quot;main&quot; - Thread t@1
+   java.lang.Thread.State: RUNNABLE
+    at java.io.FileOutputStream.writeBytes(Native Method)
+    at java.io.FileOutputStream.write(FileOutputStream.java:277)
+    at java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:76)
+    at java.io.BufferedOutputStream.flush(BufferedOutputStream.java:134)
+    - locked &lt;6c566c56&gt; (a java.io.BufferedOutputStream)
+    at java.io.PrintStream.write(PrintStream.java:452)
+    - locked &lt;74b874b8&gt; (a java.io.PrintStream)
+    at sun.nio.cs.StreamEncoder$CharsetSE.writeBytes(StreamEncoder.java:355)
+    at sun.nio.cs.StreamEncoder$CharsetSE.implFlushBuffer(StreamEncoder.java:425)
+    at sun.nio.cs.StreamEncoder.flushBuffer(StreamEncoder.java:138)
+    - locked &lt;74ce74ce&gt; (a java.io.OutputStreamWriter)
+    at java.io.OutputStreamWriter.flushBuffer(OutputStreamWriter.java:187)
+    at java.io.PrintStream.write(PrintStream.java:501)
+    - locked &lt;74b874b8&gt; (a java.io.PrintStream)
+    at java.io.PrintStream.print(PrintStream.java:643)
+    at java.io.PrintStream.append(PrintStream.java:1039)
+    at java.io.PrintStream.append(PrintStream.java:51)
+    at java.lang.StackTraceElement.appendTo(StackTraceElement.java:180)
+    at java.lang.Throwable.appendTo(Throwable.java:305)
+    at java.lang.Throwable.printStackTrace(Throwable.java:332)
+    at java.lang.Throwable.printStackTrace(Throwable.java:212)
+    at java.lang.Throwable.printStackTrace(Throwable.java:163)
+    at com.xxx.service.XXXService.someMethod(someMethod.java:285)
+    at ...
+</code></pre>
+
+<p>似乎是卡在了奇怪的地方。<code>someMethod</code>(实际上不叫这个名字，只是把和业务相关的名字都改了一下，下同)在try&hellip;catch块里new一个对象的时候抛出了一个自定义异常:</p>
+
+<pre><code class="language-java">public void someMethod(){
+
+    try{
+        // ...
+        SomeObject object = new SomeObject(); // &lt;-报错
+        // ...
+    }catch(Exception e){
+        e.printStackTrace();
+    }
+}
+</code></pre>
+
+<p>虽然在SomeObject的构造方法里面会抛出异常的设计让人感觉很不舒服，但这并不会引起这个问题。我还注意到这个代码另外一个不合理的地方：轮询任务里面打印日志有专门的类来处理(像下面这样)，而使用原生的日志打印很少见：</p>
+
+<pre><code class="language-java">getLogger().error(&quot;对象new不出来了^-^&quot;);
+</code></pre>
+
+<p>尽管如此，<code>printStackTrace</code>也不应该卡住。</p>
+
+<p>再来看下线程状态，没有线程处于<code>BLOCKED</code>状态，而卡住的主线程的状态是<code>RUNNABLE</code>，但文档里说：</p>
+
+<blockquote>
+<p>Thread state for a runnable thread. A thread in the runnable state is executing in the Java virtual machine but it <strong>may be waiting for other resources</strong> from the operating system such as processor.</p>
+</blockquote>
+
+<p>所以即使是RUNNABLE的，也可能处于等待某些资源的状态，可是这个打印报错栈的方法到底在等待什么呢？不仅程序卡住了，现在脑子也卡住了。</p>
+
+<p>根据运维同事反馈，在终端上手动启动那个Java程序没有问题，但是轮询调度启动有时候就会卡住，但是两者启动方式都是调用同一个Shell脚本。这个就很有意思了，同一个Shell脚本启动的，能有什么差别呢？手动输入shell命令启动该脚本，所有日志除了打印到屏幕上，还会打印到文件里；调度起的只会往文件里打印输出。然后再翻一下日志，没有发现<code>printStackTrace</code>的输出，难道说它只打印到了终端上，而调度启动的任务没有相应的终端去消费输入流导致输入流满了，然后就&hellip;卡住了？</p>
+
+<p>接着去翻了调度框架的代码，它用的是<code>Runtime.getRuntime.exec(...)</code>来调的shell脚本：</p>
+
+<pre><code class="language-java">
+Runtime run = null;
+Process p = null;
+BufferedInputStream in = null;
+BufferedReader br = null;
+
+try{
+
+    Runtime run = Runtime.getRuntime();
+    p = run.exec( getCommand());
+    in = new BufferedInputStream( p.getInputStream());
+    br = new BufferedReader( new InputStreamReader( in));
+
+    String s = null;
+    while( (s = br.readLine()) != null){
+        getLogger().trace( s);
+    }
+
+} catch( IOException){
+    e.printStackTrace();
+} finally{
+    if( br != null){
+        try{
+            br.close();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    if( p != null) {
+        p.destory();
+    }
+}
+</code></pre>
+
+<p>显然它只读了getInputSteam方法返回的输入流，这个输入流是被调用程序的标准输出流；而还有一个getErrorStream方法返回的被调用程序的错误输出流没有被处理。而<code>printStackTrace</code>方法是打印到错误流里的。问题找到了。在这个程序里面，只是碰巧卡在了<code>printStackTrace</code>，任何输入到错误流的数据（比如<code>Systen.err.print(&quot;...&quot;)</code>），最终都会导致程序卡住。</p>
+
+<h1 id="总结">总结</h1>
+
+<p>这个问题之所以难定位，</p>
+
+<ul>
+<li>一是主观上之前没有碰到过类似情况，经验不足，以后要记得<code>Runtime.getRuntime().exec()</code>的这个坑；</li>
+<li>二是直接引起问题的代码看上去非常的正常，真正造成问题的代码隐藏在背后，甚至不在同一个程序里面，所以在定位问题的时候还是要多想一层。</li>
+</ul>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Jiaqi Li</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2018-08-18</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x 31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</ a>.</span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/java/">Java</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/java-basics-7-init/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Java基础知识系列7：初始化</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+          <a class="next" href="/post/java-basics-6-enum/">
+            <span class="next-text nav-default">Java基础知识系列6：枚举类型</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://www.facebook.com/ajl98" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="https://www.instagram.com/binaryexplorer/" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="https://www.linkedin.com/in/alexjiaqili/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="https://github.com/virtworld" class="iconfont icon-github" title="github"></a>
+  <a href="http://www.jiaqili.me/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2014 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jiaqi Li</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.1"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+
+
+
+</body>
+</html>
