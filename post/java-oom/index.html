@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Java OOM错误诊断方法总结 - Virtual World</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Jiaqi Li" />
+  <meta name="description" content="Out of Memory 错误产生原因 有两种内存分配失败会产生OOM错误：
+ 一种是本地堆内存不足，本地代码(native code)内存分配(malloc)失败。 另一种是Java堆空间不足(GC无法回收足够的空间，并且Java堆无法继续扩展)，无法创建Java对象。  造成上述内存分配失败的原因又有四种：
+ 本地内存泄漏 Java堆内存泄漏 堆开地太小 请求的内存分配太大  
+" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.41" />
+
+
+<link rel="canonical" href="http://www.jiaqili.me/post/java-oom/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=2.7.1" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="Java OOM错误诊断方法总结" />
+<meta property="og:description" content="Out of Memory 错误产生原因
+
+有两种内存分配失败会产生OOM错误：
+
+
+一种是本地堆内存不足，本地代码(native code)内存分配(malloc)失败。
+另一种是Java堆空间不足(GC无法回收足够的空间，并且Java堆无法继续扩展)，无法创建Java对象。
+
+
+造成上述内存分配失败的原因又有四种：
+
+
+本地内存泄漏
+Java堆内存泄漏
+堆开地太小
+请求的内存分配太大
+
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.jiaqili.me/post/java-oom/" />
+
+
+
+<meta property="article:published_time" content="2018-12-10T22:24:00&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-12-10T22:24:00&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Java OOM错误诊断方法总结">
+<meta itemprop="description" content="Out of Memory 错误产生原因
+
+有两种内存分配失败会产生OOM错误：
+
+
+一种是本地堆内存不足，本地代码(native code)内存分配(malloc)失败。
+另一种是Java堆空间不足(GC无法回收足够的空间，并且Java堆无法继续扩展)，无法创建Java对象。
+
+
+造成上述内存分配失败的原因又有四种：
+
+
+本地内存泄漏
+Java堆内存泄漏
+堆开地太小
+请求的内存分配太大
+
+
+">
+
+
+<meta itemprop="datePublished" content="2018-12-10T22:24:00&#43;08:00" />
+<meta itemprop="dateModified" content="2018-12-10T22:24:00&#43;08:00" />
+<meta itemprop="wordCount" content="3510">
+
+
+
+<meta itemprop="keywords" content="Performance,JVM,OOM,Java," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java OOM错误诊断方法总结"/>
+<meta name="twitter:description" content="Out of Memory 错误产生原因
+
+有两种内存分配失败会产生OOM错误：
+
+
+一种是本地堆内存不足，本地代码(native code)内存分配(malloc)失败。
+另一种是Java堆空间不足(GC无法回收足够的空间，并且Java堆无法继续扩展)，无法创建Java对象。
+
+
+造成上述内存分配失败的原因又有四种：
+
+
+本地内存泄漏
+Java堆内存泄漏
+堆开地太小
+请求的内存分配太大
+
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Virtual World</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Virtual World</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Java OOM错误诊断方法总结</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-12-10 </span>
+        <div class="post-category">
+            
+              <a href="/categories/jvm/"> JVM </a>
+            
+              <a href="/categories/java/"> Java </a>
+            
+          </div>
+        <span class="more-meta"> 3510 word </span>
+        <span class="more-meta"> 8 min read </span>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#out-of-memory-错误产生原因">Out of Memory 错误产生原因</a></li>
+<li><a href="#一般排查步骤">一般排查步骤</a></li>
+<li><a href="#hotspot-oom分析">HotSpot OOM分析</a></li>
+<li><a href="#参考资料">参考资料</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h1 id="out-of-memory-错误产生原因">Out of Memory 错误产生原因</h1>
+
+<p>有两种内存分配失败会产生OOM错误：</p>
+
+<ol>
+<li>一种是本地堆内存不足，本地代码(native code)内存分配(malloc)失败。</li>
+<li>另一种是Java堆空间不足(GC无法回收足够的空间，并且Java堆无法继续扩展)，无法创建Java对象。</li>
+</ol>
+
+<p>造成上述内存分配失败的原因又有四种：</p>
+
+<ol>
+<li>本地内存泄漏</li>
+<li>Java堆内存泄漏</li>
+<li>堆开地太小</li>
+<li>请求的内存分配太大</li>
+</ol>
+
+<p></p>
+
+<h1 id="一般排查步骤">一般排查步骤</h1>
+
+<p>OOM发生时首先是要确定是哪一种原因。首先区分是本地内存还是Java堆的问题：查看发生OOM时Java堆的使用情况，如果Java堆已经扩展至上限，并且基本上已经被占用，那么很可能是Java堆的的问题，并且报错原因可能会有关键字如<code>Java heap</code>或者<code>GC</code>等；如果Java堆空间还有，但还是抛出了OOM，则可能是本地代码问题，并且可能会有本地代码报错的原因，比如出现<code>malloc failed</code>, <code>failed to fork OS thread</code>等，或者错误中出现指向本地代码文件(C++)的报错信息等。</p>
+
+<p>接着排除非内存泄漏的情况：如果是堆太小，那么需要观察增加最大堆上限后程序的行为。如果程序进入稳定运行后堆使用率不再上升，则可以确定是堆太小。如果是请求分配的对象太大，则可以根据报错时线程dump，以及GC日志，结合代码排查是否有大对象分配。</p>
+
+<p>然后对于Java堆泄漏的情况，需要进行heap dump分析（也就是所谓的“尸检”），Oracle JVM的转存为 <em>.hprof</em> 文件而IBM JVM的转存为 <em>.phd</em> 文件。推荐使用的工具是MAT（下文介绍）。</p>
+
+<p>最后是本地内存分配失败。本地内存分配失败和Java堆没有关系，如果这个时候拿着Java Heap Dump分析就没有意义，而是应该使用系统层面的工具进行分析，比如pmap，gdb等工具。</p>
+
+<h1 id="hotspot-oom分析">HotSpot OOM分析</h1>
+
+<p>根据Oracle官方手册，下面总结了HotSpot JVM OOM错误信息、发生原因和处理思路：</p>
+
+<ol>
+<li><p><code>java.lang.OutOfMemoryError: Java heap space</code>表示对象无法在Java堆上分配，造成此问题的原因包括：</p>
+
+<ul>
+<li>配置错误。分配的堆太小不足以运行应用；</li>
+
+<li><p>finalize方法的调用。如果一个类重写了finalize方法，那么它的空间不会在GC的时候被回收。在GC之后，该对象会被放到一个队列里面，等待finalize方法被调用。处理这个队列的是一个低优先级的守护线程，如果入队的速率超过该线程处理的速率，会导致堆被逐渐占满，造成此类OOM错误。可以用以下方法检查这个队列的长度:</p>
+
+<ol>
+<li><p>JConsole中VM Summary页中的Objects pending for finalization（中文译作“暂挂最终处理”）的值；
+
+<figure class="center">
+    
+        <img src="/images/heap-dump-analysis/jconsole-vmsummary-finalize.png" alt="JConsole显示的finalization队列" />
+    
+    
+    <figcaption>
+        <h4>JConsole显示的finalization队列</h4>
+        
+    </figcaption>
+    
+</figure>
+</p></li>
+
+<li><p>jmap命令的-finalizerinfo参数，比如：</p>
+
+<pre><code class="language-shell">λ jmap -finalizerinfo 69636
+Attaching to process ID 69636, please wait...
+Debugger attached successfully.
+Server compiler detected.
+JVM version is 25.101-b13
+Number of objects pending for finalization: 0
+</code></pre></li>
+</ol></li>
+
+<li><p>内存泄漏。对于一个长时间运行的应用比较可能的是它不断地创建并持有对象的引用，造成GC无法回收。这个问题通常是最难排查的，但是又最容易发生的，后文将介绍工具用于处理这个问题。</p>
+
+<p>可以参考<a href="https://plumbr.io/outofmemoryerror/java-heap-space">这篇</a>文章。</p></li>
+</ul></li>
+
+<li><p><code>java.lang.OutOfMemoryError: GC Overhead limit exceeded</code>表示虽然对象可以在Java堆上分配，但是JVM需要花很大的力气进行GC操作后才能满足分配要求。这里具体是指在最近5个GC周期内，Java进程花费98%的时间在GC上，并且只能从GC中回收少于2%的空间。可以通过指定参数<code>-XX:-UseGCOverheadLimit</code>来关闭此OOM错误的抛出，但是通常在<code>GC Overhead limit exceeded</code>之后不久还是会触发<code>Java heap space</code>错误。造成此问题的原因和<code>java heap space</code>相似。</p>
+
+<p>可以参考<a href="https://plumbr.io/outofmemoryerror/gc-overhead-limit-exceeded">这篇</a>文章。</p></li>
+
+<li><p><code>java.lang.OutOfMemoryError: Requested array size exceeds VM limit</code>表示数组大小超过了平台特定数组大小的上限。这个错误是由JVM本地代码抛出的，并且发生在实际内存分配之前的校验函数中。抛出这个错误意味着数组长度超过了当前平台的寻址范围。</p>
+
+<p>理论上讲，Java的数组大小由数组索引int的范围决定（即上限为2,147,483,647），超过则无法编译。但实际上还受限于平台以及Java堆的上限。后者即为JVM启动参数<code>-Xmx</code>指定的大小，当尝试分配的数组超过这个大小的时候，会抛出 <code>java.lang.OutOfMemoryError: Java heap space</code>。前者则比较复杂，是在JVM编译时确定的。如下代码所示，在分配Java堆上分配数组内存之前校验了最大数组长度。</p>
+
+<pre><code class="language-c++">// HotSpot JDK7: /src/share/vm/oops/objArrayKlass.cpp
+objArrayOop objArrayKlass::allocate(int length, TRAPS) {
+    if (length &gt;= 0) {
+        if (length &lt;= arrayOopDesc::max_array_length(T_OBJECT)) {
+            int size = objArrayOopDesc::object_size(length);
+            KlassHandle h_k(THREAD, as_klassOop());
+            objArrayOop a = (objArrayOop)CollectedHeap::array_allocate(h_k, size, length, CHECK_NULL);
+            assert(a-&gt;is_parsable(), &quot;Can't publish unless parsable&quot;);
+            return a;
+        } else {
+            // 数组尺寸超过给定类型元素的数组最大尺寸
+            report_java_out_of_memory(&quot;Requested array size exceeds VM limit&quot;);
+            JvmtiExport::post_array_size_exhausted();
+            THROW_OOP_0(Universe::out_of_memory_error_array_size());
+        }
+    } else {
+        THROW_0(vmSymbols::java_lang_NegativeArraySizeException());
+    }
+}
+</code></pre>
+
+<p>其中<code>arrayOopDesc::max_array_length</code>函数检查了数组长度上限：</p>
+
+<pre><code class="language-c++">// HotSpot JDK7: /src/share/vm/oops/arrayOop.hpp
+static int32_t max_array_length(BasicType type) {
+    assert(type &gt;= 0 &amp;&amp; type &lt; T_CONFLICT, &quot;wrong type&quot;);
+    assert(type2aelembytes(type) != 0, &quot;wrong type&quot;);
+
+    // max_element_words_per_size_t为减去数组头部后的数组容量（单位为HeapWord），其中
+    // 1. SIZE_MAX是定义在stdint.h中的size_t的最大长度，取决于编译器；
+    // 2. HeapWordSize为4字节（32位系统）或8字节（64为系统），定义见下段代码；
+    // 3. header_size()返回的是数组对象的头部大小（包括MarkWord, 类指针和数组长度）
+    const size_t max_element_words_per_size_t =
+    align_size_down((SIZE_MAX/HeapWordSize - header_size(type)), MinObjAlignment);
+        
+    // max_elements_per_size_t为减去数组头部后的数组容量（单位为指定的类型，比如int），其中
+    // 1. type2aelembytes(type)是定义在globalDefinitions.hpp中的各类型的大小（如下段代码）
+    const size_t max_elements_per_size_t =
+    HeapWordSize * max_element_words_per_size_t / type2aelembytes(type);
+        
+    if ((size_t)max_jint &lt; max_elements_per_size_t) {
+    return align_size_down(max_jint - header_size(type), MinObjAlignment);
+    }
+    return (int32_t)max_elements_per_size_t;
+}
+</code></pre>
+
+<p>HeapWordSize就是一个HeapWord的大小，定义如下，为一个指针的大小，32位系统为4字节，64位系统为8字节。</p>
+
+<pre><code class="language-c++">class HeapWord {
+        friend class VMStructs;
+    private:
+        char* i;
+    #ifndef PRODUCT
+    public:
+        char* value() { return i; }
+    #endif
+};
+
+const int HeapWordSize = sizeof(HeapWord);
+</code></pre>
+
+<p>各种类型的尺寸定义：</p>
+
+<pre><code class="language-c++">// HotSpot JDK7: /src/share/vm/utilities/globalDefinitions.hpp
+// size in bytes
+enum ArrayElementSize {
+    T_BOOLEAN_aelem_bytes = 1,
+    T_CHAR_aelem_bytes    = 2,
+    T_FLOAT_aelem_bytes   = 4,
+    T_DOUBLE_aelem_bytes  = 8,
+    T_BYTE_aelem_bytes    = 1,
+    T_SHORT_aelem_bytes   = 2,
+    T_INT_aelem_bytes     = 4,
+    T_LONG_aelem_bytes    = 8,
+    #ifdef _LP64
+    T_OBJECT_aelem_bytes  = 8,
+    T_ARRAY_aelem_bytes   = 8,
+    #else
+    T_OBJECT_aelem_bytes  = 4,
+    T_ARRAY_aelem_bytes   = 4,
+    #endif
+    T_NARROWOOP_aelem_bytes = 4,
+    T_VOID_aelem_bytes    = 0
+};
+</code></pre>
+
+<p>这个错误通常是程序错误，尝试创建一个过大的数组。</p>
+
+<p>关于此OOM异常的详细介绍可以参考<a href="https://plumbr.io/outofmemoryerror/requested-array-size-exceeds-vm-limit">这篇</a>文章或者<a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/memleaks.html#gbyuu">Oracle</a>的文档。</p></li>
+
+<li><p><code>Exception in thread thread_name: java.lang.OutOfMemoryError: Metaspace</code>表示MetaSpace空间耗尽。由于JDK8以后永久代被取消，同时MetaSpace被引入，所以在JDK8之前，这个错误信息为<code>PermGen space</code>。</p>
+
+<p>MetaSpace用于存放被加载的Class，它不在Java Heap中，而是在本地内存当中。当需要加载的类很多或者很大，超过了MetaSpace的限制就会抛出这个错误。这个限制是由JVM启动参数<code>-XX:MaxMetaspaceSize=512m</code>指定的，可以通过调整该值来解决此问题。如果没有指定这个参数，那么MetaSpace的大小是无限的，直到出现本地内存分配失败为止，所以为了避免将这个错误隐藏起来，建议设置这个参数。</p>
+
+<p>对于PermGen Space问题的跟多介绍可以参考<a href="https://plumbr.io/outofmemoryerror/permgen-space">这篇</a>的文章或者<a href="https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/memleaks.html#gbyuu">Oracle</a>的文档；对于Metaspace问题可以参考<a href="https://plumbr.io/outofmemoryerror/metaspace">这篇</a>文章或者<a href="https://docs.oracle.com/en/java/javase/11/troubleshoot/troubleshoot-memory-leaks.html#GUID-19F6D28E-75A1-4480-9879-D0932B2F305B">Oracle</a>的文档。</p></li>
+
+<li><p><code>Exception in thread thread_name: java.lang.OutOfMemoryError: request &lt;size&gt; bytes for &lt;reason&gt;. Out of swap space?</code>表示本地堆内存分配失败和本地堆可能即将耗尽。当JVM请求的内存大于可用物理内存时，系统会把内存换出到交换空间（硬盘）上，当交换空间也满了的时候就会发生此错误。</p>
+
+<p>这个问题通常是由于系统层面的错误引起的，比如：</p>
+
+<ol>
+<li>系统配置的交换空间不够；</li>
+<li>其它进程占用了大量的内存资源；</li>
+<li>JVM进程出现本地内存泄漏。</li>
+</ol>
+
+<p>针对第一种情况，简单粗暴的方法是直接提高交换空间大小。但是对于Java程序来说使用交换空间通常会有很大的性能影响，因为GC停顿时间会上升好几个数量级，所以要么提高系统物理内存大小，要么进行优化以降低内存使用。</p>
+
+<p>针对第二种情况，应该将JVM进程或者内存消耗大户给隔离开来，单独使用一台机器。针对第三种情况，需要通过系统级别的工具分析JVM进程的内存使用情况。</p>
+
+<p>可以参考<a href="https://plumbr.io/outofmemoryerror/out-of-swap-space">这篇</a>文章。</p></li>
+
+<li><p><code>Exception in thread thread_name: java.lang.OutOfMemoryError: &lt;reason stack_trace_with_native_method&gt;</code>表示在Java Native Interface中执行的代码发生了OOM错误，而不是在JVM代码中。通常错误栈中会显示本地方法名称。这通常需要系统级别的工具进行分析。</p></li>
+</ol>
+
+<p>OOM是一种Error而不是Exception，但是还是继承自Throwable，因此我们可以捕获并且处理它，但是<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Error.html">JDK文档</a>指出鉴于Error是非常严重的错误，应用程序不应该捕获它。</p>
+
+<p>虽然OOM错误经常跟着Java程序停止响应甚至崩溃，但这并不是说OOM错误直接导致程序崩溃。它和其它异常一样，当一个线程抛出OOM，如果它没有被捕获，那么这个线程就会终止；如果有其它线程还在运行，它们还是会继续运行下去。但实际场景中，内存资源耗尽将导致级联式的OOM，所以经常影响到整个进程、甚至是系统。</p>
+
+<h1 id="参考资料">参考资料</h1>
+
+<ol>
+<li><a href="https://docs.oracle.com/en/java/javase/11/troubleshoot/">JavaSE 11 Troubleshoot Guide</a></li>
+<li><a href="https://www.ibm.com/developerworks/community/blogs/aimsupport/entry/4_general_reasons_for_outofmemoryerror_and_how_not_to_get_fooled?lang=en">The 4 general reasons for OutOfMemoryError errors and how not to get fooled</a></li>
+<li><a href="https://plumbr.io/outofmemoryerror">Plumbr</a></li>
+</ol>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Jiaqi Li</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2018-12-10</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/performance/">Performance</a>
+          
+          <a href="/tags/jvm/">JVM</a>
+          
+          <a href="/tags/oom/">OOM</a>
+          
+          <a href="/tags/java/">Java</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/java-profiling-tools/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Java故障诊断和性能分析工具</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+          <a class="next" href="/post/oom-profiling-report-20181121/">
+            <span class="next-text nav-default">故障分析报告 - Java应用PS未关闭导致的OOM错误</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://www.facebook.com/ajl98" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="https://www.instagram.com/binaryexplorer/" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="https://www.linkedin.com/in/alexjiaqili/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="https://github.com/virtworld" class="iconfont icon-github" title="github"></a>
+  <a href="http://www.jiaqili.me/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2014 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jiaqi Li</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.1"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+
+
+
+</body>
+</html>

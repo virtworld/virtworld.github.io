@@ -10,6 +10,20 @@
   </url>
   
   <url>
+    <loc>http://www.jiaqili.me/post/java-profiling-tools/</loc>
+    <lastmod>2018-12-10T22:25:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.jiaqili.me/post/java-oom/</loc>
+    <lastmod>2018-12-10T22:24:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>http://www.jiaqili.me/post/oom-profiling-report-20181121/</loc>
     <lastmod>2018-12-09T18:36:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -381,28 +395,28 @@
   
   <url>
     <loc>http://www.jiaqili.me/tags/java/</loc>
-    <lastmod>2018-12-09T18:36:00+08:00</lastmod>
+    <lastmod>2018-12-10T22:25:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://www.jiaqili.me/categories/java/</loc>
-    <lastmod>2018-12-09T18:36:00+08:00</lastmod>
+    <lastmod>2018-12-10T22:25:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://www.jiaqili.me/tags/jvm/</loc>
-    <lastmod>2018-12-09T18:36:00+08:00</lastmod>
+    <lastmod>2018-12-10T22:25:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://www.jiaqili.me/categories/jvm/</loc>
-    <lastmod>2018-12-09T18:36:00+08:00</lastmod>
+    <lastmod>2018-12-10T22:25:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -465,7 +479,7 @@
   
   <url>
     <loc>http://www.jiaqili.me/tags/oom/</loc>
-    <lastmod>2018-12-09T18:36:00+08:00</lastmod>
+    <lastmod>2018-12-10T22:24:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -486,7 +500,7 @@
   
   <url>
     <loc>http://www.jiaqili.me/tags/performance/</loc>
-    <lastmod>2018-12-09T18:36:00+08:00</lastmod>
+    <lastmod>2018-12-10T22:25:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -500,7 +514,7 @@
   
   <url>
     <loc>http://www.jiaqili.me/post/</loc>
-    <lastmod>2018-12-09T18:36:00+08:00</lastmod>
+    <lastmod>2018-12-10T22:25:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

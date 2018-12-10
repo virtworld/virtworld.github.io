@@ -21,6 +21,56 @@
     </item>
     
     <item>
+      <title>Java故障诊断和性能分析工具</title>
+      <link>http://www.jiaqili.me/post/java-profiling-tools/</link>
+      <pubDate>Mon, 10 Dec 2018 22:25:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-profiling-tools/</guid>
+      <description>&lt;h1 id=&#34;分析前准备&#34;&gt;分析前准备&lt;/h1&gt;
+
+&lt;p&gt;本节介绍了一般生产环境建议开启的JVM flag和系统参数，以便在OOM或者崩溃的时候收集信息。对于Oracle/IBM JDK通常我们需要收集heap dump(.prof/.phd)，thread dump(&lt;em&gt;.tdump/javacore.&lt;/em&gt;.txt)，GC日志。&lt;/p&gt;
+
+&lt;h2 id=&#34;设置out-of-memory-oom-时转存java堆&#34;&gt;设置Out of Memory(OOM)时转存Java堆&lt;/h2&gt;
+
+&lt;p&gt;在生产系统发生OOM时产生Java堆转存是必要的配置，因为这往往是OOM错误发生后收集分析数据的唯一机会。Oracle Hotspot JVM在启动参数上添加&lt;code&gt;-XX:+HeapDumpOnOutOfMemoryError&lt;/code&gt;后会在发生OOM错误时进行heap dump。可以结合&lt;code&gt;-xx:HeapDumpPath=path&lt;/code&gt;指定保存的dump的路径。&lt;/p&gt;
+
+&lt;p&gt;IBM JVM默认在OOM发生时产生heap dump和javacore文件，文件命名方式为&lt;code&gt;javacore.[date].[time].[index].txt&lt;/code&gt;和&lt;code&gt;heapdump.[date].[time].[index].phd&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;需要注意的是，oracle Hotspot只会在第一次OOM时进行堆转存，而IBM JRE会在每一次OOM时都产生堆转存。通常第一个OOM错误时产生的堆转存是最适合拿来分析的，因为OOM会造成级联性地错误（发生了OOM错误的进程一般会持续抛出OOM）。但只要JVM进程还活着，就可以手动触发dump生成（参考&lt;a href=&#34;#使用工具&#34;&gt;使用工具&lt;/a&gt;）。&lt;/p&gt;
+
+&lt;p&gt;除了Java heap dump以外，Oracle JVM产生的HPROF dump文件中包含了一份线程栈快照，而IBM JVM也会在OOM时转存javacore文件，文件中包含线程栈的快照。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java OOM错误诊断方法总结</title>
+      <link>http://www.jiaqili.me/post/java-oom/</link>
+      <pubDate>Mon, 10 Dec 2018 22:24:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-oom/</guid>
+      <description>&lt;h1 id=&#34;out-of-memory-错误产生原因&#34;&gt;Out of Memory 错误产生原因&lt;/h1&gt;
+
+&lt;p&gt;有两种内存分配失败会产生OOM错误：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;一种是本地堆内存不足，本地代码(native code)内存分配(malloc)失败。&lt;/li&gt;
+&lt;li&gt;另一种是Java堆空间不足(GC无法回收足够的空间，并且Java堆无法继续扩展)，无法创建Java对象。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;造成上述内存分配失败的原因又有四种：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;本地内存泄漏&lt;/li&gt;
+&lt;li&gt;Java堆内存泄漏&lt;/li&gt;
+&lt;li&gt;堆开地太小&lt;/li&gt;
+&lt;li&gt;请求的内存分配太大&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>故障分析报告 - Java应用PS未关闭导致的OOM错误</title>
       <link>http://www.jiaqili.me/post/oom-profiling-report-20181121/</link>
       <pubDate>Sun, 09 Dec 2018 18:36:00 +0800</pubDate>

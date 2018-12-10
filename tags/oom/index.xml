@@ -6,10 +6,37 @@
     <description>Recent content in Oom on Virtual World</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 09 Dec 2018 18:36:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 10 Dec 2018 22:24:00 +0800</lastBuildDate>
     
 	<atom:link href="http://www.jiaqili.me/tags/oom/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Java OOM错误诊断方法总结</title>
+      <link>http://www.jiaqili.me/post/java-oom/</link>
+      <pubDate>Mon, 10 Dec 2018 22:24:00 +0800</pubDate>
+      
+      <guid>http://www.jiaqili.me/post/java-oom/</guid>
+      <description>&lt;h1 id=&#34;out-of-memory-错误产生原因&#34;&gt;Out of Memory 错误产生原因&lt;/h1&gt;
+
+&lt;p&gt;有两种内存分配失败会产生OOM错误：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;一种是本地堆内存不足，本地代码(native code)内存分配(malloc)失败。&lt;/li&gt;
+&lt;li&gt;另一种是Java堆空间不足(GC无法回收足够的空间，并且Java堆无法继续扩展)，无法创建Java对象。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;造成上述内存分配失败的原因又有四种：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;本地内存泄漏&lt;/li&gt;
+&lt;li&gt;Java堆内存泄漏&lt;/li&gt;
+&lt;li&gt;堆开地太小&lt;/li&gt;
+&lt;li&gt;请求的内存分配太大&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>故障分析报告 - Java应用PS未关闭导致的OOM错误</title>

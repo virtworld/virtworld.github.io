@@ -78,7 +78,7 @@ To Space:
 PS Old Generation
    capacity = 2840068096 (2708.5MB)
    used     = 2837510472 (2706.060859680176MB)
-   **free     = 2557624 (2.4391403198242188MB)**
+   free     = 2557624 (2.4391403198242188MB)
    99.90994497619258% used
 PS Perm Generation
    capacity = 84148224 (80.25MB)

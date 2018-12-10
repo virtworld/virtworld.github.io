@@ -140,6 +140,94 @@
     
       <article class="post">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/java-profiling-tools/">Java故障诊断和性能分析工具</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-12-10 </span>
+      <div class="post-category">
+          
+            <a href="/categories/jvm/"> JVM </a>
+          
+            <a href="/categories/java/"> Java </a>
+          
+        </div>
+      <span class="more-meta"> 11973 word </span>
+      <span class="more-meta"> 24 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <h1 id="分析前准备">分析前准备</h1>
+
+<p>本节介绍了一般生产环境建议开启的JVM flag和系统参数，以便在OOM或者崩溃的时候收集信息。对于Oracle/IBM JDK通常我们需要收集heap dump(.prof/.phd)，thread dump(<em>.tdump/javacore.</em>.txt)，GC日志。</p>
+
+<h2 id="设置out-of-memory-oom-时转存java堆">设置Out of Memory(OOM)时转存Java堆</h2>
+
+<p>在生产系统发生OOM时产生Java堆转存是必要的配置，因为这往往是OOM错误发生后收集分析数据的唯一机会。Oracle Hotspot JVM在启动参数上添加<code>-XX:+HeapDumpOnOutOfMemoryError</code>后会在发生OOM错误时进行heap dump。可以结合<code>-xx:HeapDumpPath=path</code>指定保存的dump的路径。</p>
+
+<p>IBM JVM默认在OOM发生时产生heap dump和javacore文件，文件命名方式为<code>javacore.[date].[time].[index].txt</code>和<code>heapdump.[date].[time].[index].phd</code>。</p>
+
+<p>需要注意的是，oracle Hotspot只会在第一次OOM时进行堆转存，而IBM JRE会在每一次OOM时都产生堆转存。通常第一个OOM错误时产生的堆转存是最适合拿来分析的，因为OOM会造成级联性地错误（发生了OOM错误的进程一般会持续抛出OOM）。但只要JVM进程还活着，就可以手动触发dump生成（参考<a href="#使用工具">使用工具</a>）。</p>
+
+<p>除了Java heap dump以外，Oracle JVM产生的HPROF dump文件中包含了一份线程栈快照，而IBM JVM也会在OOM时转存javacore文件，文件中包含线程栈的快照。</p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/java-profiling-tools/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/java-oom/">Java OOM错误诊断方法总结</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-12-10 </span>
+      <div class="post-category">
+          
+            <a href="/categories/jvm/"> JVM </a>
+          
+            <a href="/categories/java/"> Java </a>
+          
+        </div>
+      <span class="more-meta"> 3510 word </span>
+      <span class="more-meta"> 8 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <h1 id="out-of-memory-错误产生原因">Out of Memory 错误产生原因</h1>
+
+<p>有两种内存分配失败会产生OOM错误：</p>
+
+<ol>
+<li>一种是本地堆内存不足，本地代码(native code)内存分配(malloc)失败。</li>
+<li>另一种是Java堆空间不足(GC无法回收足够的空间，并且Java堆无法继续扩展)，无法创建Java对象。</li>
+</ol>
+
+<p>造成上述内存分配失败的原因又有四种：</p>
+
+<ol>
+<li>本地内存泄漏</li>
+<li>Java堆内存泄漏</li>
+<li>堆开地太小</li>
+<li>请求的内存分配太大</li>
+</ol>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/java-oom/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/oom-profiling-report-20181121/">故障分析报告 - Java应用PS未关闭导致的OOM错误</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2018-12-09 </span>
@@ -527,115 +615,6 @@ assert x &gt; 0 : &quot;Now you see my assetion message.&quot;;
     </div>
     <div class="read-more">
       <a href="/post/java-basics-11-exception/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/java-basics-10-container/">Java基础知识系列10：容器</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-08-29 </span>
-      <div class="post-category">
-          
-            <a href="/categories/java/"> Java </a>
-          
-        </div>
-      <span class="more-meta"> 8718 word </span>
-      <span class="more-meta"> 18 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <h1 id="容器的接口与实现分离">容器的接口与实现分离</h1>
-
-<p>Java的集合类库设计将接口与实现分离。以队列为例，我们可以有以下接口：</p>
-
-<pre><code class="language-java">interface Queue &lt;E&gt;{
-    void add(E element);
-    E remove();
-    int size();
-}
-</code></pre>
-
-<p>这个接口只是定义了一个队列的实现所必需包含的方法，但没有说明具体应该如何实现。队列的常见实现方式有</p>
-
-<ol>
-<li>循环数组比如ArrayDeque;</li>
-<li>链表，比如LinkedList。</li>
-</ol>
-
-<p>一旦我们构造了一个集合，我们就不需要知道它究竟用了哪一种实现，因为它们都遵守了接口的协议。通常我们将实例化的某集合保存到一个接口的引用中，如下所示：</p>
-
-<pre><code class="language-java">Queue &lt;Customer&gt; custQueue = new LinkedList &lt;Customer&gt;();
-</code></pre>
-
-<p>这样做的目的是，一旦我们想修改某数据结构的实现，我们只要在上述构造的地方（new 语句中）修改即可。另外，还有一组Abstract开头的类。和接口不同的是，集合中的抽象类一般是给类库实现者设计的，比如如果要实现自己的队列类，可以扩展AbstractQueue类，这要比实现Queue 接口中所有的方法轻松地多。</p>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/java-basics-10-container/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/java-basics-9-generic/">Java基础知识系列9：泛型</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-08-25 </span>
-      <div class="post-category">
-          
-            <a href="/categories/java/"> Java </a>
-          
-        </div>
-      <span class="more-meta"> 8394 word </span>
-      <span class="more-meta"> 17 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <h1 id="泛型概述">泛型概述</h1>
-
-<p>泛型的代码意味着它可以被很多不同类型的对象所重用，比如ArrayList<T>可以用来保存任意特定类型。</p>
-
-<p>我们知道原生类型，保存的是Object类型（在擦除小节会讲到），当用get方法获取元素时候，需要进行强制类型转换。</p>
-
-<p>但是泛型提供了类型参数(即类型参数化的概念)，它希望通过解耦类或方法与所使用的类型之间的约束来使类或方法实现最广泛的表达能力。这里的T可以用来指示元素类型，比如</p>
-
-<pre><code class="language-java">ArrayList &lt;String &gt; files = new ArrayList &lt;&gt;();
-</code></pre>
-
-<p>当调用get的时候不再需要强制类型转换，因为编译器自动插入了合适的强制类型转换，它直接返回正确的类型，比如</p>
-
-<pre><code class="language-java">String filename = files.get(0);
-</code></pre>
-
-<h1 id="泛型类">泛型类</h1>
-
-<p>一个泛型类是具有一个或多个类型变量的类。类型变量使用大写形式，通常比较短，一般用E表示集合的元素类型，用K和V表示关键字与值的类型，T、U 和S表示任意类型。以下是一个泛型类的示例：</p>
-
-<pre><code class="language-java">public class Pair &lt;T&gt; {
-    private T first;
-    private T second;
-    public Pair() { first = null; second = null;}
-    public Pair(T first , T second) { this.first = first; this.second = second;}
-    public T getFirst() { return first;}
-    public T getSecond() { return second;}
-    public void setFirst(T newValue) { first = newValue;}
-    public void setSecond(T newValue) { second = newValue;}
-}
-</code></pre>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/java-basics-9-generic/" class="read-more-link">Read more..</a>
     </div>
   </div>
 </article>
